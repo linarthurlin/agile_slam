@@ -29,7 +29,7 @@ docker compose down
 
 The default profile uses software rendering and a private Docker bridge network. It starts simulation only, with no CAN or USB access. Ground-truth odometry is isolated under `/ground_truth/odometry`; no operational odometry TF is fabricated from it.
 
-See [setup](docs/setup.md), [validation](docs/validation/baseline.md), and the [implementation plan](docs/plans/implementation_plan.md). Plans are written in Traditional Chinese; code, configuration, operational documentation, and commit messages are written in English.
+See [setup](docs/setup.md), [validation](docs/validation/baseline.md), [roadmap](docs/roadmap.md), and the [implementation plan](docs/plans/implementation_plan.md). Plans are written in Traditional Chinese; code, configuration, operational documentation, and commit messages are written in English.
 
 ## Validation status
 
