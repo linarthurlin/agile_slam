@@ -2,6 +2,11 @@
 # Open WSLg clients against the already-running simulation namespace.
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+view="${1:-baseline}"
+if [[ "$view" != baseline && "$view" != navigation ]]; then
+    echo "Usage: bash scripts/gui.sh [baseline|navigation]" >&2
+    exit 1
+fi
 sim="$(docker compose --project-directory "$root" ps -q sim)"
 if [[ -z "$sim" ]] || [[ "$(docker inspect -f '{{.State.Running}}' "$sim")" != true ]]; then
     echo 'Start the simulator with docker compose up -d first.' >&2
@@ -37,6 +42,6 @@ start_client() {
         "$image" "$@"
 }
 start_client agile-slam-gazebo ign gazebo -g -v 2
-start_client agile-slam-rviz rviz2 -d /gui/baseline.rviz --ros-args -p use_sim_time:=true
+start_client agile-slam-rviz rviz2 -d "/gui/$view.rviz" --ros-args -p use_sim_time:=true
 printf 'Opened Gazebo and RViz through WSLg.\n'
 printf 'Close clients with: docker stop agile-slam-gazebo agile-slam-rviz\n'

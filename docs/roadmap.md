@@ -1,13 +1,17 @@
 # Roadmap
 
-The first executable milestone is committed: a single-container Humble/Fortress simulator baseline with sensor presence and low-speed command-expiry checks. This is not a complete e6 digital twin or validated SLAM system.
+The executable baseline includes a single-container Humble/Fortress simulator, WSLg clients, sensor/control checks, and an optional known-start static Nav2 profile. It is not a measured e6 digital twin or a validated full SLAM system.
 
-Next gates, in order:
+The immediate simulator-first sequence is documented in the [implementation plan](plans/simulation_first_plan.md): repeat simple motion and sensor geometry tests, validate goal cancellation/unreachable cases, record/replay fixed routes, then add localization/SLAM and larger worlds.
+
+Existing workstreams:
 
 1. [Sustained transport and record/replay](https://github.com/linarthurlin/agile_slam/issues/1).
 2. [FAST-LIO input contracts and rolling-scan validation](https://github.com/linarthurlin/agile_slam/issues/2).
 3. [GEM e6 geometry and full sensor/PACMod profiles](https://github.com/linarthurlin/agile_slam/issues/3).
 
-The default development workflow is local build and integration validation, followed by a reviewable commit with updated evidence. GitHub Actions runs source/configuration checks and regression tests; it does not build the private local base image or exercise GPU/CAN hardware.
+See [navigation operation](navigation.md), [validation](validation/navigation.md), and [scene candidates](scenes.md). Known-start identity alignment is a temporary navigation test assumption; AMCL/SLAM must replace it before evaluating global localization.
 
-Detailed implementation plans are maintained in Traditional Chinese under `docs/plans/`. All other project code, configuration, documentation, issue descriptions, and commit messages use English.
+The development workflow is local build/integration validation, followed by a reviewable commit with updated evidence. GitHub Actions checks source/configuration, kinematics/watchdog regressions, and generated scene/map consistency. It does not build the private local base image or exercise GPU/CAN hardware.
+
+Detailed implementation plans use Traditional Chinese under `docs/plans/`. Other code, configuration, documentation, issue descriptions, and commit messages use English.

@@ -2,6 +2,8 @@
 
 Snapshot date: 2026-10-14 (America/Los_Angeles). Implementation revision inspected: `3e9d702`.
 
+> Navigation update: an optional known-start Nav2 profile now exists. See [navigation setup](navigation.md) and [navigation validation](validation/navigation.md). The original baseline configuration below remains available.
+
 ## Status
 
 The project has an executable legacy simulator baseline, sensor delivery checks, command-expiry checks, and WSLg GUI launch support. It is not yet a measured GEM e6 digital twin or a validated SLAM platform.
@@ -24,7 +26,7 @@ At the inspection, `agile-slam-sim-1` was running and the GUI clients had exited
 | Storage | Source copied into `/opt/agile_slam_ws`; only local `artifacts/` mounted writable |
 | Hardware access | No CAN/USB passthrough, no privileged mode, no real-vehicle driver launched |
 
-The supplied image includes FAST-LIO, PACMod2, Nav2, and RViz. Only RViz is used by the GUI launcher; FAST-LIO, PACMod2, and Nav2 are not currently launched. NVIDIA/CUDA/GPU rendering have not been validated.
+The supplied image includes FAST-LIO, PACMod2, Nav2, and RViz. FAST-LIO and PACMod2 remain unlaunched. Nav2 is active only with the optional navigation profile; the baseline-only profile still excludes it. NVIDIA/CUDA/GPU rendering have not been validated.
 
 ```mermaid
 flowchart TD
@@ -124,7 +126,7 @@ These mounts are model inputs, not calibration results. In particular, IMU axes 
 | `/ackermann_cmd` | Direct simulator drive command |
 | `/tf`, `/tf_static` | Robot description and joint-derived transforms |
 
-There is no operational `map -> odom -> base_link` estimator chain yet. No `/odom` or `/odometry/local` publisher was present during the baseline check. Robot state transforms form the vehicle/sensor tree rooted at `base_footprint`; truth odometry does not publish an operational TF edge. RViz uses `base_link` as a local fixed frame.
+In the original baseline-only profile there is no operational localization chain. The optional navigation profile adds wheel-feedback odometry and a known-start identity map alignment, described in navigation.md; it does not add global localization or SLAM. No `/odom` or `/odometry/local` publisher was present during the baseline check. Robot state transforms form the vehicle/sensor tree rooted at `base_footprint`; truth odometry does not publish an operational TF edge. RViz uses `base_link` as a local fixed frame.
 
 The LiDAR cloud has no per-point time. Do not claim deskew accuracy or synthesize firing times from a snapshot without a physically consistent rolling-scan model. Large-message best-effort loss was observed; reliable image/cloud subscriptions passed the short checks. Rates, latency, recorder completeness, and long-duration robustness remain unvalidated.
 

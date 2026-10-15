@@ -25,6 +25,12 @@
   <link name="base_footprint">
   </link>
 
+  <link name="base_rear_axle"/>
+  <joint name="base_rear_axle_joint" type="fixed">
+    <parent link="base_footprint"/><child link="base_rear_axle"/>
+    <origin xyz="-0.87 0 0" rpy="0 0 0"/>
+  </joint>
+
   <link name="base_link">
 
     <!--

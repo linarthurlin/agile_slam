@@ -11,4 +11,5 @@ jobs:
         with:
           python-version: '3.10'
       - run: python scripts/check_source.py
+      - run: python scripts/generate_scene.py --check
       - run: python -m unittest discover -s tests -v

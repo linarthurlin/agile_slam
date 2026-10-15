@@ -37,9 +37,13 @@ See [setup](docs/setup.md), [validation](docs/validation/baseline.md), [roadmap]
 
 The local baseline builds all three packages, delivers all seven required streams, and passes a low-speed command-expiry test. Large image/cloud checks use reliable subscriptions; best-effort transport loss was observed and remains a separate performance gate. See the validation report for evidence and limits.
 
+## Navigation experiments
+
+An optional Nav2 profile adds a generated obstacle scene, wheel-feedback odometry, a filtered obstacle scan, Smac Hybrid-A* planning, and Regulated Pure Pursuit control. See [navigation setup](docs/navigation.md), [scene candidates](docs/scenes.md), and the [simulation-first plan](docs/plans/simulation_first_plan.md).
+
 ## Scope
 
-Sensor schema/timing checks, FAST-LIO integration, measured e6 geometry, full sensor profiles, calibration, and real-vehicle PACMod bringup are subsequent milestones. The existing snapshot LiDAR must not be presented as a validated rolling-scan or deskew model. Fortress is a legacy reproduction baseline; the supported-platform migration remains planned.
+Basic sensor schema/rate checks and known-start static Nav2 navigation are available. Sustained transport/recording, FAST-LIO, measured e6 geometry, full sensor profiles, calibration, and real-vehicle PACMod bringup remain subsequent milestones. The existing snapshot LiDAR must not be presented as a validated rolling-scan or deskew model. Fortress is a legacy reproduction baseline; the supported-platform migration remains planned.
 
 ## Attribution
 

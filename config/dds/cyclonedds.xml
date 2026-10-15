@@ -5,6 +5,6 @@
       <MaxMessageSize>65500B</MaxMessageSize>
       <FragmentSize>4000B</FragmentSize>
     </General>
-    <Discovery><ParticipantIndex>auto</ParticipantIndex></Discovery>
+    <Discovery><ParticipantIndex>auto</ParticipantIndex><MaxAutoParticipantIndex>64</MaxAutoParticipantIndex></Discovery>
   </Domain>
 </CycloneDDS>

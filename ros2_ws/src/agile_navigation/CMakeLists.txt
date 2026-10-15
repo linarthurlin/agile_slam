@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.8)
+project(agile_navigation)
+find_package(ament_cmake REQUIRED)
+install(DIRECTORY launch config maps DESTINATION share/${PROJECT_NAME})
+install(PROGRAMS scripts/wheel_odometry.py scripts/twist_to_ackermann.py scripts/check_navigation.py scripts/obstacle_scan.py scripts/check_sensors.py DESTINATION lib/${PROJECT_NAME})
+install(FILES scripts/vehicle_math.py DESTINATION lib/${PROJECT_NAME})
+ament_package()

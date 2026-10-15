@@ -14,3 +14,5 @@ The supplied local snapshot is recorded by SHA256 in `third_party/source_manifes
 - Use a dedicated bringup package and single build stage.
 
 The vehicle geometry and snapshot LiDAR remain inherited approximations. Package presence in the supplied image does not establish hardware compatibility or algorithm correctness.
+
+The optional navigation milestone adds a rear-axle reference frame, joint-feedback wheel odometry, a generated primitive obstacle scene/map, a filtered virtual scan, and forward-only Nav2. See docs/navigation.md; the original baseline remains selectable.
