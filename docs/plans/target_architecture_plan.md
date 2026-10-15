@@ -1,28 +1,35 @@
 # Agile_SLAM 目標架構與重新建置計畫
 
-日期：2026-10-15（America/Los_Angeles）。前提：開發電腦為 Windows＋WSL2；GEM e6 搭載一般 x86_64 Linux PC，不是 Jetson。實車 Linux 發行版、GPU 及 sensor／PACMod 型號仍未知。此文件定義建議目標，尚未安裝新 WSL distro、搬移 checkout、替換 Compose 或改動實車。
+日期：2026-10-15（America/Los_Angeles）。前提：開發電腦為 Windows＋WSL2；GEM e6 搭載一般 x86_64 Linux PC，不是 Jetson。使用者表示實車可能是 Ubuntu 22，但精確 VERSION_ID 尚未核對；GPU 及 sensor／PACMod 型號仍未知。此文件定義建議目標，尚未安裝新 WSL distro、搬移 checkout、替換 Compose 或改動實車。
 
-## 1. 架構決策
+## 1. 架構決策（依使用者平台限制修訂）
 
-採用同一 repository、同一 amd64 應用程式 images、共用 ROS 介面與分層設定；由單一部署入口選擇 sim／vehicle-readonly／vehicle／replay。以 Ubuntu 24.04＋ROS 2 Jazzy＋Gazebo Harmonic 為目標，先做 PACMod／LIO／WSLg 建置與運作 feasibility gate，再完整遷移。舊 Humble／Fortress 保留為可重現回歸基線，無需為重建新架構而刪除。
+採用同一 repository、同一 amd64 應用程式 images、共用 ROS 介面與分層設定；由單一部署入口選擇 sim／vehicle-readonly／vehicle／replay。目前首選為 Ubuntu 22.04＋ROS 2 Humble＋Gazebo Fortress，沿用現有可動基線並重構其服務邊界。Ubuntu 24.04／Jazzy 不再是本輪必要前置條件；新架構不依賴特定新版 ROS 功能。
 
-不把舊 agile_control_ros2 image 當長期 build foundation；從公開可追溯基底與 pinned source/dependency 建立新 image。兩台都是 amd64，可重用同一應用 image digest，但 kernel、GPU host driver、USB／CAN 與顯示掛載仍依主機不同。
+重構與升級分開：先改善 Compose、backend 抽象、PACMod 與測試，再依支援週期與 driver 驗證安排後續 ROS／OS 遷移。現有 image 作比對與臨時 bootstrap，逐步建立公開可追溯的乾淨 Humble image；不要在 PACMod／LIO sources 尚未盤點前丟棄可用 base。
 
-## 2. 版本選擇
+兩台都是 amd64，可重用相同應用 image digest；host kernel、GPU driver、USB／CAN 及顯示掛載由 overlay／主機設定處理。車上版本只暫列可能 22.04，實車預檢須確認 /etc/os-release、uname -m、kernel 與 driver／SDK，不把推測記成 inventory 真值。
 
-| 組合 | 本專案用途與取捨 |
+## 2. 版本選擇與維護期限
+
+| 組合 | 決策 |
 |---|---|
-| Humble／Fortress／22.04 | 已通過短程測試，作 legacy baseline；不繼續擴大所有新功能對其耦合 |
-| Jazzy／Harmonic／24.04 | 推薦目標；官方配對、amd64 Tier 1、Jazzy 至 2029-05；Velodyne 有 Jazzy release，RealSense README 列出支援 |
-| Lyrical／Jetty | 官方相容的新配對；現有 PACMod／LIO port 與完整 SDK matrix 未驗證，暫不作主線。這是專案相容性取捨，不宣稱新版無法使用 |
+| Ubuntu 22.04／Humble／Fortress | 本輪首選；Humble 的 Ubuntu Jammy amd64 為 Tier 1，Gazebo 官方標示 Humble/Fortress 為推薦配對；現有專案已有驗收證據 |
+| Ubuntu 22.04／Humble／Harmonic | 只作隔離的 simulator 實驗 image；需要非預設 ros_gz 套件或 source build，可能與 ros-humble-ros-gz* 衝突，並須移植控制 plugin／Gazebo API；不是預設快速解法 |
+| Ubuntu 24.04／Jazzy／Harmonic | 後續維護遷移候選；不要求立即升級實車，也不在同一主線任意混用 ROS distros |
+| Lyrical／Jetty | 暫不採用；現有 driver／SDK matrix 未驗證 |
 
-沒有在 Jazzy rosdistro distribution.yaml 找到 PACMod 項目，不可據此推斷第三方沒有套件；須核對 vendor repository／本機 ROS2 source，先固定 message definitions 與對應 driver revision。ROS distro 跨版本通訊不是預設相容方案；driver 如必須保留舊環境，使用有測試的明確 adapter／bridge 當過渡，不把 Humble 與 Jazzy 任意混在一個 ROS domain 當作可行證據。
+查核日期 2026-10-15：Humble 維護期限至 2027-05；Gazebo 官方目前也列 Fortress 至 2027-05；Ubuntu 22.04 標準安全維護至 2027-05。Ubuntu Pro／ESM 的 OS 支援不等於 ROS Humble、Gazebo、第三方 SDK 延長維護。
+
+在 2027-02 前完成一次實際 driver／LIO／Jazzy/Harmonic 遷移評估（僅計畫里程碑，未建立排程／automation），於 2027-05 前選定維護路徑。可先在隔離的新版 container 測試，不將車載 OS 更新與軟體架構重構綁定；若必須跨過上游 EOL，需明確記錄 pinned 版本、修補來源、回歸與維護負責範圍，不能宣稱仍受原上游完整維護。
+
+Humble 也不代表所有 PACMod driver 已可用：固定本機已核對的 pacmod2_msgs 與 source revision，再測真正 driver／hardware generation／DBC。LIO source、Python／PCL／Eigen 依賴及 SDK 均保持明確版本；不以 Docker 或跨 ROS 同 domain 通訊掩蓋相容性問題。
 
 ## 3. 主機環境
 
 ### 開發端
 
-Windows 11 提供編輯器與桌面；獨立 WSL2 Ubuntu 24.04 提供 Linux shell／Git；Docker Desktop 的 WSL2 backend 執行 Linux containers。此專案只選一個 Docker daemon，不同時混用 WSL 原生 dockerd 與 Desktop 的 image／context。
+Windows 11 提供編輯器與桌面；沿用 WSL2 Ubuntu 22.04 提供 Linux shell／Git；Docker Desktop 的 WSL2 backend 執行 Linux containers。此專案只選一個 Docker daemon，不同時混用 WSL 原生 dockerd 與 Desktop 的 image／context。
 
 新開發 checkout、build cache、assets 與工作中 bags 放在 WSL Linux filesystem 或 Docker named volumes；Windows D: 保留既有 checkout、備份及匯出，不在遷移前移除原路徑。Windows 編輯器透過 WSL integration 存取；Dev Container 與 runtime 共用基底／依賴。這可減少跨檔案系統 I/O、權限、case／換行差異；實際性能仍須量測。
 
@@ -30,7 +37,7 @@ Windows 11 提供編輯器與桌面；獨立 WSL2 Ubuntu 24.04 提供 Linux shel
 
 ### 實車端
 
-候選標準主機為原生 Ubuntu 24.04 amd64＋Docker Engine／Compose plugin。既有 Linux 若不同版本，先盤點 kernel、driver／SDK；容器 user space 可用 24.04，但不據此假設所有 USB／GPU／CAN 能運作，也不先重灌主機。
+首選實車環境為原生 Ubuntu 22.04 amd64＋Docker Engine／Compose plugin；先核對使用者目前的 Linux 精確版本。共用 runtime user space 為 Ubuntu 22.04／Humble。若主機不是 22.04，先測 kernel、driver／SDK 與 devices，不因本計畫直接重灌或升級。
 
 主機負責 NIC／IP、SocketCAN bitrate、udev／USB、GPU driver、系統時間同步、SSD／log rotation、開機與關機處置；Docker 負責版本固定的 ROS／SDK user space。systemd 可管理部署啟停，但所有 actuation 重啟後仍 disabled，須重新通過 readiness 與明確 enable。
 
@@ -74,7 +81,7 @@ sim／replay：唯一 /clock source，所有相關 nodes use_sim_time=true；veh
 
 ## 7. WSL 圖形與效能處理
 
-WSLg OpenGL 使用 Mesa/D3D12 路徑；CUDA container GPU access 不等於 Ogre rendering 已相容。現有 Fortress/Ogre2 已實際失敗過，升到 Harmonic／新 Mesa 是重新驗證機會，不宣稱必定修復。
+WSLg OpenGL 使用 Mesa/D3D12 路徑；CUDA container GPU access 不等於 Ogre rendering 已相容。現有 Fortress/Ogre2 GPU 路徑已實際失敗過，但 software baseline 可運作。先保持可重現 software rendering，再隔離驗證 Mesa／WSLg／GPU；Humble/Harmonic 僅於證明具體收益並通過 plugin／sensor regression 後評估，不能宣稱升級必定修復。
 
 先驗證新 GUI／sensor-rendering profile：glxinfo／renderer、camera／depth／LiDAR 輸出、Gazebo＋RViz 同開穩定性與 RTF；同時保留可重現 software headless CI。若桌面 WSL 無法達到需求，可從 Windows 開發端操作 native Linux 的 simulation compute，仍執行同一 sim image/config；這是性能補充路徑，WSL 本機基本模擬仍須通過，不把問題藏起來。
 
@@ -107,22 +114,28 @@ agile_slam/
 
 | 階段 | 內容 | 驗收與決策 |
 |---|---|---|
-| A0 | inventory／driver source、Jazzy build matrix、WSLg GPU＋sensor feasibility | PACMod messages/driver source 可追溯、LIO選定版本可建置、GUI及sensor正常；任何不相容先解決或選有測試的過渡 adapter |
-| A1 | clean public base＋core／sim／tools targets；small_city Harmonic 轉換 | 乾淨環境可重建；同時檢查世界 physics／materials／collision；既有3/8/16m測試回歸 |
+| A0 | 確認實車 OS／inventory、Humble driver source／build matrix、WSLg GPU＋sensor feasibility | PACMod messages/driver source 可追溯、LIO選定版本可建置、GUI及sensor正常；任何不相容先解決或選有測試的過渡 adapter |
+| A1 | clean Humble base＋core／sim／tools targets；沿用 small_city Fortress 轉換 | 乾淨環境可重建；同時檢查世界 physics／materials／collision；既有3/8/16m測試回歸 |
 | A2 | 獨立 core/localization/vehicle-control/backend，Compose overlays＋readiness | 關 Gazebo 不殺 core；graph無重複TF／commands；GUI不依附sim namespace；跨容器cloud/image通過 |
 | A3 必做 | PACMod mock／adapter／速度閉迴路與故障回歸 | enable、gear、override、fault、stale command/report、互鎖、取消、停止及重啟不自動enable |
 | A4 | 固定 scenario runner、動態bags與CI | 直行／左右轉／路口各三次，軌跡／heading／collision與停止指標；replay無實體輸出 |
 | A5 | 真實 firing-time rolling Velodyne、LIO、calibration profiles | deskew開關／時間offset對照；held-out校正與估計器真值隔離 |
-| A6 | 車載 Linux readonly bringup與compute-in-loop | 真實sensor/PACMod/DBC確認，USB/NIC/CAN/time/CPU/GPU/SSD負載，使用與sim相同core image digest |
+| A6 | 車載 Linux readonly bringup與compute-in-loop | 真實sensor/PACMod/DBC確認，USB/NIC/CAN/time/CPU/GPU/SSD負載，使用與sim相同Humble core image digest |
 | A7 | 封閉場地低速動態驗證 | 實車tuning、人工接管、失聯／停止與重啟；每次run可追溯 |
 
 A0–A4 優先建立可靠平台；A5 的 LIO 與完整校正不能只靠新 ROS 版本宣稱完成。現有可動 baseline 可作比較，待新架構達成驗收再切主線，避免失去可用測試環境。
 
-## 10. 研究來源
+## 10. 優化後近期執行範圍
+
+先完成 A0 的實車只讀 inventory 範本及 source provenance、A2 的共用 bringup／Compose 拆分、A3 的 PACMod mock 與 fault tests；乾淨 Humble base 可逐步替換 bootstrap。保留既有場景與已通過測試，避免同時更換 ROS／OS／Gazebo／車控造成回歸難以定位。LIO／rolling scan、完整 sensors 與校正仍依 gate 接續。
+
+## 11. 研究來源
 
 - ROS/Gazebo 官方配對：https://gazebosim.org/docs/latest/ros_installation/
 - ROS REP-2000：https://github.com/ros-infrastructure/rep/blob/master/rep-2000.rst
-- Jazzy release catalog（Velodyne／PACMod查核）：https://github.com/ros/rosdistro/blob/master/jazzy/distribution.yaml
+- Humble release catalog：https://github.com/ros/rosdistro/blob/master/humble/distribution.yaml
+- Gazebo 支援期限：https://gazebosim.org/docs/latest/releases/
+- Ubuntu 支援期限：https://ubuntu.com/about/release-cycle
 - RealSense supported setup：https://github.com/realsenseai/realsense-ros
 - WSL filesystem：https://learn.microsoft.com/en-us/windows/wsl/filesystems
 - Docker Desktop WSL backend：https://docs.docker.com/desktop/features/wsl/

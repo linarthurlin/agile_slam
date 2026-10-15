@@ -16,4 +16,4 @@ The development workflow is local build/integration validation, followed by a re
 
 Detailed implementation plans use Traditional Chinese under `docs/plans/`. Other code, configuration, documentation, issue descriptions, and commit messages use English.
 
-The proposed replacement platform targets a shared amd64 Jazzy/Harmonic runtime for Windows/WSL2 simulation and native Linux vehicle deployment. See the [architecture decision](architecture/0001-shared-runtime.md) and [target architecture plan](plans/target_architecture_plan.md). Migration is gated by PACMod/LIO compatibility and WSLg rendering validation.
+The preferred refactoring platform is a shared amd64 Ubuntu 22.04/Humble/Fortress runtime for Windows/WSL2 simulation and native Linux vehicle deployment. See [ADR 0002](architecture/0002-humble-jammy-baseline.md) and the [updated target plan](plans/target_architecture_plan.md). Vehicle OS/version verification, backend separation, and mandatory PACMod integration come first; Jazzy/Harmonic is a later maintenance candidate. Humble/Fortress support and Jammy standard security maintenance end in May 2027, so maintenance-path assessment is an explicit milestone.

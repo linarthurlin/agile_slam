@@ -1,6 +1,6 @@
 # ADR 0001: Shared amd64 runtime with replaceable backends
 
-Status: Proposed; feasibility gates required before migration.
+Status: Superseded by [ADR 0002](0002-humble-jammy-baseline.md). The shared-backend structure remains; the Jazzy/Noble platform proposal is no longer the preferred baseline.
 Date: 2026-10-15.
 
 ## Context
