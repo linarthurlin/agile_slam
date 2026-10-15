@@ -1,0 +1,139 @@
+{
+  "goal_3": {
+    "truth_goal_error_m": 0.33563956555591196,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      3.0,
+      0.0
+    ],
+    "initial_odom": [
+      -0.87,
+      0.0
+    ],
+    "final_odom": [
+      2.7014911435649402,
+      -0.09185971408347528
+    ],
+    "goal_error_m": 0.31232314106012854,
+    "wall_duration_s": 24.210423846001504,
+    "commands": 484,
+    "path_points": 335,
+    "scans": 72,
+    "max_lateral_odom": 0.09185971408347528,
+    "truth_rear_pose": [
+      2.6771297704207613,
+      -0.09169914295134383
+    ],
+    "truth_samples": 358,
+    "footprint_overlap_samples": 0
+  },
+  "goal_8": {
+    "truth_goal_error_m": 0.33085151605388086,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      8.0,
+      0.0
+    ],
+    "initial_odom": [
+      2.7215361780190483,
+      -0.09267445463571738
+    ],
+    "final_odom": [
+      7.718592751576467,
+      -0.10284125322571616
+    ],
+    "goal_error_m": 0.2996103516742035,
+    "wall_duration_s": 31.420630806998815,
+    "commands": 627,
+    "path_points": 347,
+    "scans": 95,
+    "max_lateral_odom": 0.13046299080266036,
+    "truth_rear_pose": [
+      7.685181971069653,
+      -0.10174642173345798
+    ],
+    "truth_samples": 475,
+    "footprint_overlap_samples": 0
+  },
+  "driving_sensors": {
+    "passed": true,
+    "wall_window_s": 15.0,
+    "estimated_rtf": 0.31485698737780965,
+    "warnings": [],
+    "topics": {
+      "/sensors/cameras/front/image_raw": {
+        "count": 123,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "encoding": "rgb8",
+        "payload_valid": true,
+        "received_rate_wall_hz": 8.159636816907268,
+        "received_rate_stamp_hz": 26.034997865983783,
+        "backward_stamps": 0
+      },
+      "/sensors/imu/data_raw": {
+        "count": 235,
+        "frame_id": "IMU_link",
+        "acceleration_norm": 9.800000006196264,
+        "received_rate_wall_hz": 15.684139917024206,
+        "received_rate_stamp_hz": 50.0,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/camera_info": {
+        "count": 143,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "focal_lengths": [
+          476.7014503479004,
+          476.7014980316162
+        ],
+        "received_rate_wall_hz": 9.518214294204208,
+        "received_rate_stamp_hz": 30.303030303030305,
+        "backward_stamps": 0
+      },
+      "/sensors/velodyne/points": {
+        "count": 47,
+        "frame_id": "velodyne_link",
+        "fields": [
+          "x",
+          "y",
+          "z",
+          "intensity",
+          "ring"
+        ],
+        "points": 30000,
+        "finite_points": 26343,
+        "received_rate_wall_hz": 3.148739109944017,
+        "received_rate_stamp_hz": 9.999999999999996,
+        "backward_stamps": 0
+      },
+      "/sensors/obstacle_scan": {
+        "count": 47,
+        "frame_id": "base_footprint",
+        "finite_ranges": 458,
+        "nearest_obstacle_m": 2.2139251232147217,
+        "received_rate_wall_hz": 3.1485669375406844,
+        "received_rate_stamp_hz": 9.999999999999996,
+        "backward_stamps": 0
+      }
+    },
+    "scope": "Short delivery/schema sanity window; not a hardware accuracy, latency, or long-duration acceptance."
+  },
+  "post_goal_rest": {
+    "passed": true,
+    "wall_window_s": 10,
+    "wheel_samples": 89,
+    "truth_samples": 152,
+    "max_wheel_speed_mps": 1.010506175863248e-18,
+    "max_truth_drift_m": 0.0,
+    "scope": "Post-goal rest check; not stopping-distance validation."
+  }
+}

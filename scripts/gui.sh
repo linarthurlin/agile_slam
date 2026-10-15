@@ -3,8 +3,8 @@
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 view="${1:-baseline}"
-if [[ "$view" != baseline && "$view" != navigation ]]; then
-    echo "Usage: bash scripts/gui.sh [baseline|navigation]" >&2
+if [[ "$view" != baseline && "$view" != navigation && "$view" != motion ]]; then
+    echo "Usage: bash scripts/gui.sh [baseline|navigation|motion]" >&2
     exit 1
 fi
 sim="$(docker compose --project-directory "$root" ps -q sim)"

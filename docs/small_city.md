@@ -53,3 +53,5 @@ docker compose exec -T sim /agile_slam_entrypoint.sh bash /tmp/bag_smoke.sh repl
 ```
 
 The action checker briefly drives toward (30,0), cancels, then requests an occupied off-road goal. Run with a clear forward road and no other command producer. Existing bag directories are preserved. Playback uses domain 43 and the recorded clock; it does not send recorded commands to domain-42 controllers. The sensor checker observes 15 seconds and does not establish whole-bag equality or static TF late-join correctness.
+
+For vehicle-following GUI motion tests, use `scripts/gui.sh motion`. See [visible motion validation](validation/visible_motion.md).
