@@ -6,7 +6,7 @@ Snapshot date: 2026-10-14 (America/Los_Angeles). Implementation revision inspect
 
 The project has an executable legacy simulator baseline, sensor delivery checks, command-expiry checks, and WSLg GUI launch support. It is not yet a measured GEM e6 digital twin or a validated SLAM platform.
 
-At this inspection, `agile-slam-sim-1` was running. RViz had exited with code 0; Gazebo GUI had exited with code 139 and was not OOM-killed. The cause of the GUI exit is unconfirmed; successful initial window creation does not establish sustained GUI stability.
+At the inspection, `agile-slam-sim-1` was running and the GUI clients had exited. The user subsequently confirmed that the GUI windows were closed manually. The observed exit codes alone are not evidence of an unsolicited runtime failure. Sustained GUI performance has not been benchmarked.
 
 ## Environment and deployment
 
@@ -130,7 +130,7 @@ The LiDAR cloud has no per-point time. Do not claim deskew accuracy or synthesiz
 
 ## Verified and pending work
 
-Passed: clean three-package build, model spawn, seven controllers, seven required ROS streams, basic IMU/frame sanity, vehicle motion, command-expiry zero wheel commands, source/XML checks, and four regression tests. Gazebo/RViz windows were created and the client discovered the existing world; sustained GUI stability is pending because Gazebo later exited with code 139.
+Passed: clean three-package build, model spawn, seven controllers, seven required ROS streams, basic IMU/frame sanity, vehicle motion, command-expiry zero wheel commands, source/XML checks, and four regression tests. Gazebo/RViz windows were created and the client discovered the existing world. The user confirmed the subsequent GUI shutdown was manual; it is not tracked as an unexplained GUI failure. Sustained GUI performance remains unmeasured.
 
 Ordered backlog:
 
