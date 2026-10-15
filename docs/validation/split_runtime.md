@@ -15,6 +15,8 @@ Date: 2026-10-15. Platform: Docker Desktop / WSL2 Ubuntu 22.04, Humble / Fortres
 - Stopping backend-sim at rest left shared services running and latched readiness fault/control inhibit. A full cold restart recovered the simulation.
 - Gazebo rendered small_city and the vehicle; RViz displayed vehicle, point cloud, camera, map and costmap. Restarting RViz preserved the core PID and ready status. Some inherited scene materials remain magenta/missing and are not accepted for photometric camera testing.
 
+- Nav2 cancellation returned CANCELED with a zero final command; an occupied goal returned ABORTED with no nonzero command. This checks action output, not physical braking distance.
+
 ## Fixes discovered during validation
 
 The renamed simulation actuator adapter initially missed its legacy parameter namespace; launch now passes the resolved parameter dictionary and common wheel diameter. One cold boot encountered planner configuration failure during concurrent map startup; map lifecycle is now separate and Nav2 starts after map readiness. Two final starts passed, which is useful evidence but not a long-run stability claim.
