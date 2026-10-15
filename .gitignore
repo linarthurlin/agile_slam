@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.env
+.venv/
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+artifacts/
+datasets/
+*.bag
+*.db3
+*.mcap
+*.pcap
+*.tar
+*.tar.gz

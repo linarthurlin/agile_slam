@@ -1,0 +1,23 @@
+name: agile-slam
+services:
+  sim:
+    image: agile_slam:humble-baseline
+    build:
+      context: .
+      dockerfile: containers/Dockerfile
+      args:
+        BASE_IMAGE: agile_control_ros2:baseline-20261014
+    init: true
+    environment:
+      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-42}
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      CYCLONEDDS_URI: file:///etc/agile_slam/cyclonedds.xml
+      LIBGL_ALWAYS_SOFTWARE: "1"
+    shm_size: 512mb
+    command: ["xvfb-run", "-a", "ros2", "launch", "avl_bringup", "baseline.launch.py"]
+    volumes:
+      - ./artifacts:/artifacts
+    networks: [ros]
+networks:
+  ros:
+    driver: bridge

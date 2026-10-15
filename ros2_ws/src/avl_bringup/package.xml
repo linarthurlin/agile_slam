@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>avl_bringup</name>
+  <version>0.1.0</version>
+  <description>Agile SLAM simulation baseline orchestration.</description>
+  <maintainer email="linarthurlin8883@users.noreply.github.com">linarthurlin</maintainer>
+  <license>BSD-3-Clause</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>gem_description</exec_depend>
+  <exec_depend>gem_gazebo</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>ros_gz_image</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>rosgraph_msgs</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

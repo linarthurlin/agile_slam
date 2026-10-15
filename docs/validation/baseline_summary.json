@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-14",
+  "profile": "single-container-software-rendering",
+  "base_image_id": "sha256:a6acca67607edcb48e66adfec152714ad480b0b0854587c6dcca72034f2084ca",
+  "sensor_check": {
+    "passed": true,
+    "topics": {
+      "/clock": {
+        "count": 324
+      },
+      "/sensors/imu/data_raw": {
+        "count": 15,
+        "frame_id": "IMU_link",
+        "acceleration": [
+          -4.687865461663052e-10,
+          4.073734886838139e-10,
+          9.810000001868346
+        ]
+      },
+      "/ground_truth/odometry": {
+        "count": 15,
+        "frame_id": "world"
+      },
+      "/sensors/cameras/front/camera_info": {
+        "count": 9,
+        "frame_id": "camera_front_optical_frame"
+      },
+      "/joint_states": {
+        "count": 9,
+        "frame_id": "base_link"
+      },
+      "/sensors/cameras/front/image_raw": {
+        "count": 4,
+        "frame_id": "camera_front_optical_frame"
+      },
+      "/sensors/velodyne/points": {
+        "count": 3,
+        "frame_id": "velodyne_link",
+        "fields": [
+          "x",
+          "y",
+          "z",
+          "intensity",
+          "ring"
+        ],
+        "points": 30000
+      }
+    },
+    "unexpected_odometry_publishers": []
+  },
+  "command_check": {
+    "passed": true,
+    "nonzero_command_samples": 52,
+    "expired_command_samples": 12,
+    "expired_command_max_abs": 0.0,
+    "start_pose": [
+      8.253133838934451e-14,
+      3.4884866894987e-19
+    ],
+    "end_pose": [
+      1.1167129188268563,
+      0.07553046743232532
+    ]
+  },
+  "limits": [
+    "Short presence checks only; no rate or latency acceptance.",
+    "Reliable cloud/image subscribers; best-effort loss observed.",
+    "Snapshot cloud has no point-time field.",
+    "No measured e6 geometry, real CAN, or LIO accuracy validation."
+  ]
+}

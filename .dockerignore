@@ -1,0 +1,7 @@
+.git
+artifacts
+datasets
+ros2_ws/build
+ros2_ws/install
+ros2_ws/log
+**/__pycache__
