@@ -1,9 +1,9 @@
 # Implementation baseline: shared Humble platform
 
-Status: Implementation specification; the split runtime and PACMod mock are not yet implemented.
+Status: Initial split simulation and PACMod mock implemented; acceptance evidence and remaining gates are recorded in ../validation/split_runtime.md.
 Date: 2026-10-15.
 
-This document and the linked Traditional Chinese execution plan consolidate ADR 0002 and the earlier deployment research. ADR 0001's Jazzy platform proposal is superseded. The current repository remains a working single-runtime simulation baseline.
+This document and the linked Traditional Chinese execution plan consolidate ADR 0002 and the earlier deployment research. ADR 0001's Jazzy platform proposal is superseded. The original single-runtime baseline is retained alongside the isolated split simulation.
 
 ## Fixed decisions
 

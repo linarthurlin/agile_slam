@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY ros2_ws/src /opt/agile_slam_ws/src
 WORKDIR /opt/agile_slam_ws
 RUN source /opt/ros/humble/setup.bash && \
+    if [[ -f /workspace/ros_ws/install/setup.bash ]]; then source /workspace/ros_ws/install/setup.bash; fi && \
     colcon build --event-handlers console_direct+ && \
     mkdir -p /opt/agile_slam_metadata && \
     dpkg-query -W > /opt/agile_slam_metadata/packages.tsv

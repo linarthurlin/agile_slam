@@ -1,0 +1,22 @@
+{
+  "profile": "inherited_e2_reference",
+  "hardware_validated": false,
+  "wheelbase": 1.75,
+  "track": 1.2,
+  "wheel_radius": 0.295,
+  "rear_axle_x": -0.87,
+  "max_speed": 0.6,
+  "max_steer": 0.48,
+  "steering_ratio": 16.0,
+  "steering_rate": 3.29,
+  "command_timeout": 0.75,
+  "report_timeout": 0.75,
+  "backend_timeout": 2.0,
+  "mock_accel_gain": 2.0,
+  "mock_brake_gain": 4.0,
+  "mock_drag": 0.15,
+  "body_front_x": 1.6,
+  "body_rear_x": -1.5,
+  "body_half_width": 0.8,
+  "minimum_turning_radius": 4.0
+}

@@ -16,6 +16,7 @@ find_package(xacro REQUIRED)
 
 # Install directories
 install(DIRECTORY
+  config
   launch
   urdf
   meshes

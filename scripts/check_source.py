@@ -18,4 +18,6 @@ json.loads((root / 'third_party/source_manifest.json').read_text(encoding='utf-8
 for path in list((root / 'scripts').rglob('*.sh')) + list((root / 'containers').rglob('*.sh')):
     if b'\r\n' in path.read_bytes():
         raise SystemExit(f'Shell script has CRLF line endings: {path.relative_to(root)}')
+from validate_contracts import validate
+validate()
 print('Source and configuration checks passed.')

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>agile_vehicle</name><version>0.1.0</version>
+  <description>Shared vehicle controller and simulation-only PACMod2 interface mock.</description>
+  <maintainer email="linarthurlin8883@users.noreply.github.com">linarthurlin</maintainer>
+  <license>BSD-3-Clause</license><buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>rclpy</exec_depend><exec_depend>pacmod2_msgs</exec_depend>
+  <exec_depend>ackermann_msgs</exec_depend><exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend><exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend><exec_depend>rosgraph_msgs</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>gem_description</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

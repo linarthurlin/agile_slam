@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.8)
+project(agile_vehicle)
+find_package(ament_cmake REQUIRED)
+install(PROGRAMS scripts/vehicle_control.py scripts/pacmod_mock.py scripts/runtime_probe.py scripts/check_pacmod_runtime.py DESTINATION lib/${PROJECT_NAME})
+install(FILES scripts/control_logic.py scripts/runtime_support.py DESTINATION lib/${PROJECT_NAME})
+ament_package()

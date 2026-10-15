@@ -92,3 +92,9 @@ vehicle-readonly須確認無控制傳輸；即使無Nav2 publisher，driver也�
 - 本機package metadata、source/config及docs/validation/visible_motion_results.json。
 
 英文介面與生命週期規格：docs/architecture/implementation-baseline.md。
+
+## 8. 首批實作進度（2026-10-15）
+
+已建立獨立 compose.next、四個執行服務、兩個可選 GUI、共用車輛設定與介面契約，以及 PACMod commands→mock→private adapter→joint feedback 閉迴路。readiness 先等 map／TF／clock／感測器與回授，再啟動 Nav2；失效時取消任務並鎖定 inhibit。控制與回授新鮮度使用 monotonic 時間。
+
+這是 M0–M2 的初版實作，不代表全部驗收完成。操作入口與限制見英文 docs/runtime.md；實際驗證結果另見 docs/validation/split_runtime.md。舊基線保留，simulation_first_plan.md 的使用者修改未變動。M3 的長時間錄製、左右轉、重播與統一報告，M4 rolling scan／LIO，以及 M5 真車仍待完成。

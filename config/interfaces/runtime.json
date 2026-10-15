@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "mode": "simulation_only",
+  "nav_command": {
+    "topic": "/cmd_vel",
+    "type": "geometry_msgs/msg/Twist"
+  },
+  "setpoint": {
+    "topic": "/vehicle/setpoint",
+    "type": "ackermann_msgs/msg/AckermannDriveStamped",
+    "speed_unit": "m/s",
+    "steering_angle_unit": "road-wheel radians"
+  },
+  "pacmod": {
+    "package": "pacmod2_msgs",
+    "hardware_generation": "unverified",
+    "accel_cmd": "/pacmod/accel_cmd",
+    "brake_cmd": "/pacmod/brake_cmd",
+    "steering_cmd": "/pacmod/steering_cmd",
+    "shift_cmd": "/pacmod/shift_cmd",
+    "speed_report": "/pacmod/vehicle_speed_rpt",
+    "global_report": "/pacmod/global_rpt"
+  },
+  "sim_private_actuation": "/simulation/actuation",
+  "truth_usage": "evaluation_only",
+  "clock_owner": "backend-sim",
+  "tf_owners": {
+    "map->odom": "localization debug only",
+    "odom->base_footprint": "wheel_odometry",
+    "fixed_sensor_edges": "robot_state_publisher"
+  }
+}

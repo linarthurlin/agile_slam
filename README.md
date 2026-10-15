@@ -4,6 +4,10 @@ A ROS 2 platform for GEM sensor integration, calibration, and SLAM experiments.
 
 The first milestone ports the existing GEM simulator onto a pinned Ubuntu 22.04 / ROS 2 Humble image. The imported vehicle remains an e2-derived surrogate; it is not yet a measured GEM e6 model.
 
+## Split PACMod runtime
+
+The isolated multi-service simulation is available through scripts/deploy.py. See [runtime operation and limitations](docs/runtime.md). It uses the shared vehicle controller and PACMod mock; the original Compose baseline remains available separately.
+
 ## Layout
 
 - `containers/`: derived runtime and entrypoint.

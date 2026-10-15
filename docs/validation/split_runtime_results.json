@@ -1,0 +1,382 @@
+{
+  "next_goal_3_final": {
+    "truth_goal_error_m": 0.3126332307295311,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      3.0,
+      0.0
+    ],
+    "initial_odom": [
+      -0.87,
+      0.0
+    ],
+    "final_odom": [
+      2.7023013586222002,
+      -0.0921950487835554
+    ],
+    "goal_error_m": 0.31164789121441205,
+    "wall_duration_s": 16.78068586399968,
+    "commands": 335,
+    "path_points": 14,
+    "scans": 74,
+    "max_lateral_odom": 0.0921950487835554,
+    "truth_rear_pose": [
+      2.701246899979274,
+      -0.09212015080529526
+    ],
+    "truth_samples": 368,
+    "footprint_overlap_samples": 0
+  },
+  "next_goal_8_final": {
+    "truth_goal_error_m": 0.3193104897050782,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      8.0,
+      0.0
+    ],
+    "initial_odom": [
+      2.711074492659305,
+      -0.09253695916801373
+    ],
+    "final_odom": [
+      7.703996909880095,
+      -0.10271070936026376
+    ],
+    "goal_error_m": 0.3133166436335951,
+    "wall_duration_s": 21.33038130299974,
+    "commands": 426,
+    "path_points": 19,
+    "scans": 97,
+    "max_lateral_odom": 0.12764462084785497,
+    "truth_rear_pose": [
+      7.697655506768835,
+      -0.10269856984635613
+    ],
+    "truth_samples": 488,
+    "footprint_overlap_samples": 0
+  },
+  "next_goal_16_final": {
+    "truth_goal_error_m": 0.32058546401693744,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      16.0,
+      0.0
+    ],
+    "initial_odom": [
+      7.709954934277775,
+      -0.10263008147629611
+    ],
+    "final_odom": [
+      15.701401168247834,
+      -0.10004734756414335
+    ],
+    "goal_error_m": 0.3149138518363059,
+    "wall_duration_s": 34.58056508899972,
+    "commands": 691,
+    "path_points": 29,
+    "scans": 147,
+    "max_lateral_odom": 0.10263008147629611,
+    "truth_rear_pose": [
+      15.695414424681031,
+      -0.10001333434381574
+    ],
+    "truth_samples": 736,
+    "footprint_overlap_samples": 0
+  },
+  "next_gui_goal_3": {
+    "truth_goal_error_m": 0.31957240078849314,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      3.0,
+      0.0
+    ],
+    "initial_odom": [
+      -0.87,
+      0.0
+    ],
+    "final_odom": [
+      2.701145637097806,
+      -0.09205364840483159
+    ],
+    "goal_error_m": 0.31271041621653195,
+    "wall_duration_s": 26.730391088000033,
+    "commands": 534,
+    "path_points": 14,
+    "scans": 75,
+    "max_lateral_odom": 0.09205364840483159,
+    "truth_rear_pose": [
+      2.693885685144108,
+      -0.09176353080624734
+    ],
+    "truth_samples": 377,
+    "footprint_overlap_samples": 0
+  },
+  "next_pacmod_final": {
+    "passed": true,
+    "checks": {
+      "private_actuation_only_mock": true,
+      "no_legacy_bypass": true,
+      "disabled_no_motion": true,
+      "explicit_enable": true,
+      "closed_loop_motion": true,
+      "command_expiry_stop": true,
+      "override_stop": true,
+      "override_clear_no_auto_enable": true,
+      "fault_stop": true,
+      "fault_clear_no_auto_enable": true,
+      "invalid_setpoint_stop": true,
+      "invalid_report_inhibits": true,
+      "final_disabled_rest": true
+    },
+    "final": {
+      "ready": false,
+      "speed": -2.9136085428860256e-19,
+      "enabled": false,
+      "mock": {
+        "enabled": false,
+        "ready": false,
+        "fault": false,
+        "override": false,
+        "timeout": true,
+        "gear": 3,
+        "feedback_mps": -2.9136085428860256e-19,
+        "plant_target_mps": 0.0,
+        "scope": "Provisional ROS mock, no CAN/firmware validation"
+      },
+      "control": {
+        "state": "inhibited",
+        "enabled": false,
+        "inhibited": false,
+        "report_age_s": null,
+        "target_mps": 0.0,
+        "feedback_mps": -2.9136085428860256e-19,
+        "accel": 0.0,
+        "brake": 0.4
+      }
+    },
+    "scope": "ROS mock contract, no CAN/firmware or measured vehicle dynamics."
+  },
+  "next_backend_stopped": {
+    "passed": true,
+    "action": "inhibited",
+    "state": {
+      "system": {
+        "ready": false,
+        "data_ready": false,
+        "tf_ready": true,
+        "nav2_active": false,
+        "fault_latched": true
+      },
+      "mock": {},
+      "control": {
+        "state": "inhibited",
+        "enabled": false,
+        "inhibited": true,
+        "report_age_s": 1.9534749040030874,
+        "target_mps": 0.0,
+        "feedback_mps": 5.593492535641671e-19,
+        "accel": 0.0,
+        "brake": 0.4
+      }
+    },
+    "graph": [
+      "bt_navigator",
+      "bt_navigator_navigate_through_poses_rclcpp_node",
+      "bt_navigator_navigate_to_pose_rclcpp_node",
+      "controller_server",
+      "global_costmap",
+      "lifecycle_manager_map",
+      "lifecycle_manager_navigation",
+      "local_costmap",
+      "map_server",
+      "obstacle_scan",
+      "planner_server",
+      "readiness",
+      "robot_state_publisher",
+      "runtime_probe",
+      "static_transform_publisher_TS5t55SFcmNyqX9i",
+      "transform_listener_impl_5941ff8a6920",
+      "transform_listener_impl_77d1b80045b0",
+      "vehicle_control",
+      "wheel_odometry"
+    ]
+  },
+  "next_controller_stopped": {
+    "passed": true,
+    "action": "ready",
+    "state": {
+      "system": {
+        "ready": true,
+        "data_ready": true,
+        "tf_ready": true,
+        "nav2_active": true,
+        "fault_latched": false
+      },
+      "mock": {
+        "enabled": false,
+        "ready": false,
+        "fault": false,
+        "override": false,
+        "timeout": true,
+        "gear": 3,
+        "feedback_mps": 1.751610555702827e-19,
+        "plant_target_mps": 0.0,
+        "scope": "Provisional ROS mock, no CAN/firmware validation"
+      },
+      "control": {}
+    },
+    "graph": [
+      "bt_navigator",
+      "bt_navigator_navigate_through_poses_rclcpp_node",
+      "bt_navigator_navigate_to_pose_rclcpp_node",
+      "controller_manager",
+      "controller_server",
+      "global_costmap",
+      "gz_ros2_control",
+      "joint_state_broadcaster",
+      "left_front_wheel_controller",
+      "left_rear_wheel_controller",
+      "left_steering_controller",
+      "lifecycle_manager_map",
+      "lifecycle_manager_navigation",
+      "local_costmap",
+      "map_server",
+      "obstacle_scan",
+      "pacmod_mock",
+      "planner_server",
+      "readiness",
+      "right_front_wheel_controller",
+      "right_rear_wheel_controller",
+      "right_steering_controller",
+      "robot_state_publisher",
+      "ros_gz_bridge",
+      "ros_gz_image",
+      "runtime_probe",
+      "simulation_actuator_adapter",
+      "static_transform_publisher_TS5t55SFcmNyqX9i",
+      "transform_listener_impl_5941ff8a6920",
+      "transform_listener_impl_77d1b80045b0",
+      "wheel_odometry"
+    ]
+  },
+  "next_controller_restart": {
+    "passed": true,
+    "action": "ready",
+    "state": {
+      "system": {
+        "ready": true,
+        "data_ready": true,
+        "tf_ready": true,
+        "nav2_active": true,
+        "fault_latched": false
+      },
+      "mock": {
+        "enabled": false,
+        "ready": true,
+        "fault": false,
+        "override": false,
+        "timeout": true,
+        "gear": 3,
+        "feedback_mps": -1.1261494099640433e-20,
+        "plant_target_mps": 0.0,
+        "scope": "Provisional ROS mock, no CAN/firmware validation"
+      },
+      "control": {
+        "state": "inhibited",
+        "enabled": false,
+        "inhibited": false,
+        "report_age_s": 0.002434144997096155,
+        "target_mps": 0.0,
+        "feedback_mps": -1.1261494099640433e-20,
+        "accel": 0.0,
+        "brake": 0.4
+      }
+    },
+    "graph": [
+      "bt_navigator",
+      "bt_navigator_navigate_through_poses_rclcpp_node",
+      "bt_navigator_navigate_to_pose_rclcpp_node",
+      "controller_manager",
+      "controller_server",
+      "global_costmap",
+      "gz_ros2_control",
+      "joint_state_broadcaster",
+      "left_front_wheel_controller",
+      "left_rear_wheel_controller",
+      "left_steering_controller",
+      "lifecycle_manager_map",
+      "lifecycle_manager_navigation",
+      "local_costmap",
+      "map_server",
+      "obstacle_scan",
+      "pacmod_mock",
+      "planner_server",
+      "readiness",
+      "right_front_wheel_controller",
+      "right_rear_wheel_controller",
+      "right_steering_controller",
+      "robot_state_publisher",
+      "ros_gz_bridge",
+      "ros_gz_image",
+      "runtime_probe",
+      "simulation_actuator_adapter",
+      "static_transform_publisher_TS5t55SFcmNyqX9i",
+      "transform_listener_impl_5941ff8a6920",
+      "transform_listener_impl_77d1b80045b0",
+      "vehicle_control",
+      "wheel_odometry"
+    ]
+  },
+  "next_gui_restart": {
+    "passed": true,
+    "action": "ready",
+    "state": {
+      "system": {
+        "ready": true,
+        "data_ready": true,
+        "tf_ready": true,
+        "nav2_active": true,
+        "fault_latched": false
+      },
+      "mock": {},
+      "control": {}
+    },
+    "graph": [
+      "controller_manager",
+      "global_costmap",
+      "gz_ros2_control",
+      "joint_state_broadcaster",
+      "left_front_wheel_controller",
+      "left_rear_wheel_controller",
+      "left_steering_controller",
+      "lifecycle_manager_map",
+      "lifecycle_manager_navigation",
+      "map_server",
+      "pacmod_mock",
+      "planner_server",
+      "right_front_wheel_controller",
+      "right_rear_wheel_controller",
+      "right_steering_controller",
+      "robot_state_publisher",
+      "runtime_probe",
+      "rviz",
+      "transform_listener_impl_5cc0de395f90",
+      "transform_listener_impl_74e37c008ba0",
+      "vehicle_control"
+    ]
+  },
+  "gui_restart_preserved_core_pid": true,
+  "scope": "Initial ROS simulation acceptance. Sequential straight goals; no CAN, real dynamics, LIO or full M3 acceptance.",
+  "next_nav2_actions": {
+    "passed": true,
+    "cancel_status": 5,
+    "zero_command_after_cancel": true,
+    "occupied_goal_status": 6,
+    "occupied_goal_nonzero_commands": 0,
+    "scope": "Action cancellation and command output only; not a physical braking test."
+  }
+}
