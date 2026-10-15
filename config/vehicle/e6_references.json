@@ -1,0 +1,53 @@
+{
+  "status": "reference_only_not_active",
+  "physical_vehicle_year": "unknown",
+  "active_model": "inherited_e2",
+  "sources": [
+    {
+      "id": "gem_my2024_owner_manual",
+      "url": "https://www.gemcar.com/wp-content/uploads/2024/03/MY24-GEM_web.pdf",
+      "pdf_page_1_based": 86,
+      "wheelbase_m": 3.39,
+      "overall_dimensions_m": [
+        4.24,
+        1.41,
+        1.86
+      ],
+      "dry_mass_kg": 769,
+      "turning_spec_label": "Turning Circle/Radius",
+      "turning_spec_m": 6.71
+    },
+    {
+      "id": "gem_product_page_accessed_2026_10_15",
+      "url": "https://www.gemcar.com/gem-e6/",
+      "wheelbase_m": 3.404,
+      "overall_dimensions_m": [
+        4.24,
+        1.41,
+        1.86
+      ],
+      "dry_mass_kg": 672,
+      "battery_configuration": "Lithium Ion",
+      "turning_spec_label": "Turning Radius",
+      "turning_spec_m": 5.59
+    }
+  ],
+  "unknown": [
+    "front_track_m",
+    "rear_track_m",
+    "loaded_rolling_radius_m",
+    "center_of_mass",
+    "inertia_tensor",
+    "steering_wheel_to_road_wheel_mapping",
+    "actual_sensor_mounts",
+    "actual_pacmod_board_firmware_dbc"
+  ],
+  "model_candidate": {
+    "repository": "https://github.com/Nova-UTD/navigator",
+    "revision": "24c111ce8a53a240bb3be81b52f9eabead173200",
+    "urdf": "data/hail_bopp.urdf",
+    "mesh": "data/hailbopp.stl",
+    "repository_license": "MIT",
+    "assessment": "Research description with placeholder inertia/mass; not a complete runnable Gazebo vehicle model; no assets imported."
+  }
+}
