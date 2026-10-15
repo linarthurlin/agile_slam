@@ -15,3 +15,5 @@ See [navigation operation](navigation.md), [validation](validation/navigation.md
 The development workflow is local build/integration validation, followed by a reviewable commit with updated evidence. GitHub Actions checks source/configuration, kinematics/watchdog regressions, and generated scene/map consistency. It does not build the private local base image or exercise GPU/CAN hardware.
 
 Detailed implementation plans use Traditional Chinese under `docs/plans/`. Other code, configuration, documentation, issue descriptions, and commit messages use English.
+
+The proposed replacement platform targets a shared amd64 Jazzy/Harmonic runtime for Windows/WSL2 simulation and native Linux vehicle deployment. See the [architecture decision](architecture/0001-shared-runtime.md) and [target architecture plan](plans/target_architecture_plan.md). Migration is gated by PACMod/LIO compatibility and WSLg rendering validation.
