@@ -22,6 +22,15 @@ if [[ -z "$partition" ]]; then
     partition="$(docker exec "$sim" hostname):$(docker exec "$sim" id -un)"
 fi
 domain="$(docker exec "$sim" printenv ROS_DOMAIN_ID)"
+client_args=()
+if [[ "$(docker exec "$sim" printenv AGILE_SCENE || true)" == small_city ]]; then
+    client_args+=(-v "$root/assets/small_city:/opt/agile_assets:ro" -e IGN_GAZEBO_RESOURCE_PATH=/opt/agile_assets/models)
+fi
+if [[ "$(docker exec "$sim" printenv AGILE_WSL_GPU || true)" == 1 ]]; then
+    client_args+=(--gpus all --device /dev/dxg -v /usr/lib/wsl:/usr/lib/wsl:ro
+        -e LIBGL_ALWAYS_SOFTWARE=0 -e GALLIUM_DRIVER=d3d12
+        -e MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA -e LD_LIBRARY_PATH=/usr/lib/wsl/lib)
+fi
 start_client() {
     local name="$1"
     shift
@@ -39,7 +48,7 @@ start_client() {
         -e IGN_PARTITION="$partition" \
         -v /mnt/wslg/.X11-unix:/tmp/.X11-unix:ro \
         -v "$root/config/rviz:/gui:ro" \
-        "$image" "$@"
+        "${client_args[@]}" "$image" "$@"
 }
 start_client agile-slam-gazebo ign gazebo -g -v 2
 start_client agile-slam-rviz rviz2 -d "/gui/$view.rviz" --ros-args -p use_sim_time:=true

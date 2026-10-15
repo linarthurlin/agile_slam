@@ -41,6 +41,8 @@ The local baseline builds all three packages, delivers all seven required stream
 
 An optional Nav2 profile adds a generated obstacle scene, wheel-feedback odometry, a filtered obstacle scan, Smac Hybrid-A* planning, and Regulated Pure Pursuit control. See [navigation setup](docs/navigation.md), [scene candidates](docs/scenes.md), and the [simulation-first plan](docs/plans/simulation_first_plan.md).
 
+The selected outdoor scene is [small_city](docs/small_city.md), with pinned asset preparation, Fortress conversion, and a conservative road map.
+
 ## Scope
 
 Basic sensor schema/rate checks and known-start static Nav2 navigation are available. Sustained transport/recording, FAST-LIO, measured e6 geometry, full sensor profiles, calibration, and real-vehicle PACMod bringup remain subsequent milestones. The existing snapshot LiDAR must not be presented as a validated rolling-scan or deskew model. Fortress is a legacy reproduction baseline; the supported-platform migration remains planned.

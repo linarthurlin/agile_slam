@@ -5,7 +5,7 @@ import math
 import time
 from pathlib import Path as FilePath
 from ament_index_python.packages import get_package_share_directory
-from vehicle_math import footprint_overlaps_box
+from vehicle_math import footprint_overlaps_box, footprint_overlaps_polygon
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
@@ -23,7 +23,8 @@ def main():
     gy = node.declare_parameter('goal_y', 0.0).value
     timeout = node.declare_parameter('timeout', 150.0).value
     observed = {'odom': None, 'commands': 0, 'path_points': 0, 'scans': 0, 'max_lateral_odom': 0.0, 'truth_rear_pose': None, 'truth_samples': 0, 'footprint_overlap_samples': 0}
-    scene=json.loads((FilePath(get_package_share_directory('agile_navigation'))/'maps/navigation_scene.json').read_text())
+    scene_path=node.declare_parameter('scene_file',str(FilePath(get_package_share_directory('agile_navigation'))/'maps/navigation_scene.json')).value
+    scene=json.loads(FilePath(scene_path).read_text())
     def truth(msg):
         pose=msg.pose.pose
         q=pose.orientation
@@ -31,7 +32,7 @@ def main():
         x,y=pose.position.x,pose.position.y
         observed['truth_rear_pose']=[x-.87*math.cos(yaw),y-.87*math.sin(yaw)]
         observed['truth_samples']+=1
-        if any(footprint_overlaps_box(x,y,yaw,b['center'],b['size']) for b in scene['obstacles']):
+        if any(footprint_overlaps_polygon(x,y,yaw,b['polygon']) if 'polygon' in b else footprint_overlaps_box(x,y,yaw,b['center'],b['size']) for b in scene['obstacles']):
             observed['footprint_overlap_samples']+=1
     def odometry(msg):
         observed['odom'] = [msg.pose.pose.position.x, msg.pose.pose.position.y]
@@ -80,7 +81,7 @@ def main():
     error = math.hypot(final[0]-gx,final[1]-gy) if final else None
     truth_pose=observed['truth_rear_pose']
     truth_error=math.hypot(truth_pose[0]-gx,truth_pose[1]-gy) if truth_pose else None
-    report = {'truth_goal_error_m': truth_error, 'passed': observed['truth_samples'] > 0 and observed['footprint_overlap_samples'] == 0 and status == 4 and error is not None and error <= .4 and observed['commands'] > 0 and observed['path_points'] > 0, 'action_status': status, 'goal': [gx,gy], 'initial_odom': initial, 'final_odom': final, 'goal_error_m': error, 'wall_duration_s': time.monotonic()-started, **{k:v for k,v in observed.items() if k!='odom'}}
+    report = {'truth_goal_error_m': truth_error, 'passed': observed['truth_samples'] > 0 and observed['footprint_overlap_samples'] == 0 and status == 4 and error is not None and error <= .4 and truth_error is not None and truth_error <= .4 and observed['commands'] > 0 and observed['path_points'] > 0, 'action_status': status, 'goal': [gx,gy], 'initial_odom': initial, 'final_odom': final, 'goal_error_m': error, 'wall_duration_s': time.monotonic()-started, **{k:v for k,v in observed.items() if k!='odom'}}
     print(json.dumps(report,indent=2))
     node.destroy_node()
     rclpy.shutdown()

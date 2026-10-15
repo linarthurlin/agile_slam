@@ -11,8 +11,11 @@ for path in (root / 'ros2_ws/src').rglob('*'):
         ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
     elif path.suffix in ('.xml', '.xacro', '.gazebo', '.sdf'):
         ET.parse(path)
+for path in (root / 'scripts').glob('*.py'):
+    ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+json.loads((root / 'config/scenes/small_city_sources.json').read_text(encoding='utf-8'))
 json.loads((root / 'third_party/source_manifest.json').read_text(encoding='utf-8'))
-for path in root.rglob('*.sh'):
+for path in list((root / 'scripts').rglob('*.sh')) + list((root / 'containers').rglob('*.sh')):
     if b'\r\n' in path.read_bytes():
         raise SystemExit(f'Shell script has CRLF line endings: {path.relative_to(root)}')
 print('Source and configuration checks passed.')

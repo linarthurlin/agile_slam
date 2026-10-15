@@ -1,0 +1,8 @@
+services:
+  sim:
+    environment:
+      AGILE_SCENE: small_city
+      IGN_GAZEBO_RESOURCE_PATH: /opt/agile_assets/models
+    volumes:
+      - ./assets/small_city:/opt/agile_assets:ro
+    command: ["xvfb-run", "-a", "ros2", "launch", "agile_navigation", "simulation.launch.py", "world_name:=/opt/agile_assets/worlds/small_city.sdf", "map_yaml:=/opt/agile_assets/maps/small_city.yaml"]

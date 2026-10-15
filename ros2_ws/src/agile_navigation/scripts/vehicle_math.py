@@ -34,3 +34,16 @@ def footprint_overlaps_box(x, y, yaw, center, size):
         if max(a)<min(b) or max(b)<min(a):
             return False
     return True
+
+
+def footprint_overlaps_polygon(x, y, yaw, polygon):
+    """SAT overlap with a convex static obstacle footprint."""
+    c,s=math.cos(yaw),math.sin(yaw)
+    body=[(x+c*px-s*py,y+s*px+c*py) for px,py in ((-1.5,-.8),(1.6,-.8),(1.6,.8),(-1.5,.8))]
+    axes=[(c,s),(-s,c)]
+    axes.extend((-(b[1]-a[1]),b[0]-a[0]) for a,b in zip(polygon,polygon[1:]+polygon[:1]))
+    for ax,ay in axes:
+        a=[px*ax+py*ay for px,py in body]
+        b=[px*ax+py*ay for px,py in polygon]
+        if max(a)<min(b) or max(b)<min(a):return False
+    return True

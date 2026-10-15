@@ -1,5 +1,7 @@
 # Current system state
 
+Latest update (2026-10-15): the selected small_city profile is running with software Ogre2, Nav2, and WSLg GUI clients. See [city setup](small_city.md) and [city validation](validation/small_city.md) for current evidence and performance limits. The snapshot below documents the earlier baseline; navigation adds a fourth source package.
+
 Snapshot date: 2026-10-14 (America/Los_Angeles). Implementation revision inspected: `3e9d702`.
 
 > Navigation update: an optional known-start Nav2 profile now exists. See [navigation setup](navigation.md) and [navigation validation](validation/navigation.md). The original baseline configuration below remains available.

@@ -14,7 +14,7 @@
 | S5 | 全域定位／建圖 | warehouse／depot／環路 | AMCL 或 SLAM 唯一 map→odom authority，處理輪速 drift；不再使用已知起點 identity alignment |
 | S6 | 完整 sensors 與資料整合 | 三顆前 LiDAR、多 camera、RealSense profile | topic/frame/schema、遮蔽／視野、資料量與運算負載；未知型號保持 placeholder |
 | S7 | 校正與故障注入 | 標靶區、不同平面、充分運動激發 | truth/nominal 分離、內外參、offset/drift/jitter/dropout、held-out 驗證 |
-| S8 | PACMod 模擬 | drive-by-wire mock 與 delayed plant | enable/override/fault、gear、油門煞車互鎖、steering map、timeout/report parity |
+| S8 | PACMod 模擬 | drive-by-wire mock  | enable/override/fault、gear、油門煞車互鎖、steering map、timeout/report parity |
 | S9 | 強健性與效能 | 動態障礙、窄路、低特徵、CPU/GPU 負載 | 失敗偵測、queue/loss、latency、RTF、恢復行為、CI regression |
 
 模擬可驗證軟體介面、演算法流程、理想幾何與指定故障下的行為。實際鏡頭／LiDAR factory calibration、USB/NIC/CAN、PTP/PPS、機構振動、真車煞車與輪胎參數仍必須實測。模擬 PACMod mock 不等同已驗證真實 firmware／DBC。
@@ -51,7 +51,7 @@
 | AWS RoboMaker Small Warehouse ros2 branch | 更豐富 warehouse assets | 次選；原始啟動方式仍是 Classic gazebo，來源目前已 archive，需改 plugins/URIs/launch 並檢查效能與資產授權 |
 | 原 golf_cart_sim tracks | outdoor／loop regression | 可再用；先確認 mesh license、碰撞幾何與垂直特徵，不把平坦賽道當理想 SLAM 場景 |
 
-本次沒有下載／vendor 外部 warehouse 資產；先建立小型自有測試場，避免把網路依賴與大型 mesh 效能混入基礎驗收。下一個推薦場景是 TurtleBot4 humble 的 depot 或簡化 warehouse。
+本次沒有下載／vendor 外部 warehouse 資產；先建立小型自有測試場，避免把網路依賴與大型 mesh 效能混入基礎驗收。此建議已由使用者指定的 small_city 取代，詳見下方進度。
 
 來源：
 
@@ -62,3 +62,22 @@
 - [Nav2 Humble RPP](https://api.nav2.org/nav2-humble/html/md_nav2_regulated_pure_pursuit_controller_README.html)
 
 操作方式與英文驗收報告分別見 docs/navigation.md、docs/validation/navigation.md。
+
+## 5. small_city 實作進度（2026-10-15）
+
+依使用者指定，主場景改為 small_city；固定 collection 與官方 osrf/gazebo_models 的來源 commit。36 個模型採本機快取，原始檔、授權與雜湊保留；大型資產與衍生地圖不進 Git。
+
+已完成本輪城市基線：Classic→Fortress 轉換、材質／COLLADA 修正、道路視覺轉換、保守碰撞輪廓地圖、城市啟動 profile、GUI 資產掛載。預設 software Ogre2；WSL GPU profile 僅供實驗，目前不列為可用驗收設定。
+
+| 階段 | 本輪證據 | 尚未完成 |
+|---|---|---|
+| S0 | 城市場景、spawn、controllers、Nav2 啟用 | 冷啟動重複性統計 |
+| S1 | 15 秒 sensor/frame/schema/時間順序檢查通過 | 已知牆距／軸向專用測試、RGB 完整率與延遲 |
+| S2 | 低速行駛至 3/8/16 m；真值僅供 evaluator | 固定速度、左右圓周、figure-eight、停止距離 |
+| S3 | 三個接續目標通過；cancel 與 occupied goal 通過 | 各路線三次獨立重跑、路口轉彎／不可行曲率 |
+| S4 | 靜止短 bag 與獨立 domain sensor replay 通過 | 動態 bag、QoS 固定、TF late join、clock reset、manifest 回歸 |
+| S5–S9 | 保留後續開發順序 | 定位／SLAM、完整 sensors、校正故障注入、PACMod mock、長時間強健性 |
+
+接續優先順序：先補 S1/S2 專用幾何與運動測試，再補 S3 重複路線／路口、S4 動態錄製與重播；完成後才加入 AMCL／SLAM。實車感測器型號與 e6 尺寸未確認前，模型須標示 placeholder；現有 LiDAR 缺逐點時間，不能直接宣稱 FAST-LIO deskew 有效。
+
+本輪感測器 RTF 約 0.38、RGB 約 23 Hz（依模擬時間），屬明確效能限制。3/8/16 m 真值誤差約 0.33/0.35/0.36 m；取樣未出現保守輪廓重疊，不等同完整碰撞安全證明。英文操作與證據：docs/small_city.md、docs/validation/small_city.md。

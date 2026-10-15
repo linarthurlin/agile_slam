@@ -22,7 +22,7 @@ def generate_launch_description():
     world = PathJoinSubstitution([FindPackageShare('gem_gazebo'), 'worlds', LaunchConfiguration('world_name')])
     gazebo = ExecuteProcess(cmd=['ign', 'gazebo', '-r', '-s', '-v', '2', world], output='screen')
     spawn = Node(package='ros_gz_sim', executable='create', arguments=['-name', 'gem', '-topic', 'robot_description', '-z', '0.3'], output='screen')
-    controllers = Node(package='controller_manager', executable='spawner', arguments=['joint_state_broadcaster', 'left_steering_controller', 'right_steering_controller', 'left_front_wheel_controller', 'right_front_wheel_controller', 'left_rear_wheel_controller', 'right_rear_wheel_controller', '--controller-manager-timeout', '60'], output='screen', parameters=[{'use_sim_time': True}])
+    controllers = Node(package='controller_manager', executable='spawner', arguments=['joint_state_broadcaster', 'left_steering_controller', 'right_steering_controller', 'left_front_wheel_controller', 'right_front_wheel_controller', 'left_rear_wheel_controller', 'right_rear_wheel_controller', '--controller-manager-timeout', '180', '--switch-timeout', '120', '--service-call-timeout', '180'], output='screen', parameters=[{'use_sim_time': True}])
     controller = Node(package='gem_gazebo', executable='gem_control.py', name='ackermann_controller', parameters=[{'use_sim_time': True, 'cmd_timeout': 0.5}, PathJoinSubstitution([FindPackageShare('gem_gazebo'), 'config', 'gem_ackermann_control_params_ros2.yaml'])], output='screen')
     return LaunchDescription([
         DeclareLaunchArgument('world_name', default_value='baseline.sdf'),

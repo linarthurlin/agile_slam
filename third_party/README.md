@@ -8,3 +8,7 @@ The GEM description and simulator files are adapted from the local `golf_cart_si
 Original package license files and author metadata are retained. `source_manifest.json` records the SHA256 of every source snapshot file, plus the imported subset. No upstream commit is claimed because the supplied snapshot has no Git metadata. Racetrack assets and unrelated real-vehicle packages are not imported into the baseline.
 
 The source repository does not publish the supplied Docker image, hardware photographs, CAN recordings, calibration data, or private machine configuration.
+
+## Optional city assets
+
+The small_city profile fetches pinned revisions of [gazebo_models_worlds_collection](https://github.com/leonhartyao/gazebo_models_worlds_collection) and [osrf/gazebo_models](https://github.com/osrf/gazebo_models). The collection declares GPL-3.0 and aggregates multiple sources. Assets and locally adapted derivatives remain in an ignored cache, with original checkouts, root notices, source hashes, and provenance. They are not redistributed as project-owned assets. Individual model terms still apply. See [city setup](../docs/small_city.md).

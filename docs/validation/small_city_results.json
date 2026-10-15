@@ -1,0 +1,241 @@
+{
+  "sensors": {
+    "passed": true,
+    "wall_window_s": 15.0,
+    "estimated_rtf": 0.38117109887033235,
+    "warnings": [
+      "RGB delivery is below 80% of nominal rate in acquisition time."
+    ],
+    "topics": {
+      "/sensors/velodyne/points": {
+        "count": 58,
+        "frame_id": "velodyne_link",
+        "fields": [
+          "x",
+          "y",
+          "z",
+          "intensity",
+          "ring"
+        ],
+        "points": 30000,
+        "finite_points": 26283,
+        "received_rate_wall_hz": 3.815715470348885,
+        "received_rate_stamp_hz": 10.000000000000002,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/camera_info": {
+        "count": 174,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "focal_lengths": [
+          476.7014503479004,
+          476.7014980316162
+        ],
+        "received_rate_wall_hz": 11.579619840593363,
+        "received_rate_stamp_hz": 30.303030303030305,
+        "backward_stamps": 0
+      },
+      "/sensors/obstacle_scan": {
+        "count": 58,
+        "frame_id": "base_footprint",
+        "finite_ranges": 463,
+        "nearest_obstacle_m": 4.692998886108398,
+        "received_rate_wall_hz": 3.815887826228514,
+        "received_rate_stamp_hz": 10.000000000000002,
+        "backward_stamps": 0
+      },
+      "/sensors/imu/data_raw": {
+        "count": 286,
+        "frame_id": "IMU_link",
+        "acceleration_norm": 9.800000001868344,
+        "received_rate_wall_hz": 19.156972036016626,
+        "received_rate_stamp_hz": 50.00000000000001,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/image_raw": {
+        "count": 129,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "encoding": "rgb8",
+        "payload_valid": true,
+        "received_rate_wall_hz": 8.78157599702626,
+        "received_rate_stamp_hz": 22.816399286987526,
+        "backward_stamps": 0
+      }
+    },
+    "scope": "Short delivery/schema sanity window; not a hardware accuracy, latency, or long-duration acceptance."
+  },
+  "goal_3": {
+    "truth_goal_error_m": 0.32561253709967064,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      3.0,
+      0.0
+    ],
+    "initial_odom": [
+      -0.87,
+      0.0
+    ],
+    "final_odom": [
+      2.7329854484547953,
+      -0.09314427280023485
+    ],
+    "goal_error_m": 0.282794317998738,
+    "wall_duration_s": 19.711030234000646,
+    "commands": 394,
+    "path_points": 335,
+    "scans": 73,
+    "max_lateral_odom": 0.09314427280023485,
+    "truth_rear_pose": [
+      2.6877045673805173,
+      -0.09216879668030029
+    ],
+    "truth_samples": 365,
+    "footprint_overlap_samples": 0
+  },
+  "goal_8": {
+    "truth_goal_error_m": 0.34721679007119227,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      8.0,
+      0.0
+    ],
+    "initial_odom": [
+      2.732985448468617,
+      -0.0931442728007995
+    ],
+    "final_odom": [
+      7.709602796271178,
+      -0.1030108351953091
+    ],
+    "goal_error_m": 0.3081262210542199,
+    "wall_duration_s": 30.41065582200008,
+    "commands": 608,
+    "path_points": 347,
+    "scans": 95,
+    "max_lateral_odom": 0.1308233456728831,
+    "truth_rear_pose": [
+      7.6681163271093205,
+      -0.1020427703266372
+    ],
+    "truth_samples": 478,
+    "footprint_overlap_samples": 0
+  },
+  "goal_16": {
+    "truth_goal_error_m": 0.3582423092631554,
+    "passed": true,
+    "action_status": 4,
+    "goal": [
+      16.0,
+      0.0
+    ],
+    "initial_odom": [
+      7.750397972559858,
+      -0.10238336036875988
+    ],
+    "final_odom": [
+      15.702244126334685,
+      -0.10005147671622103
+    ],
+    "goal_error_m": 0.3141159949688831,
+    "wall_duration_s": 36.120331934000205,
+    "commands": 722,
+    "path_points": 366,
+    "scans": 147,
+    "max_lateral_odom": 0.10238336036875988,
+    "truth_rear_pose": [
+      15.655325479675824,
+      -0.09765770417891982
+    ],
+    "truth_samples": 736,
+    "footprint_overlap_samples": 0
+  },
+  "actions": {
+    "passed": true,
+    "cancel_status": 5,
+    "zero_command_after_cancel": true,
+    "occupied_goal_status": 6,
+    "occupied_goal_nonzero_commands": 0,
+    "scope": "Action cancellation and command output only; not a physical braking test."
+  },
+  "replay_sensors": {
+    "passed": true,
+    "wall_window_s": 15.0,
+    "estimated_rtf": 0.3517843582876328,
+    "warnings": [
+      "RGB delivery is below 80% of nominal rate in acquisition time."
+    ],
+    "topics": {
+      "/sensors/cameras/front/camera_info": {
+        "count": 111,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "focal_lengths": [
+          476.7014503479004,
+          476.7014980316162
+        ],
+        "received_rate_wall_hz": 10.77869608466371,
+        "received_rate_stamp_hz": 30.31138054560487,
+        "backward_stamps": 0
+      },
+      "/sensors/imu/data_raw": {
+        "count": 183,
+        "frame_id": "IMU_link",
+        "acceleration_norm": 9.800000001462971,
+        "received_rate_wall_hz": 17.834607448241428,
+        "received_rate_stamp_hz": 49.99999999999999,
+        "backward_stamps": 0
+      },
+      "/sensors/obstacle_scan": {
+        "count": 37,
+        "frame_id": "base_footprint",
+        "finite_ranges": 458,
+        "nearest_obstacle_m": 2.217332124710083,
+        "received_rate_wall_hz": 3.5282491021627176,
+        "received_rate_stamp_hz": 10.000000000000016,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/image_raw": {
+        "count": 77,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "encoding": "rgb8",
+        "payload_valid": true,
+        "received_rate_wall_hz": 7.4283262663248095,
+        "received_rate_stamp_hz": 21.12871837642479,
+        "backward_stamps": 0
+      },
+      "/sensors/velodyne/points": {
+        "count": 37,
+        "frame_id": "velodyne_link",
+        "fields": [
+          "x",
+          "y",
+          "z",
+          "intensity",
+          "ring"
+        ],
+        "points": 30000,
+        "finite_points": 26339,
+        "received_rate_wall_hz": 3.5662302339928504,
+        "received_rate_stamp_hz": 10.000000000000016,
+        "backward_stamps": 0
+      }
+    },
+    "scope": "Short delivery/schema sanity window; not a hardware accuracy, latency, or long-duration acceptance."
+  }
+}

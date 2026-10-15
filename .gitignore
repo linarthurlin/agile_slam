@@ -13,3 +13,4 @@ datasets/
 *.pcap
 *.tar
 *.tar.gz
+assets/
