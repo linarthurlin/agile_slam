@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-15",
+  "scope": "Read-only configuration/package/runtime-graph audit; previous navigation results referenced, not rerun.",
+  "container": {
+    "os": "Ubuntu 22.04.5 LTS",
+    "architecture": "x86_64",
+    "ros_distro": "humble",
+    "ros_domain_id": 42,
+    "rmw": "rmw_cyclonedds_cpp"
+  },
+  "packages": {
+    "libignition-gazebo6": "6.18.0-1~jammy",
+    "ros-humble-nav2-bringup": "1.1.20-1jammy.20260425.085132",
+    "ros-humble-ros-gz": "0.244.26-1jammy.20260916.004151",
+    "ros-humble-ign-ros2-control": "0.7.21-1jammy.20261006.001819",
+    "ros-humble-pacmod2": "2003.1.1-0jammy",
+    "pacmod2_msgs": "1.0.0"
+  },
+  "provenance": {
+    "pacmod2_driver_prefix": "/opt/ros/humble",
+    "pacmod2_msgs_prefix": "/workspace/ros_ws/install/pacmod2_msgs",
+    "fast_lio_prefix": "/workspace/ros_ws/install/fast_lio",
+    "fast_lio_source_revision": null,
+    "pacmod2_msgs_source_revision": null
+  },
+  "current_runtime": {
+    "containers": [
+      "agile-slam-sim-1",
+      "agile-slam-gazebo",
+      "agile-slam-rviz"
+    ],
+    "pacmod_driver_running": false,
+    "lio_running": false,
+    "direct_twist_adapter_running": true,
+    "shared_backend_refactor_implemented": false
+  },
+  "vehicle": {
+    "architecture": "Conventional x86 Linux PC, user supplied",
+    "exact_os_verified": false,
+    "velodyne_model": null,
+    "pacmod_board_firmware_dbc": null
+  }
+}

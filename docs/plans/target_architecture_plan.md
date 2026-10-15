@@ -1,5 +1,7 @@
 # Agile_SLAM 目標架構與重新建置計畫
 
+本輪已重新審查；即將實作的批次、介面與驗收，以 [統一實作基準](implementation_baseline.md) 為準。本文件保留較完整的架構研究及維護決策。
+
 日期：2026-10-15（America/Los_Angeles）。前提：開發電腦為 Windows＋WSL2；GEM e6 搭載一般 x86_64 Linux PC，不是 Jetson。使用者表示實車可能是 Ubuntu 22，但精確 VERSION_ID 尚未核對；GPU 及 sensor／PACMod 型號仍未知。此文件定義建議目標，尚未安裝新 WSL distro、搬移 checkout、替換 Compose 或改動實車。
 
 ## 1. 架構決策（依使用者平台限制修訂）
