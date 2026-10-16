@@ -6,7 +6,7 @@ The first milestone ports the existing GEM simulator onto a pinned Ubuntu 22.04 
 
 ## Split PACMod runtime
 
-The isolated multi-service simulation is available through scripts/deploy.py. See [runtime operation and limitations](docs/runtime.md). It uses the shared vehicle controller and PACMod mock; the original Compose baseline remains available separately.
+The isolated multi-service simulation is available through scripts/deploy.py. See [runtime operation and limitations](docs/runtime.md) and [dynamic scenarios](docs/scenarios.md). It uses the shared vehicle controller and PACMod mock; the original Compose baseline remains available separately.
 
 ## Layout
 

@@ -2,11 +2,16 @@
 """Reject inconsistent reference geometry before starting the split runtime."""
 import json
 import math
+import os
 from pathlib import Path
 import xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[1]
 
 def validate():
+    for key in ('AGILE_SPAWN_X','AGILE_SPAWN_Y','AGILE_SPAWN_YAW'):
+        if not math.isfinite(float(os.environ.get(key,'0'))):raise ValueError('Invalid finite spawn coordinate: '+key)
+    simulation=json.loads((ROOT/'ros2_ws/src/gem_description/config/simulation.json').read_text())
+    if not isinstance(simulation.get('auxiliary_cameras'),bool):raise ValueError('auxiliary_cameras must be a JSON boolean.')
     cfg=json.loads((ROOT/'ros2_ws/src/gem_description/config/vehicle.json').read_text())
     model=ET.parse(ROOT/'ros2_ws/src/gem_description/urdf/gem.urdf.xacro').getroot()
     def xyz(name):return [float(v) for v in model.find(f"joint[@name='{name}']/origin").get('xyz').split()]

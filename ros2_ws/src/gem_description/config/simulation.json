@@ -1,0 +1,5 @@
+{
+  "profile": "navigation_front_camera",
+  "auxiliary_cameras": false,
+  "scope": "Disable unbridged depth and secondary RGB sensors in the split navigation runtime. Primary RGB remains 800x600 at 30 Hz; lidar and IMU remain unchanged. Legacy xacro default retains auxiliary sensors."
+}

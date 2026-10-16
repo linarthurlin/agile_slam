@@ -18,7 +18,8 @@ class WheelOdometry(Node):
         self.track = self.declare_parameter('track', 1.2).value
         self.radius = self.declare_parameter('wheel_radius', 0.295).value
         self.rear_x = self.declare_parameter('rear_axle_x', -0.87).value
-        self.x, self.y, self.yaw = self.rear_x, 0.0, 0.0
+        self.initial_pose=(self.declare_parameter('initial_x',self.rear_x).value,self.declare_parameter('initial_y',0.0).value,self.declare_parameter('initial_yaw',0.0).value)
+        self.x, self.y, self.yaw = self.initial_pose
         self.last_stamp = None
         self.publisher = self.create_publisher(Odometry, '/odometry/wheel', 10)
         self.broadcaster = TransformBroadcaster(self)
@@ -38,7 +39,7 @@ class WheelOdometry(Node):
         if self.last_stamp is not None:
             dt = stamp - self.last_stamp
             if dt < 0:
-                self.x, self.y, self.yaw = self.rear_x, 0.0, 0.0
+                self.x, self.y, self.yaw = self.initial_pose
             elif dt <= 0.5:
                 self.x, self.y, self.yaw = integrate(self.x, self.y, self.yaw, speed, yaw_rate, dt)
         self.last_stamp = stamp

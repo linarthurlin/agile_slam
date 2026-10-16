@@ -24,8 +24,7 @@ def generate_launch_description():
         settings[name][name]['ros__parameters']['footprint']=footprint
     settings['planner_server']['ros__parameters']['GridBased']['minimum_turning_radius']=cfg['minimum_turning_radius']
     settings['controller_server']['ros__parameters']['FollowPath']['desired_linear_vel']=cfg['max_speed']
-    settings['bt_navigator']['ros__parameters']['goal_reached_tol']=1.0
-    settings['bt_navigator']['ros__parameters']['plugin_lib_names'].append('nav2_goal_reached_condition_bt_node')
+    settings['bt_navigator']['ros__parameters']['plugin_lib_names'].append('nav2_is_path_valid_condition_bt_node')
     generated=tempfile.NamedTemporaryFile(mode='w',suffix='.yaml',delete=False)
     yaml.safe_dump(settings,generated);generated.close();config=generated.name
     lifecycle_nodes = ['planner_server', 'controller_server', 'bt_navigator']

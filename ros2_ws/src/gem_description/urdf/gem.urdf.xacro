@@ -3,6 +3,7 @@
 <robot name="gem" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 
+  <xacro:arg name="auxiliary_cameras" default="true"/>
   <xacro:property name="steer_angle" value="0.61"/>
   <xacro:property name="PI" value="3.1415926835897931"/>
 
@@ -1272,6 +1273,7 @@
       <topic>camera/image_raw</topic>
       <ignition_frame_id>camera_front_optical_frame</ignition_frame_id>
     </sensor>
+    <xacro:if value="$(arg auxiliary_cameras)">
     <sensor name="depth_camera" type="depth_camera">
       <camera>
         <horizontal_fov>1.047</horizontal_fov>
@@ -1290,6 +1292,7 @@
       <visualize>true</visualize>
       <topic>depth_camera/image_raw</topic>
     </sensor>
+    </xacro:if>
   </gazebo>
 
   <!-- IMU -->

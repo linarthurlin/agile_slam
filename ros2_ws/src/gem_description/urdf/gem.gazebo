@@ -203,6 +203,7 @@
   <!-- ***************************** camera ***************************** -->
 
   <gazebo reference="front_single_camera_link">
+    <xacro:if value="$(arg auxiliary_cameras)">
     <sensor type="camera" name="front_single_camera_sensor">
       <update_rate>30.0</update_rate>
       <camera>
@@ -233,6 +234,7 @@
       <camera_info_topic>front_single_camera/camera_info</camera_info_topic>
       <ignition_frame_id>front_single_camera_link</ignition_frame_id>
     </sensor>
+    </xacro:if>
   </gazebo>
 
   <!-- ***************************** IMU ***************************** -->

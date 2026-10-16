@@ -30,3 +30,7 @@ Windows GUI startup also exposed backslash handling by wslpath; the wrapper now 
 M0–M2 have an initial working implementation, not complete milestone acceptance. Moving controller/backend failure, simulated pause/reset, feedback delay/dropout, all gear transitions in live ROS, active goal preemption, NavigateThroughPoses, left/right turns, intersections, yaw error, repeated fixed-start routes, collision events, long-run DDS performance and dynamic bag/replay still require acceptance. Unit coverage does not substitute for these integration tests.
 
 The vehicle geometry, steering map and plant are provisional e2 values. The PACMod mock validates ROS control contracts only. Real CAN/ECU, firmware, measured actuator response and actual hardware configuration remain unverified. LIO, rolling-scan timing, sensor calibration and hardware deployment are subsequent work.
+
+## Subsequent navigation update
+
+The initial one-metre replan suppression described above was superseded during dynamic-route testing. The current tree checks path validity and replans only on invalidation; see [dynamic scenario evidence](dynamic_scenarios.md). The initial results remain historical evidence for the earlier image.

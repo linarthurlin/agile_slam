@@ -4,6 +4,9 @@ x-runtime: &runtime
   init: true
   environment: &environment
     ROS_DOMAIN_ID: "44"
+    AGILE_SPAWN_X: "${AGILE_SPAWN_X:-0}"
+    AGILE_SPAWN_Y: "${AGILE_SPAWN_Y:-0}"
+    AGILE_SPAWN_YAW: "${AGILE_SPAWN_YAW:-0}"
     RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
     CYCLONEDDS_URI: file:///etc/agile_slam/desktop.xml
     IGN_PARTITION: agile-slam-next

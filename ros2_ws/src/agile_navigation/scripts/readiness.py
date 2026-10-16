@@ -19,6 +19,7 @@ class Readiness(Node):
     def __init__(self):
         super().__init__('readiness')
         self.map_ready=False;self.times={};self.last_clock=None;self.active=False;self.starting=None;self.failed=False
+        self.last_fault=None;self.report_valid=None
         self.buffer=Buffer();self.listener=TransformListener(self.buffer,self)
         self.inhibit=self.create_publisher(Bool,'/vehicle/inhibit',QoSProfile(depth=1,durability=DurabilityPolicy.TRANSIENT_LOCAL))
         self.status=self.create_publisher(String,'/system/readiness',10)
@@ -34,14 +35,21 @@ class Readiness(Node):
     def map(self,msg):self.map_ready=msg.info.width>0 and msg.info.height>0 and bool(msg.data)
     def seen(self,key):self.times[key]=time.monotonic()
     def speed(self,msg):
+        self.report_valid=msg.vehicle_speed_valid
         if msg.vehicle_speed_valid:self.seen('report')
         else:self.times.pop('report',None)
     def clock(self,msg):
         stamp=msg.clock.sec+msg.clock.nanosec*1e-9
-        if self.last_clock is not None and stamp<self.last_clock:self.trip()
+        if self.last_clock is not None and stamp<self.last_clock:self.trip('clock_rewind')
         if stamp!=self.last_clock:self.seen('clock')
         self.last_clock=stamp
-    def trip(self):
+    def ages(self):
+        now=time.monotonic()
+        return {key:now-self.times[key] if key in self.times else None for key in ('clock','cloud','odom','report')}
+    def trip(self,reason):
+        if self.failed:return
+        self.last_fault={'reason':reason,'stream_ages_s':self.ages(),'report_valid':self.report_valid}
+        self.get_logger().error('Readiness fault: '+json.dumps(self.last_fault))
         self.failed=True;self.active=False
         if self.cancel.service_is_ready():self.cancel.call_async(CancelGoal.Request())
         if self.manager.service_is_ready():
@@ -54,10 +62,10 @@ class Readiness(Node):
             result=self.starting.result();self.active=bool(result and result.success);self.failed=not self.active;self.starting=None
         if not self.failed and not self.active and self.starting is None and data and tf and self.manager.service_is_ready():
             req=ManageLifecycleNodes.Request();req.command=0;self.starting=self.manager.call_async(req)
-        if self.active and not (data and tf):self.trip()
+        if self.active and not (data and tf):self.trip('data_stale_or_invalid' if not data else 'tf_unavailable')
         ready=self.active and data and tf and not self.failed
         msg=Bool();msg.data=not ready;self.inhibit.publish(msg)
-        status=String();status.data=json.dumps({'ready':ready,'data_ready':data,'tf_ready':tf,'nav2_active':self.active,'fault_latched':self.failed});self.status.publish(status)
+        status=String();status.data=json.dumps({'ready':ready,'data_ready':data,'tf_ready':tf,'nav2_active':self.active,'fault_latched':self.failed,'stream_ages_s':self.ages(),'report_valid':self.report_valid,'last_fault':self.last_fault});self.status.publish(status)
 
 def main():
     rclpy.init();node=Readiness()

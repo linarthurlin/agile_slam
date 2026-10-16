@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "scene_file": "/opt/agile_assets/maps/small_city_scene.json",
+  "routes": {
+    "curves": [
+      {
+        "name": "left_offset",
+        "x": 12.0,
+        "y": 1.0,
+        "yaw": 0.0
+      },
+      {
+        "name": "right_offset",
+        "x": 28.0,
+        "y": -1.0,
+        "yaw": 0.0
+      },
+      {
+        "name": "return_center",
+        "x": 36.0,
+        "y": 0.0,
+        "yaw": 0.0
+      }
+    ],
+    "intersection-left": [
+      {
+        "name": "left_intersection",
+        "x": 44.0,
+        "y": 12.0,
+        "yaw": 1.5707963267948966
+      }
+    ],
+    "intersection-right": [
+      {
+        "name": "right_intersection",
+        "x": 44.0,
+        "y": -12.0,
+        "yaw": -1.5707963267948966
+      }
+    ]
+  },
+  "scope": "Known-start small_city routes; only executed passing reports establish acceptance.",
+  "starts": {
+    "curves": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "intersection-left": [
+      30.0,
+      0.0,
+      0.0
+    ],
+    "intersection-right": [
+      30.0,
+      0.0,
+      0.0
+    ]
+  }
+}

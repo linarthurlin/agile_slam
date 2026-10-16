@@ -98,3 +98,15 @@ vehicle-readonly須確認無控制傳輸；即使無Nav2 publisher，driver也�
 已建立獨立 compose.next、四個執行服務、兩個可選 GUI、共用車輛設定與介面契約，以及 PACMod commands→mock→private adapter→joint feedback 閉迴路。readiness 先等 map／TF／clock／感測器與回授，再啟動 Nav2；失效時取消任務並鎖定 inhibit。控制與回授新鮮度使用 monotonic 時間。
 
 這是 M0–M2 的初版實作，不代表全部驗收完成。操作入口與限制見英文 docs/runtime.md；實際驗證結果另見 docs/validation/split_runtime.md。舊基線保留，simulation_first_plan.md 的使用者修改未變動。M3 的長時間錄製、左右轉、重播與統一報告，M4 rolling scan／LIO，以及 M5 真車仍待完成。
+
+## 動態驗證建置（2026-10-15）
+
+新增 scripts/run_scenarios.py 與 config/scenarios/small_city.json，提供固定起點 cold reset、左右偏移連續目標、90 度路口目標，以及行進中 controller-stop／backend-pause 測試。每次執行記錄 git／dirty state、image ID、source/config hashes、個別結果與最終 disabled 狀態。
+
+導航 evaluator 新增 goal yaw、truth yaw error、正負轉向命令統計與到站後 fresh wheel feedback 靜止檢查。動態故障 observer 先確認 >0.15 m/s 再通知 host 注入故障，恢復時持續送入命令，檢查不會自動 enable。backend pause 期間物理凍結，不把缺失資料當作已觀察到停車。
+
+英文操作說明：docs/scenarios.md。以 docs/validation/dynamic_scenarios.md 的實測結果為準，設定檔存在不表示該場景已驗收。使用者的 simulation_first_plan.md 修改保留。
+
+已新增共用 known-start fixture：Gazebo body spawn 與 wheel odometry rear-axle 初始位姿由同一組設定推導，初始位姿不讀 truth。90 度路口測試預設從 (30,0,0) body pose 出發；--start-x 0 保留長路線重現入口。新增 last_fault／last_watchdog_fault 與串流年齡記錄。
+
+目前長左轉與短右轉發現 Gazebo-derived 資料停頓約 2 秒以上，readiness 正確取消任務，但路線驗收失敗。停用未 bridge 的 depth／secondary RGB cameras 未消除此問題；保留為下一優先調查，不能宣稱全路口／全場景已驗收。

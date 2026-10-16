@@ -5,7 +5,7 @@
       <PipelineSequence>
         <RateController hz="1.0">
           <Fallback>
-            <GoalReached goal="{goal}" global_frame="map" robot_base_frame="base_rear_axle"/>
+            <IsPathValid path="{path}"/>
             <ComputePathToPose goal="{goal}" path="{path}" planner_id="GridBased"/>
           </Fallback>
         </RateController>

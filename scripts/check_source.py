@@ -13,11 +13,12 @@ for path in (root / 'ros2_ws/src').rglob('*'):
         ET.parse(path)
 for path in (root / 'scripts').glob('*.py'):
     ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
-json.loads((root / 'config/scenes/small_city_sources.json').read_text(encoding='utf-8'))
+for path in (root / 'config').rglob('*.json'):
+    json.loads(path.read_text(encoding='utf-8-sig'))
 json.loads((root / 'third_party/source_manifest.json').read_text(encoding='utf-8'))
-for path in list((root / 'scripts').rglob('*.sh')) + list((root / 'containers').rglob('*.sh')):
+for path in list((root / 'ros2_ws/src').rglob('*.py')) + list((root / 'scripts').rglob('*.sh')) + list((root / 'containers').rglob('*.sh')):
     if b'\r\n' in path.read_bytes():
-        raise SystemExit(f'Shell script has CRLF line endings: {path.relative_to(root)}')
+        raise SystemExit(f'Linux executable has CRLF line endings: {path.relative_to(root)}')
 from validate_contracts import validate
 validate()
 print('Source and configuration checks passed.')

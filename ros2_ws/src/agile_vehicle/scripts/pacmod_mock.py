@@ -20,6 +20,7 @@ class PacmodMock(Node):
         super().__init__('pacmod_mock')
         self.cfg=config();self.state=MockState();self.bundle=CommandBundle();self.report_valid=True;self.commands={'accel':0.,'brake':.4,'shaft':0.,'rate':self.cfg['steering_rate']};self.receipts={}
         self.feedback=0.;self.feedback_angle=0.;self.joint_time=0.;self.clock_time=0.;self.last_stamp=None;self.last_step=None
+        self.last_watchdog_fault=None
         self.actuation=self.create_publisher(AckermannDrive,'/simulation/actuation',10)
         self.speed=self.create_publisher(VehicleSpeedRpt,'/pacmod/vehicle_speed_rpt',10)
         self.global_pub=self.create_publisher(GlobalRpt,'/pacmod/global_rpt',10)
@@ -94,6 +95,9 @@ class PacmodMock(Node):
         dt=sim-self.last_step if self.last_step is not None else 0.;self.last_step=sim
         if dt<0:self.state.enabled=False;self.state.velocity=0.
         ready=self.ready(now)
+        if self.state.enabled and not ready:
+            self.last_watchdog_fault={'joint_age_s':now-self.joint_time,'advancing_joint_stamp_age_s':now-self.clock_time,'command_ages_s':{key:now-self.receipts[key] if key in self.receipts else None for key in ('accel','brake','shaft','gear')},'report_valid':self.report_valid}
+            self.get_logger().error('Mock watchdog: '+json.dumps(self.last_watchdog_fault))
         speed,angle=self.state.advance(dt,self.commands['accel'],self.commands['brake'],self.commands['shaft'],self.commands['rate'],ready,self.cfg)
         cmd=AckermannDrive();cmd.speed=speed;cmd.steering_angle=angle;self.actuation.publish(cmd)
         stamp=self.get_clock().now().to_msg()
@@ -101,6 +105,6 @@ class PacmodMock(Node):
         glob=GlobalRpt();glob.header.stamp=stamp;glob.enabled=self.state.enabled;glob.override_active=self.state.override;glob.veh_can_timeout=self.state.fault;glob.usr_can_timeout=self.state.timeout;self.global_pub.publish(glob)
         steering=SystemRptFloat();steering.header.stamp=stamp;steering.command=self.commands['shaft'];steering.output=self.feedback_angle*self.cfg['steering_ratio'];self.steer_report.publish(steering)
         gear=SystemRptInt();gear.header.stamp=stamp;gear.command=self.state.gear;gear.output=self.state.gear;self.shift_report.publish(gear)
-        status=String();status.data=json.dumps({'enabled':self.state.enabled,'ready':ready,'fault':self.state.fault,'override':self.state.override,'timeout':self.state.timeout,'gear':self.state.gear,'feedback_mps':self.feedback,'plant_target_mps':speed,'scope':'Provisional ROS mock, no CAN/firmware validation'});self.status.publish(status)
+        status=String();status.data=json.dumps({'enabled':self.state.enabled,'ready':ready,'fault':self.state.fault,'override':self.state.override,'timeout':self.state.timeout,'gear':self.state.gear,'feedback_mps':self.feedback,'plant_target_mps':speed,'last_watchdog_fault':self.last_watchdog_fault,'scope':'Provisional ROS mock, no CAN/firmware validation'});self.status.publish(status)
 
 if __name__=='__main__':run(PacmodMock)

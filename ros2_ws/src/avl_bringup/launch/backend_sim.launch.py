@@ -1,5 +1,6 @@
 """Isolated simulation backend; consumes description and private actuation."""
 import json
+import os
 import yaml
 from pathlib import Path
 from ament_index_python.packages import get_package_share_directory
@@ -22,7 +23,7 @@ def generate_launch_description():
     for wheel in ('left_front_wheel','right_front_wheel','left_rear_wheel','right_rear_wheel'):
         joints[wheel]['diameter']=2*cfg['wheel_radius']
     server=ExecuteProcess(cmd=['ign','gazebo','-r','-s','-v','2',LaunchConfiguration('world')],output='screen')
-    spawn=Node(package='ros_gz_sim',executable='create',arguments=['-name','gem','-topic','robot_description','-z','0.3'],output='screen')
+    spawn=Node(package='ros_gz_sim',executable='create',arguments=['-name','gem','-topic','robot_description','-z','0.3','-x',os.environ.get('AGILE_SPAWN_X','0'),'-y',os.environ.get('AGILE_SPAWN_Y','0'),'-Y',os.environ.get('AGILE_SPAWN_YAW','0')],output='screen')
     spawner=Node(package='controller_manager',executable='spawner',arguments=['joint_state_broadcaster','left_steering_controller','right_steering_controller','left_front_wheel_controller','right_front_wheel_controller','left_rear_wheel_controller','right_rear_wheel_controller','--controller-manager-timeout','180','--switch-timeout','120','--service-call-timeout','180'],parameters=[{'use_sim_time':True}],output='screen')
     adapter=Node(package='gem_gazebo',executable='gem_control.py',name='simulation_actuator_adapter',parameters=[{'use_sim_time':True,'cmd_timeout':.5},joints],remappings=[('ackermann_cmd','/simulation/actuation')],output='screen')
     return LaunchDescription([
