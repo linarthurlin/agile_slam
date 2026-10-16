@@ -44,3 +44,8 @@ Gazebo and RViz were then opened in the canonical project. A 3 m goal and 30-sec
 Final inventory verified exactly one application image (`agile_slam:humble`), one Agile SLAM Compose project (`agile-slam`) and all six explicitly named containers, with no numeric suffixes. The current image identity was preserved; unrelated images and the build base were untouched. Assets, bags and reports remain on the host. The simulation was left ready with the mock explicitly disabled.
 
 Reviewed results, independent statistics, network counters and final inventory: [JSON evidence](canonical_runtime_results.json). The repeated right-turn failure is retained; the overall run collection is not all-green.
+
+
+## Subsequent renderer investigation
+
+See [Software-renderer stall investigation](render_stalls.md) for the subsequent thread-level investigation, failed isolation trials, and the 128-bit LLVMpipe workaround. Historical failures in this report remain valid; later positive evidence does not retroactively pass them.

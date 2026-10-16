@@ -61,3 +61,10 @@ Repeatable curved-route and moving-fault scenarios are available through `script
 This removes unused rendering work; it is not a validated full sensor suite or a guaranteed fix for backend stalls. The current scene's material defects and missing LiDAR firing times remain limitations.
 
 Desktop DDS datagrams are capped at 1400 bytes with 1280-byte DDS fragments for the observed 1500-byte bridge MTU. Independent per-route monitors record MTU and IP fragmentation/reassembly counters. This corrects observed fragmentation exposure but does not eliminate all simulation-progress stalls; see [current validation](validation/canonical_runtime.md).
+
+
+## Software renderer baseline
+
+The simulation backend sets `LP_NATIVE_VECTOR_WIDTH=128` for Mesa llvmpipe. The original camera resolution/rate/noise and LiDAR sampling/rate remain enabled. This is a headless-tested desktop workaround, not a GPU configuration or a change to the vehicle application images. Dual-GUI navigation still has a reproduced rendering stall and is not accepted. Mesa documents vector-width selection in its [LLVMpipe guide](https://docs.mesa3d.org/drivers/llvmpipe.html).
+
+Reducing renderer workers to four and removing the camera Gaussian noise pass both failed isolation tests; neither change is retained. Read `docs/validation/render_stalls.md` for positive and negative evidence and the remaining acceptance limits.

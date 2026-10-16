@@ -14,7 +14,7 @@ class GazeboMonitor:
 
     def network_snapshot(self):
         snapshot={}
-        code="import json; from pathlib import Path; lines=Path('/proc/net/snmp').read_text().splitlines(); names=lines[0].split()[1:]; values=lines[1].split()[1:]; fields=dict(zip(names,map(int,values))); print(json.dumps({'mtu':int(Path('/sys/class/net/eth0/mtu').read_text()),'ip':{k:fields[k] for k in ('ReasmReqds','ReasmOKs','ReasmFails','ReasmTimeout','FragOKs','FragFails','FragCreates')}}))"
+        code="import json, os; from pathlib import Path; lines=Path('/proc/net/snmp').read_text().splitlines(); names=lines[0].split()[1:]; values=lines[1].split()[1:]; fields=dict(zip(names,map(int,values))); print(json.dumps({'render_environment':{k:os.environ.get(k) for k in ('LIBGL_ALWAYS_SOFTWARE','LP_NUM_THREADS','LP_NATIVE_VECTOR_WIDTH','GALLIUM_DRIVER')},'mtu':int(Path('/sys/class/net/eth0/mtu').read_text()),'ip':{k:fields[k] for k in ('ReasmReqds','ReasmOKs','ReasmFails','ReasmTimeout','FragOKs','FragFails','FragCreates')}}))"
         for service in ('core','backend-sim'):
             try:
                 result=subprocess.run(self.compose+['exec','-T',service,'python3','-c',code],capture_output=True,text=True,encoding='utf-8',timeout=10)
@@ -29,6 +29,9 @@ class GazeboMonitor:
         command=self.compose+['exec','-T','backend-sim','sh','-c','echo $$ > "$1"; exec timeout --signal=INT 450 ign topic -e -t /world/small_city/stats --json-output','sh',self.pidfile]
         self.process=subprocess.Popen(command,stdout=subprocess.PIPE,stderr=self.errors,text=True,encoding='utf-8',bufsize=1)
         self.thread=threading.Thread(target=self.read,daemon=True);self.thread.start()
+        self.resources=self.output.with_suffix(".process.jsonl").open("w",encoding="utf-8")
+        sampler=Path(__file__).with_name("sample_gazebo_process.py").read_text(encoding="utf-8-sig")
+        self.resource_process=subprocess.Popen(self.compose+["exec","-T","backend-sim","python3","-u","-c",sampler,self.pidfile],stdout=self.resources,stderr=self.errors)
         return self
 
     def read(self):
@@ -50,9 +53,13 @@ class GazeboMonitor:
         try:self.process.wait(timeout=5)
         except subprocess.TimeoutExpired:self.process.terminate();self.process.wait(timeout=5)
         self.thread.join(timeout=3)
+        try:self.resource_process.wait(timeout=5)
+        except subprocess.TimeoutExpired:self.resource_process.terminate();self.resource_process.wait(timeout=5)
+        self.resources.close()
         self.stream.close();self.errors.close()
         gaps=[{'wall_unix_s':b['wall_unix_s'],'wall_gap_s':b['monotonic_s']-a['monotonic_s'],'sim_delta_s':b['sim_s']-a['sim_s'],'iteration_delta':b['iterations']-a['iterations']} for a,b in zip(self.records,self.records[1:])]
         summary={'source':'Gazebo Transport /world/small_city/stats, independent of ROS bridge','samples':len(self.records),'capture_error':self.error,'max_wall_gap_s':max((g['wall_gap_s'] for g in gaps),default=None),'gaps_over_one_second':[g for g in gaps if g['wall_gap_s']>1.0],'first':self.records[0] if self.records else None,'last':self.records[-1] if self.records else None}
+        summary['process_samples_file']=self.output.with_suffix('.process.jsonl').name
         summary['network_before']=self.network_before;summary['network_after']=network_after
         summary['ip_counter_delta']={service:{key:network_after[service]['ip'][key]-before['ip'][key] for key in before['ip']} for service,before in self.network_before.items() if 'ip' in before and 'ip' in network_after[service]}
         self.output.with_suffix('.summary.json').write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')

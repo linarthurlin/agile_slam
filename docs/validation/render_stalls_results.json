@@ -1,0 +1,3924 @@
+{
+  "scope": "Renderer investigation with successful headless regression and failed GUI acceptance; no complete stability acceptance.",
+  "all_runs_passed": false,
+  "runs": [
+    {
+      "run_id": "20261016T084719822936Z",
+      "suite": "intersection-right",
+      "repeat": 2,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": false,
+      "results": [],
+      "error": "Command exited 1: ['docker', 'compose', '-f', 'D:\\\\UCSD\\\\Lectures\\\\AVL\\\\Agile_SLAM\\\\compose.yaml', 'exec', '-T', 'core', '/agile_slam_entrypoint.sh', 'ros2', 'run', 'agile_navigation', 'check_navigation.py', '--ros-args', '-p', 'goal_x:=44.0', '-p', 'goal_y:=-12.0', '-p', 'goal_yaw:=-1.5707963267948966', '-p', 'timeout:=360.0', '-p', 'scene_file:=/opt/agile_assets/maps/small_city_scene.json']; ",
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "1b4c98173ebfb484728bed79092c3b2677d6e3f8eb583dfdc779fa1d5c0ed35d",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "0be017dd52724b7161a03efd4d097b6b6067aff565c6c80713c8d7249aa02783",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "c9a46b637f81c7f3a689da4e22fd27abe9a03af287df6a7bd681012c9de126b9",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "cb00a902f2c35053b01723eb56dca2a9a090ed780ca9baeb9141ca1a451c3ff7",
+        "scripts/sample_gazebo_process.py": "a2cd46281686e019858b6f54f42df3069f4f38faeb421c6836e7b3ff5a951e0e",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "7ab39d3c4dec62be92099c6914e8435e053afb5764647efdcbc0db90ef9d50c2",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "10baed1147698c5df90899a6a651150c77cd36c29ce473ce07ed8c6cb0dd6f3a",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T08:47:19.823457+00:00",
+      "finished_utc": "2026-10-16T08:50:28.262232+00:00",
+      "reports": {
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1266,
+          "capture_error": null,
+          "max_wall_gap_s": 1.5,
+          "gaps_over_one_second": [
+            {
+              "wall_unix_s": 1792140619.319857,
+              "wall_gap_s": 1.5,
+              "sim_delta_s": 0.03399999999999892,
+              "iteration_delta": 34
+            }
+          ],
+          "first": {
+            "wall_unix_s": 1792140480.0068479,
+            "monotonic_s": 1045082.25,
+            "sim_s": 1.896,
+            "iterations": 1896,
+            "rtf": 0.2954,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792140625.1754472,
+            "monotonic_s": 1045227.406,
+            "sim_s": 46.222,
+            "iterations": 46222,
+            "rtf": 0.4987,
+            "paused": false
+          },
+          "network_before": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 0.28022354511723324,
+          "truth_yaw_error_rad": 0.001705598176857448,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": false,
+          "action_status": 5,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.911731890796965,
+            -11.803795080172836
+          ],
+          "goal_error_m": 0.2151456010860149,
+          "wall_duration_s": 134.67732293299923,
+          "commands": 2633,
+          "path_points": 84,
+          "scans": 436,
+          "max_lateral_odom": 11.803795080172836,
+          "truth_rear_pose": [
+            44.19900359407567,
+            -11.802711366817457
+          ],
+          "truth_yaw": -1.572501924971754,
+          "speed": 2.2684161830155447e-19,
+          "rest_samples": 25,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 1164,
+          "truth_samples": 2179,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 2.2684161830155447e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": false,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": false,
+            "fault_latched": true,
+            "stream_ages_s": {
+              "clock": 0.0023147350002545863,
+              "cloud": 0.28803830099786865,
+              "odom": 0.04176369299966609,
+              "report": 0.010524693003389984
+            },
+            "report_valid": true,
+            "last_fault": {
+              "reason": "data_stale_or_invalid",
+              "stream_ages_s": {
+                "clock": 0.15490915100235725,
+                "cloud": 2.0886325940009556,
+                "odom": 0.04438091900374275,
+                "report": 0.01145323300443124
+              },
+              "report_valid": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": "20261016T085145328690Z",
+      "suite": "intersection-right",
+      "repeat": 2,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": false,
+      "results": [
+        {
+          "file": "1_right_intersection.json",
+          "passed": true
+        }
+      ],
+      "error": "Command exited 1: ['docker', 'compose', '-f', 'D:\\\\UCSD\\\\Lectures\\\\AVL\\\\Agile_SLAM\\\\compose.yaml', 'exec', '-T', 'core', '/agile_slam_entrypoint.sh', 'ros2', 'run', 'agile_navigation', 'check_navigation.py', '--ros-args', '-p', 'goal_x:=44.0', '-p', 'goal_y:=-12.0', '-p', 'goal_yaw:=-1.5707963267948966', '-p', 'timeout:=360.0', '-p', 'scene_file:=/opt/agile_assets/maps/small_city_scene.json']; ",
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "b7678d9f5c9b1f85b0e90305d6d394d45b0388a61dd00dac0865c6dc9be711fe",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "0be017dd52724b7161a03efd4d097b6b6067aff565c6c80713c8d7249aa02783",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "c9a46b637f81c7f3a689da4e22fd27abe9a03af287df6a7bd681012c9de126b9",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "cb00a902f2c35053b01723eb56dca2a9a090ed780ca9baeb9141ca1a451c3ff7",
+        "scripts/sample_gazebo_process.py": "a2cd46281686e019858b6f54f42df3069f4f38faeb421c6836e7b3ff5a951e0e",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "7ab39d3c4dec62be92099c6914e8435e053afb5764647efdcbc0db90ef9d50c2",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "10baed1147698c5df90899a6a651150c77cd36c29ce473ce07ed8c6cb0dd6f3a",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T08:51:45.339413+00:00",
+      "finished_utc": "2026-10-16T08:57:29.773049+00:00",
+      "reports": {
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1201,
+          "capture_error": null,
+          "max_wall_gap_s": 0.21899999992456287,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792140741.2395895,
+            "monotonic_s": 1045343.468,
+            "sim_s": 2.158,
+            "iterations": 2158,
+            "rtf": 0.4956,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792140879.5842369,
+            "monotonic_s": 1045481.812,
+            "sim_s": 47.177,
+            "iterations": 47177,
+            "rtf": 0.205,
+            "paused": false
+          },
+          "network_before": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 0.21579013852137804,
+          "truth_yaw_error_rad": 0.0004583054675328935,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.907305993156385,
+            -11.912516001842517
+          ],
+          "goal_error_m": 0.12745834158007321,
+          "wall_duration_s": 128.66689433099964,
+          "commands": 2513,
+          "path_points": 84,
+          "scans": 443,
+          "max_lateral_odom": 11.912516001842517,
+          "truth_rear_pose": [
+            44.19687070328165,
+            -11.91164101589275
+          ],
+          "truth_yaw": -1.5712546322624295,
+          "speed": -7.310462264919749e-19,
+          "rest_samples": 23,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 1099,
+          "truth_samples": 2215,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -7.310462264919749e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.0009576619995641522,
+              "cloud": 0.11805657699733274,
+              "odom": 0.13130265699874144,
+              "report": 0.007615693997649942
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "2_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1138,
+          "capture_error": null,
+          "max_wall_gap_s": 4.609000000054948,
+          "gaps_over_one_second": [
+            {
+              "wall_unix_s": 1792141044.3233259,
+              "wall_gap_s": 4.609000000054948,
+              "sim_delta_s": 0.006000000000000227,
+              "iteration_delta": 6
+            }
+          ],
+          "first": {
+            "wall_unix_s": 1792140911.0472784,
+            "monotonic_s": 1045513.281,
+            "sim_s": 2.265,
+            "iterations": 2265,
+            "rtf": 0.5657,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792141046.989124,
+            "monotonic_s": 1045649.218,
+            "sim_s": 45.542,
+            "iterations": 45542,
+            "rtf": 0.3725,
+            "paused": false
+          },
+          "network_before": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "2_right_intersection.json": {
+          "truth_goal_error_m": 0.3061175991034194,
+          "truth_yaw_error_rad": 0.0018751519572841602,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": false,
+          "action_status": 5,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.91322707127991,
+            -11.766560543477851
+          ],
+          "goal_error_m": 0.249045218825854,
+          "wall_duration_s": 126.27419950199692,
+          "commands": 2465,
+          "path_points": 84,
+          "scans": 426,
+          "max_lateral_odom": 11.766560543477851,
+          "truth_rear_pose": [
+            44.197532942592424,
+            -11.766143802580261
+          ],
+          "truth_yaw": -1.5726714787521807,
+          "speed": 3.004711180503537e-19,
+          "rest_samples": 3,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 1112,
+          "truth_samples": 2130,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": false,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": true,
+            "gear": 3,
+            "feedback_mps": 3.004711180503537e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": {
+              "joint_age_s": 2.0126760060011293,
+              "advancing_joint_stamp_age_s": 2.012672922006459,
+              "command_ages_s": {
+                "accel": 0.015535922000708524,
+                "brake": 0.015535922000708524,
+                "shaft": 0.015535922000708524,
+                "gear": 0.015501705005590338
+              },
+              "report_valid": true
+            },
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": false,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": false,
+            "fault_latched": true,
+            "stream_ages_s": {
+              "clock": 0.0010750740038929507,
+              "cloud": 0.04026290900219465,
+              "odom": 0.022317341004963964,
+              "report": 0.01803081700199982
+            },
+            "report_valid": true,
+            "last_fault": {
+              "reason": "data_stale_or_invalid",
+              "stream_ages_s": {
+                "clock": 2.0237115990021266,
+                "cloud": 2.057611939999333,
+                "odom": 2.0849364290043013,
+                "report": null
+              },
+              "report_valid": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": "20261016T091530024923Z",
+      "suite": "intersection-right",
+      "repeat": 2,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": false,
+      "results": [],
+      "error": "Command exited 1: ['docker', 'compose', '-f', 'D:\\\\UCSD\\\\Lectures\\\\AVL\\\\Agile_SLAM\\\\compose.yaml', 'exec', '-T', 'core', '/agile_slam_entrypoint.sh', 'ros2', 'run', 'agile_navigation', 'check_navigation.py', '--ros-args', '-p', 'goal_x:=44.0', '-p', 'goal_y:=-12.0', '-p', 'goal_yaw:=-1.5707963267948966', '-p', 'timeout:=360.0', '-p', 'scene_file:=/opt/agile_assets/maps/small_city_scene.json']; ",
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "13d3b9d90a1278fd964f499eda9e68791e5e821bea452a6aaa9c0b5c0395e5cb",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/analyze_gazebo_process.py": "b0b1478197cd2a7230fa52bf8c121a57fd7a4e5bd131a4898b22f5d41737cfd1",
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "0be017dd52724b7161a03efd4d097b6b6067aff565c6c80713c8d7249aa02783",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "6cc0c1aa29cfada6d7f5c17ba2d4ef5012703597293a1fcf014e410238af7fdb",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "5857dac8f0617cea9e48ded20b1bc96768320d9d909e650c21d2cc5285cf37a5",
+        "scripts/sample_gazebo_process.py": "a2cd46281686e019858b6f54f42df3069f4f38faeb421c6836e7b3ff5a951e0e",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "40c730a39906c8c61847c0d6a31a2201187214ad226bc40fbebcfab9f8742594",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "10baed1147698c5df90899a6a651150c77cd36c29ce473ce07ed8c6cb0dd6f3a",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T09:15:30.024923+00:00",
+      "finished_utc": "2026-10-16T09:17:37.400643+00:00",
+      "reports": {
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 785,
+          "capture_error": null,
+          "max_wall_gap_s": 2.2660000000614673,
+          "gaps_over_one_second": [
+            {
+              "wall_unix_s": 1792142249.3779488,
+              "wall_gap_s": 2.2660000000614673,
+              "sim_delta_s": 0.021000000000000796,
+              "iteration_delta": 21
+            }
+          ],
+          "first": {
+            "wall_unix_s": 1792142163.6915941,
+            "monotonic_s": 1046765.921,
+            "sim_s": 1.824,
+            "iterations": 1824,
+            "rtf": 0.1809,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792142254.299325,
+            "monotonic_s": 1046856.531,
+            "sim_s": 26.178,
+            "iterations": 26178,
+            "rtf": 0.2888,
+            "paused": false
+          },
+          "process_samples_file": "1_right_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 11.184054360914242,
+          "truth_yaw_error_rad": 0.9818845701707082,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": false,
+          "action_status": 5,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            42.420047206885336,
+            -0.9263060231977821
+          ],
+          "goal_error_m": 11.185836987920776,
+          "wall_duration_s": 82.76658978799969,
+          "commands": 1595,
+          "path_points": 84,
+          "scans": 235,
+          "max_lateral_odom": 0.9263060231978446,
+          "truth_rear_pose": [
+            42.436184407337315,
+            -0.9258159334409686
+          ],
+          "truth_yaw": -0.5889117566241884,
+          "speed": -1.004345613280347e-17,
+          "rest_samples": 28,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 655,
+          "truth_samples": 1177,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": false,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": true,
+            "gear": 3,
+            "feedback_mps": -1.004345613280347e-17,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": {
+              "joint_age_s": 2.004752930995892,
+              "advancing_joint_stamp_age_s": 2.0047486619951087,
+              "command_ages_s": {
+                "accel": 0.017343062994768843,
+                "brake": 0.017343062994768843,
+                "shaft": 0.017343062994768843,
+                "gear": 0.01730539699929068
+              },
+              "report_valid": true
+            },
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": false,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": false,
+            "fault_latched": true,
+            "stream_ages_s": {
+              "clock": 0.20024551799724577,
+              "cloud": 0.27975341500132345,
+              "odom": 0.0006832180006313138,
+              "report": 0.017027285997755826
+            },
+            "report_valid": true,
+            "last_fault": {
+              "reason": "data_stale_or_invalid",
+              "stream_ages_s": {
+                "clock": 2.0207908479933394,
+                "cloud": 2.0416742359957425,
+                "odom": 2.0599676860001637,
+                "report": null
+              },
+              "report_valid": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": "20261016T091943785956Z",
+      "suite": "intersection-right",
+      "repeat": 2,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": true,
+      "results": [
+        {
+          "file": "1_right_intersection.json",
+          "passed": true
+        },
+        {
+          "file": "2_right_intersection.json",
+          "passed": true
+        }
+      ],
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "f7dc72fe9de0980fd285dde8f96d369a287c7479dfa57ba3d4e2326bceaea879",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/analyze_gazebo_process.py": "5a966ec05a4ffd50e36ae66390e7bb3240fab868dcf31ebc5ea87d24161118d9",
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "0be017dd52724b7161a03efd4d097b6b6067aff565c6c80713c8d7249aa02783",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "6cc0c1aa29cfada6d7f5c17ba2d4ef5012703597293a1fcf014e410238af7fdb",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "5857dac8f0617cea9e48ded20b1bc96768320d9d909e650c21d2cc5285cf37a5",
+        "scripts/sample_gazebo_process.py": "2e260ebeacfbed28d1817064e57f9f015d9fc913d853afd243cb486a22c8e0cd",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "40c730a39906c8c61847c0d6a31a2201187214ad226bc40fbebcfab9f8742594",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "10baed1147698c5df90899a6a651150c77cd36c29ce473ce07ed8c6cb0dd6f3a",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T09:19:43.785956+00:00",
+      "finished_utc": "2026-10-16T09:26:48.967578+00:00",
+      "reports": {
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1504,
+          "capture_error": null,
+          "max_wall_gap_s": 0.2970000000204891,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792142417.6021411,
+            "monotonic_s": 1047019.843,
+            "sim_s": 1.79,
+            "iterations": 1790,
+            "rtf": 0.3429,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792142594.8853745,
+            "monotonic_s": 1047197.125,
+            "sim_s": 46.669,
+            "iterations": 46669,
+            "rtf": 0.4715,
+            "paused": false
+          },
+          "process_samples_file": "1_right_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 0.2176329958475681,
+          "truth_yaw_error_rad": 0.0007048248911505351,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.90734946392714,
+            -11.912834279274499
+          ],
+          "goal_error_m": 0.1272084301616224,
+          "wall_duration_s": 164.92612761200144,
+          "commands": 3238,
+          "path_points": 84,
+          "scans": 442,
+          "max_lateral_odom": 11.912834279274499,
+          "truth_rear_pose": [
+            44.19892790771297,
+            -11.911728779239622
+          ],
+          "truth_yaw": -1.571501151686047,
+          "speed": -1.4213008648765405e-19,
+          "rest_samples": 20,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 1456,
+          "truth_samples": 2209,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -1.4213008648765405e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.0019738800037885085,
+              "cloud": 0.015043593004520517,
+              "odom": 0.06102158399880864,
+              "report": 0.006926210000528954
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "2_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1493,
+          "capture_error": null,
+          "max_wall_gap_s": 0.34299999999348074,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792142628.831195,
+            "monotonic_s": 1047231.062,
+            "sim_s": 1.42,
+            "iterations": 1420,
+            "rtf": 0.2858,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792142805.482604,
+            "monotonic_s": 1047407.718,
+            "sim_s": 46.315,
+            "iterations": 46315,
+            "rtf": 0.107,
+            "paused": false
+          },
+          "process_samples_file": "2_right_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "2_right_intersection.json": {
+          "truth_goal_error_m": 0.21810985995643703,
+          "truth_yaw_error_rad": 0.0006685426690469231,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.907374900989716,
+            -11.911993878055137
+          ],
+          "goal_error_m": 0.12776731376388525,
+          "wall_duration_s": 163.81785898900125,
+          "commands": 3216,
+          "path_points": 84,
+          "scans": 442,
+          "max_lateral_odom": 11.911993878055137,
+          "truth_rear_pose": [
+            44.19899235810608,
+            -11.910703009985793
+          ],
+          "truth_yaw": -1.5714648694639435,
+          "speed": -8.137793705780774e-21,
+          "rest_samples": 20,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 1422,
+          "truth_samples": 2210,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -8.137793705780774e-21,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.10910612800216768,
+              "cloud": 0.24120015199878253,
+              "odom": 0.1340844649967039,
+              "report": 0.012233781999384519
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        }
+      }
+    },
+    {
+      "run_id": "20261016T092714633912Z",
+      "suite": "all",
+      "repeat": 1,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": true,
+      "results": [
+        {
+          "file": "1_left_offset.json",
+          "passed": true
+        },
+        {
+          "file": "1_right_offset.json",
+          "passed": true
+        },
+        {
+          "file": "1_return_center.json",
+          "passed": true
+        },
+        {
+          "route": "curves",
+          "repeat": 1,
+          "passed": true,
+          "turn_commands": {
+            "positive": 1263,
+            "negative": 1353
+          }
+        },
+        {
+          "file": "1_left_intersection.json",
+          "passed": true
+        },
+        {
+          "file": "1_right_intersection.json",
+          "passed": true
+        },
+        {
+          "file": "1_controller-stop.json",
+          "passed": true
+        },
+        {
+          "file": "1_backend-pause.json",
+          "passed": true
+        }
+      ],
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "f7dc72fe9de0980fd285dde8f96d369a287c7479dfa57ba3d4e2326bceaea879",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/analyze_gazebo_process.py": "5a966ec05a4ffd50e36ae66390e7bb3240fab868dcf31ebc5ea87d24161118d9",
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "0be017dd52724b7161a03efd4d097b6b6067aff565c6c80713c8d7249aa02783",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "b1dcadd53a962f4c045a05987166859435283aaf400e3fef47a652094df8239b",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "5857dac8f0617cea9e48ded20b1bc96768320d9d909e650c21d2cc5285cf37a5",
+        "scripts/sample_gazebo_process.py": "2e260ebeacfbed28d1817064e57f9f015d9fc913d853afd243cb486a22c8e0cd",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "40c730a39906c8c61847c0d6a31a2201187214ad226bc40fbebcfab9f8742594",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "10baed1147698c5df90899a6a651150c77cd36c29ce473ce07ed8c6cb0dd6f3a",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T09:27:14.635511+00:00",
+      "finished_utc": "2026-10-16T09:41:27.438141+00:00",
+      "reports": {
+        "1_backend-pause.json": {
+          "passed": true,
+          "fault": "backend-pause",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "readiness_fault_inhibits": true,
+            "feedback_resumed": true,
+            "disabled_after_resume": true,
+            "no_auto_enable_with_live_command": true,
+            "fresh_rest_hold": true
+          },
+          "wall_time_to_observed_rest_s": 2.629731273998914,
+          "rest_drift_m": 6.513582990341771e-05,
+          "final": {
+            "speed": -1.5212745082695047e-19,
+            "enabled": false,
+            "ready": false,
+            "fault_latched": true,
+            "inhibited": true,
+            "truth": [
+              0.039904297446092786,
+              2.1651334406248237e-19
+            ],
+            "mock_diagnostics": {
+              "enabled": false,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": true,
+              "gear": 3,
+              "feedback_mps": -1.5212745082695047e-19,
+              "plant_target_mps": 0.0,
+              "last_watchdog_fault": {
+                "joint_age_s": 2.2390420329975314,
+                "advancing_joint_stamp_age_s": 2.239039933003369,
+                "command_ages_s": {
+                  "accel": 2.1283777429998736,
+                  "brake": 2.1283777429998736,
+                  "shaft": 2.1283777429998736,
+                  "gear": 2.1283390759999747
+                },
+                "report_valid": true
+              },
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "readiness_diagnostics": {
+              "ready": false,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": false,
+              "fault_latched": true,
+              "stream_ages_s": {
+                "clock": 0.12755776599806268,
+                "cloud": 0.2319433719967492,
+                "odom": 0.028280286998779047,
+                "report": 0.008100539998849854
+              },
+              "report_valid": true,
+              "last_fault": {
+                "reason": "data_stale_or_invalid",
+                "stream_ages_s": {
+                  "clock": 1.9560575830037124,
+                  "cloud": 2.080949702001817,
+                  "odom": 1.9561093970041838,
+                  "report": 1.8473630500011495
+                },
+                "report_valid": true
+              }
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_controller-stop.json": {
+          "passed": true,
+          "fault": "controller-stop",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "watchdog_disabled": true,
+            "fresh_feedback_rest": true,
+            "controller_returned": true,
+            "no_auto_enable_with_live_command": true,
+            "fresh_rest_hold": true
+          },
+          "wall_time_to_observed_rest_s": 1.4280410319988732,
+          "rest_drift_m": 0.0014344211160988718,
+          "final": {
+            "speed": -1.587206874420811e-19,
+            "enabled": false,
+            "ready": true,
+            "fault_latched": false,
+            "inhibited": false,
+            "truth": [
+              0.14112874329491346,
+              -4.69514969995557e-18
+            ],
+            "mock_diagnostics": {
+              "enabled": false,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": true,
+              "gear": 3,
+              "feedback_mps": -1.587206874420811e-19,
+              "plant_target_mps": 0.0,
+              "last_watchdog_fault": {
+                "joint_age_s": 0.07312669700331753,
+                "advancing_joint_stamp_age_s": 0.07312396800261922,
+                "command_ages_s": {
+                  "accel": 0.763979631003167,
+                  "brake": 0.763979631003167,
+                  "shaft": 0.763979631003167,
+                  "gear": 0.763915112001996
+                },
+                "report_valid": true
+              },
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "readiness_diagnostics": {
+              "ready": true,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": true,
+              "fault_latched": false,
+              "stream_ages_s": {
+                "clock": 0.003069072001380846,
+                "cloud": 0.03591687999869464,
+                "odom": 0.08110262599802809,
+                "report": 0.00452768800460035
+              },
+              "report_valid": true,
+              "last_fault": null
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_left_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1572,
+          "capture_error": null,
+          "max_wall_gap_s": 0.3280000000959262,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792143187.0155187,
+            "monotonic_s": 1047789.25,
+            "sim_s": 1.749,
+            "iterations": 1749,
+            "rtf": 0.3543,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792143371.8129485,
+            "monotonic_s": 1047974.046,
+            "sim_s": 43.835,
+            "iterations": 43835,
+            "rtf": 0.1865,
+            "paused": false
+          },
+          "process_samples_file": "1_left_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_left_intersection.json": {
+          "truth_goal_error_m": 0.39277441555008313,
+          "truth_yaw_error_rad": 0.16847975608505017,
+          "goal_yaw_rad": 1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            44.0,
+            12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.87479517740897,
+            11.71003120811626
+          ],
+          "goal_error_m": 0.315845132725783,
+          "wall_duration_s": 170.38476238599833,
+          "commands": 3347,
+          "path_points": 78,
+          "scans": 413,
+          "max_lateral_odom": 11.71003120811626,
+          "truth_rear_pose": [
+            44.17146845328187,
+            11.646630064889735
+          ],
+          "truth_yaw": 1.4023165707098464,
+          "speed": -2.1824526562222213e-19,
+          "rest_samples": 20,
+          "positive_turn_commands": 1449,
+          "negative_turn_commands": 131,
+          "truth_samples": 2065,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -2.1824526562222213e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.001977497995540034,
+              "cloud": 0.040369499001826625,
+              "odom": 0.014216505995136686,
+              "report": 0.010943221001070924
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "1_left_offset.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 809,
+          "capture_error": null,
+          "max_wall_gap_s": 0.26500000001396984,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792142869.2899158,
+            "monotonic_s": 1047471.531,
+            "sim_s": 1.7770000000000001,
+            "iterations": 1777,
+            "rtf": 0.3002,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792142960.060697,
+            "monotonic_s": 1047562.296,
+            "sim_s": 26.076,
+            "iterations": 26076,
+            "rtf": 0.3751,
+            "paused": false
+          },
+          "process_samples_file": "1_left_offset.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_left_offset.json": {
+          "truth_goal_error_m": 0.31336835218805187,
+          "truth_yaw_error_rad": 0.09689135895204115,
+          "goal_yaw_rad": 0.0,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            12.0,
+            1.0
+          ],
+          "initial_odom": [
+            -0.87,
+            0.0
+          ],
+          "final_odom": [
+            11.711756851314211,
+            0.8819250709068686
+          ],
+          "goal_error_m": 0.31148964933789636,
+          "wall_duration_s": 82.01526947200182,
+          "commands": 1580,
+          "path_points": 45,
+          "scans": 236,
+          "max_lateral_odom": 0.8819250709068686,
+          "truth_rear_pose": [
+            11.710244762905706,
+            0.8806617130612124
+          ],
+          "truth_yaw": 0.09689135895204114,
+          "speed": 1.3038788786208556e-19,
+          "rest_samples": 25,
+          "positive_turn_commands": 484,
+          "negative_turn_commands": 103,
+          "truth_samples": 1179,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 1.3038788786208556e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.002672217000508681,
+              "cloud": 0.09557766900252318,
+              "odom": 0.11265793300117366,
+              "report": 0.0158895120039233
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "1_return_center.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 578,
+          "capture_error": null,
+          "max_wall_gap_s": 0.35900000005494803,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792143082.9950025,
+            "monotonic_s": 1047685.234,
+            "sim_s": 57.921,
+            "iterations": 57921,
+            "rtf": 0.207,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792143151.9373708,
+            "monotonic_s": 1047754.171,
+            "sim_s": 74.771,
+            "iterations": 74771,
+            "rtf": 0.2065,
+            "paused": false
+          },
+          "process_samples_file": "1_return_center.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_return_center.json": {
+          "truth_goal_error_m": 0.32607606060275063,
+          "truth_yaw_error_rad": 0.12211658827076573,
+          "goal_yaw_rad": 0.0,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            36.0,
+            0.0
+          ],
+          "initial_odom": [
+            27.713154258780328,
+            -1.0720485131126698
+          ],
+          "final_odom": [
+            35.70661009851903,
+            -0.12312101261229882
+          ],
+          "goal_error_m": 0.31817670882340177,
+          "wall_duration_s": 61.16333802799636,
+          "commands": 1163,
+          "path_points": 30,
+          "scans": 160,
+          "max_lateral_odom": 1.2027978352128754,
+          "truth_rear_pose": [
+            35.696565808989654,
+            -0.11938713927431766
+          ],
+          "truth_yaw": 0.12211658827076573,
+          "speed": 7.71694191185674e-19,
+          "rest_samples": 25,
+          "positive_turn_commands": 478,
+          "negative_turn_commands": 325,
+          "truth_samples": 801,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 7.71694191185674e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.0025167040002997965,
+              "cloud": 0.06843336200108752,
+              "odom": 0.03477278899663361,
+              "report": 0.016369967997889034
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1594,
+          "capture_error": null,
+          "max_wall_gap_s": 0.3440000000409782,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792143408.6346347,
+            "monotonic_s": 1048010.875,
+            "sim_s": 1.63,
+            "iterations": 1630,
+            "rtf": 0.1451,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792143599.9674253,
+            "monotonic_s": 1048202.203,
+            "sim_s": 46.235,
+            "iterations": 46235,
+            "rtf": 0.2827,
+            "paused": false
+          },
+          "process_samples_file": "1_right_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 0.2179214059681566,
+          "truth_yaw_error_rad": 0.000710671032227328,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.90740469240291,
+            -11.911286949536569
+          ],
+          "goal_error_m": 0.12823375652115304,
+          "wall_duration_s": 178.01653348299442,
+          "commands": 3500,
+          "path_points": 84,
+          "scans": 439,
+          "max_lateral_odom": 11.911286949536569,
+          "truth_rear_pose": [
+            44.198542706876886,
+            -11.910163856242951
+          ],
+          "truth_yaw": -1.5715069978271239,
+          "speed": 1.2973860191388059e-19,
+          "rest_samples": 11,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 1546,
+          "truth_samples": 2196,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 1.2973860191388059e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.001295034002396278,
+              "cloud": 0.025803716001973953,
+              "odom": 0.0034079390024999157,
+              "report": 0.005185873000300489
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "1_right_offset.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 1024,
+          "capture_error": null,
+          "max_wall_gap_s": 0.2809999999590218,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792142962.776317,
+            "monotonic_s": 1047565.015,
+            "sim_s": 26.871,
+            "iterations": 26871,
+            "rtf": 0.4848,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792143080.0212493,
+            "monotonic_s": 1047682.25,
+            "sim_s": 57.159,
+            "iterations": 57159,
+            "rtf": 0.4299,
+            "paused": false
+          },
+          "process_samples_file": "1_right_offset.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_offset.json": {
+          "truth_goal_error_m": 0.29983165428504804,
+          "truth_yaw_error_rad": 0.15129258362567646,
+          "goal_yaw_rad": 0.0,
+          "passed": true,
+          "action_status": 4,
+          "goal": [
+            28.0,
+            -1.0
+          ],
+          "initial_odom": [
+            11.711756851314211,
+            0.8819250709068686
+          ],
+          "final_odom": [
+            27.713154258780328,
+            -1.0720485131126698
+          ],
+          "goal_error_m": 0.2957557564910775,
+          "wall_duration_s": 108.46560138300265,
+          "commands": 2109,
+          "path_points": 54,
+          "scans": 295,
+          "max_lateral_odom": 1.0720485131126698,
+          "truth_rear_pose": [
+            27.707313691743195,
+            -1.065067241145689
+          ],
+          "truth_yaw": -0.15129258362567646,
+          "speed": 2.5288877327708515e-19,
+          "rest_samples": 25,
+          "positive_turn_commands": 301,
+          "negative_turn_commands": 925,
+          "truth_samples": 1475,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 2.5288877327708515e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.000772098996094428,
+              "cloud": 0.09089383499667747,
+              "odom": 0.12855068600038067,
+              "report": 0.015406705999339465
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        }
+      }
+    },
+    {
+      "run_id": "20261016T094321514038Z",
+      "suite": "intersection-right",
+      "repeat": 1,
+      "gui": true,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": false,
+      "results": [],
+      "error": "Command exited 1: ['docker', 'compose', '-f', 'D:\\\\UCSD\\\\Lectures\\\\AVL\\\\Agile_SLAM\\\\compose.yaml', 'exec', '-T', 'core', '/agile_slam_entrypoint.sh', 'ros2', 'run', 'agile_navigation', 'check_navigation.py', '--ros-args', '-p', 'goal_x:=44.0', '-p', 'goal_y:=-12.0', '-p', 'goal_yaw:=-1.5707963267948966', '-p', 'timeout:=360.0', '-p', 'scene_file:=/opt/agile_assets/maps/small_city_scene.json']; ",
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "81bea0b3304bff90d847192e811496f923413525cc6d144ee4043075c937f941",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/analyze_gazebo_process.py": "5a966ec05a4ffd50e36ae66390e7bb3240fab868dcf31ebc5ea87d24161118d9",
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "0be017dd52724b7161a03efd4d097b6b6067aff565c6c80713c8d7249aa02783",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "b1dcadd53a962f4c045a05987166859435283aaf400e3fef47a652094df8239b",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "05d73de876860d16a0c937d51976fd252546016a082549d5df547f9ced432213",
+        "scripts/sample_gazebo_process.py": "2e260ebeacfbed28d1817064e57f9f015d9fc913d853afd243cb486a22c8e0cd",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "f779096384f72ad4a93529160bfd6f4b0dca21bd514c64261b594b57943c67b4",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "10baed1147698c5df90899a6a651150c77cd36c29ce473ce07ed8c6cb0dd6f3a",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T09:43:21.514038+00:00",
+      "finished_utc": "2026-10-16T09:50:26.863352+00:00",
+      "reports": {
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 3313,
+          "capture_error": null,
+          "max_wall_gap_s": 0.23499999986961484,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792143836.811917,
+            "monotonic_s": 1048439.046,
+            "sim_s": 1.222,
+            "iterations": 1222,
+            "rtf": 0.2205,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792144223.542072,
+            "monotonic_s": 1048825.781,
+            "sim_s": 85.395,
+            "iterations": 85395,
+            "rtf": 0.2765,
+            "paused": false
+          },
+          "process_samples_file": "1_right_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 4.86258822542602,
+          "truth_yaw_error_rad": 0.13015252255634135,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": false,
+          "action_status": null,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            -0.87,
+            0.0
+          ],
+          "final_odom": [
+            43.37945722095579,
+            -7.18552976942257
+          ],
+          "goal_error_m": 4.85429675048201,
+          "wall_duration_s": 363.00580333599646,
+          "commands": 7200,
+          "path_points": 168,
+          "scans": 836,
+          "max_lateral_odom": 7.18552976942257,
+          "truth_rear_pose": [
+            43.51650328863475,
+            -7.161508997616017
+          ],
+          "truth_yaw": -1.4406438042385552,
+          "speed": -2.866917794100371e-20,
+          "rest_samples": 9,
+          "positive_turn_commands": 939,
+          "negative_turn_commands": 3942,
+          "truth_samples": 4180,
+          "footprint_overlap_samples": 0,
+          "readiness_diagnostics": {
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.001740385006996803,
+              "cloud": 0.11914606500067748,
+              "odom": 0.08608895000361372,
+              "report": 0.004524731004494242
+            },
+            "report_valid": true,
+            "last_fault": null
+          },
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -2.866917794100371e-20,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          }
+        }
+      }
+    },
+    {
+      "run_id": "20261016T095211551050Z",
+      "suite": "intersection-right",
+      "repeat": 1,
+      "gui": true,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": false,
+      "results": [],
+      "error": "Command exited 1: ['docker', 'compose', '-f', 'D:\\\\UCSD\\\\Lectures\\\\AVL\\\\Agile_SLAM\\\\compose.yaml', 'exec', '-T', 'core', '/agile_slam_entrypoint.sh', 'ros2', 'run', 'agile_navigation', 'check_navigation.py', '--ros-args', '-p', 'goal_x:=44.0', '-p', 'goal_y:=-12.0', '-p', 'goal_yaw:=-1.5707963267948966', '-p', 'timeout:=360.0', '-p', 'scene_file:=/opt/agile_assets/maps/small_city_scene.json']; ",
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "81bea0b3304bff90d847192e811496f923413525cc6d144ee4043075c937f941",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/analyze_gazebo_process.py": "5a966ec05a4ffd50e36ae66390e7bb3240fab868dcf31ebc5ea87d24161118d9",
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "62649144d988ac67021fd7b478068d78f5e402382466d2c62ed0d3b87968d585",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "b1dcadd53a962f4c045a05987166859435283aaf400e3fef47a652094df8239b",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "6f0f86d370fce361d21df2999c5b6caa2b524671274f80ce27d10bb6cc89c514",
+        "scripts/sample_gazebo_process.py": "2e260ebeacfbed28d1817064e57f9f015d9fc913d853afd243cb486a22c8e0cd",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "f779096384f72ad4a93529160bfd6f4b0dca21bd514c64261b594b57943c67b4",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "10baed1147698c5df90899a6a651150c77cd36c29ce473ce07ed8c6cb0dd6f3a",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T09:52:11.559811+00:00",
+      "finished_utc": "2026-10-16T09:54:47.823225+00:00",
+      "reports": {
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 970,
+          "capture_error": null,
+          "max_wall_gap_s": 2.030999999959022,
+          "gaps_over_one_second": [
+            {
+              "wall_unix_s": 1792144478.9548047,
+              "wall_gap_s": 2.030999999959022,
+              "sim_delta_s": 0.02400000000000091,
+              "iteration_delta": 24
+            }
+          ],
+          "first": {
+            "wall_unix_s": 1792144369.8080668,
+            "monotonic_s": 1048972.046,
+            "sim_s": 1.42,
+            "iterations": 1420,
+            "rtf": 0.2312,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792144484.2489774,
+            "monotonic_s": 1049086.484,
+            "sim_s": 25.312,
+            "iterations": 25312,
+            "rtf": 0.2149,
+            "paused": false
+          },
+          "process_samples_file": "1_right_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 11.098965687925798,
+          "truth_yaw_error_rad": 0.9540534396610105,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": false,
+          "action_status": 5,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            42.52680929370663,
+            -1.002147949289215
+          ],
+          "goal_error_m": 11.096082217901623,
+          "wall_duration_s": 105.29305012000259,
+          "commands": 2045,
+          "path_points": 84,
+          "scans": 233,
+          "max_lateral_odom": 1.002147949289215,
+          "truth_rear_pose": [
+            42.53057382179088,
+            -0.9987352523199451
+          ],
+          "truth_yaw": -0.616742887133886,
+          "speed": -2.4104972887392077e-16,
+          "rest_samples": 8,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 846,
+          "truth_samples": 1165,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -2.4104972887392077e-16,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": false,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": false,
+            "fault_latched": true,
+            "stream_ages_s": {
+              "clock": 0.0034769349949783646,
+              "cloud": 0.20615330199507298,
+              "odom": 0.07809090599766932,
+              "report": 0.008948776994657237
+            },
+            "report_valid": true,
+            "last_fault": {
+              "reason": "data_stale_or_invalid",
+              "stream_ages_s": {
+                "clock": 0.0009537160003674217,
+                "cloud": 2.0407973369947285,
+                "odom": 0.034721559000900015,
+                "report": 0.008689141999639105
+              },
+              "report_valid": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": "20261016T100141579440Z",
+      "suite": "intersection-right",
+      "repeat": 2,
+      "gui": true,
+      "starts": {
+        "curves": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intersection-left": [
+          30.0,
+          0.0,
+          0.0
+        ],
+        "intersection-right": [
+          30.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": false,
+      "results": [],
+      "error": "Command exited 1: ['docker', 'compose', '-f', 'D:\\\\UCSD\\\\Lectures\\\\AVL\\\\Agile_SLAM\\\\compose.yaml', 'exec', '-T', 'core', '/agile_slam_entrypoint.sh', 'ros2', 'run', 'agile_navigation', 'check_navigation.py', '--ros-args', '-p', 'goal_x:=44.0', '-p', 'goal_y:=-12.0', '-p', 'goal_yaw:=-1.5707963267948966', '-p', 'timeout:=360.0', '-p', 'scene_file:=/opt/agile_assets/maps/small_city_scene.json']; ",
+      "image_id": "sha256:c82685c8a18ca791b6172c74ff95fc198cb24e93227e84c6532d562db00bfaed",
+      "config_sha256": {
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "compose.yaml": "5686285534e6389c61136e2b198f0b87406fe5a1d91f9865a9612e52279caaed",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c"
+      },
+      "source_sha256": {
+        "scripts/analyze_gazebo_process.py": "5a966ec05a4ffd50e36ae66390e7bb3240fab868dcf31ebc5ea87d24161118d9",
+        "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+        "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+        "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+        "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+        "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+        "scripts/convert_small_city.py": "6c82445d1f781e1378f7784fa9981a6d4c9063b8ae8c6fea9517babf70e6c2ac",
+        "scripts/deploy.py": "62649144d988ac67021fd7b478068d78f5e402382466d2c62ed0d3b87968d585",
+        "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+        "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+        "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+        "scripts/monitor_gazebo.py": "b1dcadd53a962f4c045a05987166859435283aaf400e3fef47a652094df8239b",
+        "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+        "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+        "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+        "scripts/run_scenarios.py": "6a83a0e9f03f8ad9341b517627b7c0e45e90db1053c0bab6a170f31172301439",
+        "scripts/sample_gazebo_process.py": "2e260ebeacfbed28d1817064e57f9f015d9fc913d853afd243cb486a22c8e0cd",
+        "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+        "scripts/summarize_scenarios.py": "f779096384f72ad4a93529160bfd6f4b0dca21bd514c64261b594b57943c67b4",
+        "scripts/validate_contracts.py": "1384aa2da265a83f1a1a2c4d560108d1e1f55bdd8d489854ad370334c9893296",
+        "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+        "ros2_ws/src/agile_navigation/CMakeLists.txt": "48eb133fab4cf55d126f8e545f1dd8140533e574e5cd64bf82ded7eb874c5e70",
+        "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+        "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+        "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+        "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+        "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+        "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+        "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+        "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+        "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+        "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+        "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+        "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+        "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+        "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+        "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+        "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+        "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+        "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+        "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "0a3fe08bb054ac88c0b47716eaaf0b0de3c079855989e6b13a5fe206711a593a",
+        "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+        "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+        "ros2_ws/src/agile_navigation/scripts/readiness.py": "11b1c9d659b445b4700f8eb2560423afa963bf80795f2781b109784dcfcedd35",
+        "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+        "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+        "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+        "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "e3a1449a6311a5f3cedee48b011506b13180a5e7f02fb08fef7a71279ac5ac9b",
+        "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+        "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "1744e1acd3b465ff8a1089f3e724766ccbf1cedd9c085589570be40d2b46564c",
+        "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "ddd9c34582f24fccbd4697da8bb23317e9bc560063f42afe7a7a83179a530e8f",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+        "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+        "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "b362f4cd3ddbb1413eb0a53ee8d862821c7c29df7d71aeafee0554a3f031896f",
+        "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+        "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+        "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+        "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+        "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+        "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+        "ros2_ws/src/gem_description/config/vehicle.json": "e49a481feec7ba6925113fc0a7fc896fe07e7d81e8c9c01d748f04f18f33ff0c",
+        "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+        "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+        "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+        "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+        "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+        "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+        "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+        "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "e6e54ec187f16e0f3334d613c91ae924692cd6e141ad753a1c97da49d372af67",
+        "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+        "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+        "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+        "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+        "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+        "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+        "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+        "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+        "containers/Dockerfile": "8d7ba8683b8c559324fd4333342092e47842ff70919777ee4e2ebffd31f99280",
+        "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+      },
+      "asset_sha256": {
+        "assets/small_city/worlds/small_city.sdf": "2f861570e5a96185ca6c8dc46118be78d4e92d2ae7777f12b945304d504076f6",
+        "assets/small_city/maps/small_city.yaml": "2975f7fc1200e7dd8f60a8b25c8982601d175fceef7f650f9604a064b80d9f13",
+        "assets/small_city/maps/small_city.pgm": "62f36e59dce46db08b80d92109c71d67d45af29e9bf38692dd8dbee6b351af90",
+        "assets/small_city/maps/small_city_scene.json": "124979744112ec08068d09f75b79a873b6548456b87945430f86694f054199d5"
+      },
+      "started_utc": "2026-10-16T10:01:41.580448+00:00",
+      "finished_utc": "2026-10-16T10:03:42.591458+00:00",
+      "reports": {
+        "1_right_intersection.gazebo.summary.json": {
+          "source": "Gazebo Transport /world/small_city/stats, independent of ROS bridge",
+          "samples": 60,
+          "capture_error": null,
+          "max_wall_gap_s": 3.3119999999180436,
+          "gaps_over_one_second": [
+            {
+              "wall_unix_s": 1792145015.2748826,
+              "wall_gap_s": 3.3119999999180436,
+              "sim_delta_s": 0.01499999999999968,
+              "iteration_delta": 15
+            }
+          ],
+          "first": {
+            "wall_unix_s": 1792145009.5673568,
+            "monotonic_s": 1049611.796,
+            "sim_s": 1.7429999999999999,
+            "iterations": 1743,
+            "rtf": 0.2786,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792145019.219437,
+            "monotonic_s": 1049621.453,
+            "sim_s": 3.501,
+            "iterations": 3501,
+            "rtf": 0.2648,
+            "paused": false
+          },
+          "process_samples_file": "1_right_intersection.gazebo.process.jsonl",
+          "network_before": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "network_after": {
+            "core": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": null,
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            },
+            "backend-sim": {
+              "render_environment": {
+                "LIBGL_ALWAYS_SOFTWARE": "1",
+                "LP_NUM_THREADS": null,
+                "LP_NATIVE_VECTOR_WIDTH": "128",
+                "GALLIUM_DRIVER": null
+              },
+              "mtu": 1500,
+              "ip": {
+                "ReasmReqds": 0,
+                "ReasmOKs": 0,
+                "ReasmFails": 0,
+                "ReasmTimeout": 0,
+                "FragOKs": 0,
+                "FragFails": 0,
+                "FragCreates": 0
+              }
+            }
+          },
+          "ip_counter_delta": {
+            "core": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            },
+            "backend-sim": {
+              "ReasmReqds": 0,
+              "ReasmOKs": 0,
+              "ReasmFails": 0,
+              "ReasmTimeout": 0,
+              "FragOKs": 0,
+              "FragFails": 0,
+              "FragCreates": 0
+            }
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 19.041154602258494,
+          "truth_yaw_error_rad": 1.5701299496195646,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": false,
+          "action_status": 5,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            29.208787849072888,
+            -2.098552249524051e-05
+          ],
+          "goal_error_m": 19.046770152486072,
+          "wall_duration_s": 6.138038920005783,
+          "commands": 62,
+          "path_points": 84,
+          "scans": 10,
+          "max_lateral_odom": 2.098552249524051e-05,
+          "truth_rear_pose": [
+            29.21602202905878,
+            -1.816910397781492e-05
+          ],
+          "truth_yaw": -0.0006663771753319785,
+          "speed": -1.085039315968366e-19,
+          "rest_samples": 15,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 62,
+          "truth_samples": 50,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": false,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": true,
+            "gear": 3,
+            "feedback_mps": -1.085039315968366e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": {
+              "joint_age_s": 2.007608480002091,
+              "advancing_joint_stamp_age_s": 2.0076052570002503,
+              "command_ages_s": {
+                "accel": 0.0001976040002773516,
+                "brake": 0.0001976040002773516,
+                "shaft": 0.0001976040002773516,
+                "gear": 0.018087622003804427
+              },
+              "report_valid": true
+            },
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "ready": false,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": false,
+            "fault_latched": true,
+            "stream_ages_s": {
+              "clock": 0.0011702409974532202,
+              "cloud": 0.1528625959981582,
+              "odom": 0.030875110998749733,
+              "report": 0.011444091993325856
+            },
+            "report_valid": true,
+            "last_fault": {
+              "reason": "data_stale_or_invalid",
+              "stream_ages_s": {
+                "clock": 1.898823221999919,
+                "cloud": 2.055560371998581,
+                "odom": 1.9619997639965732,
+                "report": 0.012364820002403576
+              },
+              "report_valid": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "moving_sensors": {
+    "passed": true,
+    "wall_window_s": 30.0,
+    "estimated_rtf": 0.27476765999341174,
+    "warnings": [],
+    "topics": {
+      "/sensors/imu/data_raw": {
+        "count": 410,
+        "frame_id": "IMU_link",
+        "acceleration_norm": 9.800033495106186,
+        "received_rate_wall_hz": 13.723751315070997,
+        "received_rate_stamp_hz": 50.0,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/image_raw": {
+        "count": 244,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "encoding": "rgb8",
+        "payload_valid": true,
+        "received_rate_wall_hz": 8.136774654547523,
+        "received_rate_stamp_hz": 29.692082111436953,
+        "backward_stamps": 0
+      },
+      "/sensors/velodyne/points": {
+        "count": 82,
+        "frame_id": "velodyne_link",
+        "fields": [
+          "x",
+          "y",
+          "z",
+          "intensity",
+          "ring"
+        ],
+        "points": 30000,
+        "finite_points": 22855,
+        "received_rate_wall_hz": 2.7473837044783065,
+        "received_rate_stamp_hz": 9.999999999999998,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/camera_info": {
+        "count": 248,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "focal_lengths": [
+          476.7014503479004,
+          476.7014980316162
+        ],
+        "received_rate_wall_hz": 8.35277897872755,
+        "received_rate_stamp_hz": 30.29931305201178,
+        "backward_stamps": 0
+      },
+      "/sensors/obstacle_scan": {
+        "count": 82,
+        "frame_id": "base_footprint",
+        "finite_ranges": 317,
+        "nearest_obstacle_m": 4.274848937988281,
+        "received_rate_wall_hz": 2.7469855041532347,
+        "received_rate_stamp_hz": 9.999999999999998,
+        "backward_stamps": 0
+      }
+    },
+    "scope": "Short delivery/schema sanity window; not a hardware accuracy, latency, or long-duration acceptance."
+  },
+  "gui_sensors": {
+    "passed": true,
+    "wall_window_s": 30.0,
+    "estimated_rtf": 0.21103890713123918,
+    "warnings": [],
+    "topics": {
+      "/sensors/velodyne/points": {
+        "count": 63,
+        "frame_id": "velodyne_link",
+        "fields": [
+          "x",
+          "y",
+          "z",
+          "intensity",
+          "ring"
+        ],
+        "points": 30000,
+        "finite_points": 26377,
+        "received_rate_wall_hz": 2.1141505958135265,
+        "received_rate_stamp_hz": 10.000000000000002,
+        "backward_stamps": 0
+      },
+      "/sensors/imu/data_raw": {
+        "count": 316,
+        "frame_id": "IMU_link",
+        "acceleration_norm": 9.800007453327387,
+        "received_rate_wall_hz": 10.638296774738176,
+        "received_rate_stamp_hz": 49.99999999999999,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/camera_info": {
+        "count": 191,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "focal_lengths": [
+          476.7014503479004,
+          476.7014980316162
+        ],
+        "received_rate_wall_hz": 6.4497186103579285,
+        "received_rate_stamp_hz": 30.29819805453675,
+        "backward_stamps": 0
+      },
+      "/sensors/obstacle_scan": {
+        "count": 63,
+        "frame_id": "base_footprint",
+        "finite_ranges": 540,
+        "nearest_obstacle_m": 4.505723476409912,
+        "received_rate_wall_hz": 2.114427447159876,
+        "received_rate_stamp_hz": 10.000000000000002,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/image_raw": {
+        "count": 141,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "encoding": "rgb8",
+        "payload_valid": true,
+        "received_rate_wall_hz": 4.771200620441505,
+        "received_rate_stamp_hz": 30.296472624972957,
+        "backward_stamps": 0
+      }
+    },
+    "scope": "Short delivery/schema sanity window; not a hardware accuracy, latency, or long-duration acceptance."
+  },
+  "renderer": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 15.0.7, 128 bits) (0xffffffff)\n    Version: 23.2.1\n    Accelerated: no\n    Video memory: 19830MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 31 MB, largest block: 31 MB\n    VBO free aux. memory - total: 16189 MB, largest block: 16189 MB\n    Texture free memory - total: 31 MB, largest block: 31 MB\n    Texture free aux. memory - total: 16189 MB, largest block: 16189 MB\n    Renderbuffer free memory - total: 31 MB, largest block: 31 MB\n    Renderbuffer free aux. memory - total: 16189 MB, largest block: 16189 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 889053 MB\n    Total available memory: 908883 MB\n    Currently available dedicated video memory: 31 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 15.0.7, 128 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 23.2.1-1ubuntu3.1~22.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 23.2.1-1ubuntu3.1~22.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 23.2.1-1ubuntu3.1~22.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
+  "final_ready": {
+    "passed": true,
+    "action": "ready",
+    "state": {
+      "system": {
+        "ready": true,
+        "data_ready": true,
+        "tf_ready": true,
+        "nav2_active": true,
+        "fault_latched": false,
+        "stream_ages_s": {
+          "clock": 0.006357878999551758,
+          "cloud": 0.25584488100139424,
+          "odom": 0.25060165800096,
+          "report": 0.01780421400326304
+        },
+        "report_valid": true,
+        "last_fault": null
+      },
+      "mock": {
+        "enabled": false,
+        "ready": true,
+        "fault": false,
+        "override": false,
+        "timeout": false,
+        "gear": 3,
+        "feedback_mps": -4.794456455504156e-19,
+        "plant_target_mps": 0.0,
+        "last_watchdog_fault": null,
+        "scope": "Provisional ROS mock, no CAN/firmware validation"
+      },
+      "control": {
+        "state": "inhibited",
+        "enabled": false,
+        "inhibited": false,
+        "report_age_s": 0.009703376999823377,
+        "target_mps": 0.0,
+        "feedback_mps": -4.794456455504156e-19,
+        "accel": 0.0,
+        "brake": 0.4
+      }
+    },
+    "graph": [
+      "bt_navigator",
+      "bt_navigator_navigate_through_poses_rclcpp_node",
+      "bt_navigator_navigate_to_pose_rclcpp_node",
+      "controller_manager",
+      "controller_server",
+      "global_costmap",
+      "gz_ros2_control",
+      "joint_state_broadcaster",
+      "left_front_wheel_controller",
+      "left_rear_wheel_controller",
+      "left_steering_controller",
+      "lifecycle_manager_map",
+      "lifecycle_manager_navigation",
+      "local_costmap",
+      "map_server",
+      "obstacle_scan",
+      "pacmod_mock",
+      "planner_server",
+      "readiness",
+      "right_front_wheel_controller",
+      "right_rear_wheel_controller",
+      "right_steering_controller",
+      "robot_state_publisher",
+      "ros_gz_bridge",
+      "ros_gz_image",
+      "runtime_probe",
+      "rviz",
+      "simulation_actuator_adapter",
+      "static_transform_publisher_z79PhG0Z7ViZJbue",
+      "transform_listener_impl_5d73cc153800",
+      "transform_listener_impl_741890003350",
+      "transform_listener_impl_7a68e40088d0",
+      "vehicle_control",
+      "wheel_odometry"
+    ]
+  },
+  "unit_tests_passed": 30
+}

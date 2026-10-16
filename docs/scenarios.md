@@ -62,3 +62,17 @@ To collect reviewed runs, including failed stress cases, use `python scripts/sum
 Root `compose.yaml` is the only active Compose definition. The project is `agile-slam`, the application image is `agile_slam:humble`, and all six services have explicit descriptive container names without numeric suffixes. The legacy overlays and `deploy/compose.next.yaml` are retired; their prior versions remain in Git history. Both shell wrappers now use the same Python deployment entrypoint.
 
 Navigation trials also retain independent Gazebo Transport statistics (`*.gazebo.jsonl`, `*.gazebo.summary.json`) and timestamped runtime logs. These probes use `/world/small_city/stats` without the ROS bridge. Correlate their source iteration/simulation-time progression with ROS freshness faults before attributing a gap to physics, rendering or bridge/DDS transport. Collection timing also includes host scheduling and is not a real-time guarantee.
+
+
+Navigation probes also retain `*.gazebo.process.jsonl`: read-only Linux thread CPU ticks, wait channels, scheduler counters and host pressure. The sampler discovers the server by its command line, runs at four samples per second, and exits with the statistics probe (maximum 450 seconds). It does not require extra container privileges or modify the server. Sampling adds overhead and does not establish real-time performance.
+
+Analyze a completed capture with:
+
+```powershell
+python scripts/analyze_gazebo_process.py artifacts/scenarios/RUN_ID/1_right_intersection.gazebo.jsonl
+```
+
+The output correlates simulation-progress gaps with active threads. Wait channels and CPU activity alone do not identify a specific shader or prove causality. Native debugger captures are separate intrusive diagnostics and must not count as navigation acceptance.
+
+
+Use `--gui` to keep Gazebo and RViz open across each scenario's cold start, for example `python scripts/run_scenarios.py intersection-right --gui`. The manifest records GUI selection. GUI load is part of that trial; it must satisfy the same goal, freshness and stopping criteria as a headless run.

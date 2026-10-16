@@ -30,12 +30,14 @@ def execute(command, output=None, timeout=180):
     return result.stdout
 
 
-def deploy(action,output=None):
-    return execute([sys.executable,str(ROOT/'scripts/deploy.py'),action],output)
+def deploy(action,output=None,gui=False):
+    command=[sys.executable,str(ROOT/'scripts/deploy.py'),action]
+    if gui:command.append('--gui')
+    return execute(command,output)
 
 
-def reset():
-    deploy('down');deploy('up');deploy('check');deploy('enable')
+def reset(gui=False):
+    deploy('down');deploy('up',gui=gui);deploy('check');deploy('enable')
 
 
 def main():
@@ -43,6 +45,7 @@ def main():
     parser.add_argument('suite',choices=('curves','intersection-left','intersection-right','faults','all'))
     parser.add_argument('--start-x',type=float,help='Override route body spawn x; zero reproduces the long intersection approach.')
     parser.add_argument('--repeat',type=int,default=1)
+    parser.add_argument('--gui',action='store_true',help='Keep Gazebo and RViz open during each scenario.')
     args=parser.parse_args()
     if args.repeat<1 or args.repeat>10:parser.error('--repeat must be between 1 and 10')
     config_path=ROOT/'config/scenarios/small_city.json'
@@ -57,7 +60,7 @@ def main():
     except (ValueError,FileNotFoundError,ImportError) as exc:parser.error(str(exc))
     run_id=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     folder=ROOT/'artifacts/scenarios'/run_id;folder.mkdir(parents=True)
-    manifest={'schema_version':1,'run_id':run_id,'suite':args.suite,'repeat':args.repeat,'starts':config['starts'],'fault_start':[0.0,0.0,0.0],'started_utc':datetime.now(timezone.utc).isoformat(),'git_commit':execute(['git','rev-parse','HEAD']).strip(),'git_status':execute(['git','status','--porcelain']),'image_id':execute(['docker','image','inspect','agile_slam:humble','--format','{{.Id}}']).strip(),'config_sha256':{p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (config_path,ROOT/'compose.yaml',ROOT/'ros2_ws/src/gem_description/config/vehicle.json')},'results':[],'passed':False}
+    manifest={'schema_version':1,'run_id':run_id,'suite':args.suite,'repeat':args.repeat,'gui':args.gui,'starts':config['starts'],'fault_start':[0.0,0.0,0.0],'started_utc':datetime.now(timezone.utc).isoformat(),'git_commit':execute(['git','rev-parse','HEAD']).strip(),'git_status':execute(['git','status','--porcelain']),'image_id':execute(['docker','image','inspect','agile_slam:humble','--format','{{.Id}}']).strip(),'config_sha256':{p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (config_path,ROOT/'compose.yaml',ROOT/'ros2_ws/src/gem_description/config/vehicle.json')},'results':[],'passed':False}
     manifest['source_sha256']={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for base in ('scripts','ros2_ws/src','config','deploy','containers') for p in (ROOT/base).rglob('*') if p.is_file() and (p.suffix in ('.py','.json','.yaml','.xml','.sdf','.xacro','.sh','.txt') or p.name=='Dockerfile') and '__pycache__' not in p.parts}
     manifest['asset_sha256']={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'assets/small_city/worlds/small_city.sdf',ROOT/'assets/small_city/maps/small_city.yaml',ROOT/'assets/small_city/maps/small_city.pgm',ROOT/'assets/small_city/maps/small_city_scene.json')}
     (folder/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
@@ -67,16 +70,21 @@ def main():
             for route in routes:
                 print(f'Cold-start route {route}, repeat {repeat+1}',flush=True)
                 for key,value in zip(('AGILE_SPAWN_X','AGILE_SPAWN_Y','AGILE_SPAWN_YAW'),config['starts'][route]):os.environ[key]=str(value)
-                reset()
+                reset(args.gui)
                 turn_counts={'positive':0,'negative':0}
-                for goal in config['routes'][route]:
+                for goal_index,goal in enumerate(config['routes'][route]):
                     output=folder/f'{repeat+1}_{goal["name"]}.json'
                     command=COMPOSE+['exec','-T','core']+ENTRY+['ros2','run','agile_navigation','check_navigation.py','--ros-args','-p',f'goal_x:={goal["x"]}','-p',f'goal_y:={goal["y"]}','-p',f'goal_yaw:={goal["yaw"]}','-p','timeout:=360.0','-p',f'scene_file:={config["scene_file"]}']
                     with GazeboMonitor(COMPOSE,output.with_suffix('.gazebo.jsonl')):
                         execute(command,output,timeout=450)
                     report=json.loads(output.read_text(encoding='utf-8'))
-                    manifest['results'].append({'file':output.name,'passed':report['passed']})
-                    if not report['passed']:raise RuntimeError(f'Route failed: {goal["name"]}')
+                    start=config['starts'][route]
+                    rear=json.loads((ROOT/'ros2_ws/src/gem_description/config/vehicle.json').read_text())['rear_axle_x']
+                    expected=[start[0]+rear*math.cos(start[2]),start[1]+rear*math.sin(start[2])]
+                    start_error=math.dist(report['initial_odom'],expected) if goal_index==0 else None
+                    passed=report['passed'] and (start_error is None or start_error<0.05)
+                    manifest['results'].append({'file':output.name,'passed':passed,'initial_odom_error_m':start_error})
+                    if not passed:raise RuntimeError(f'Route failed: {goal["name"]}')
                     turn_counts['positive']+=report['positive_turn_commands']
                     turn_counts['negative']+=report['negative_turn_commands']
                     print(f'{goal["name"]}: passed',flush=True)
@@ -88,7 +96,7 @@ def main():
                 for fault in ('controller-stop','backend-pause'):
                     print(f'Cold-start moving fault {fault}, repeat {repeat+1}',flush=True)
                     for key in ('AGILE_SPAWN_X','AGILE_SPAWN_Y','AGILE_SPAWN_YAW'):os.environ[key]='0'
-                    reset()
+                    reset(args.gui)
                     event_file=folder/f'{repeat+1}_{fault}.event.json'
                     output=folder/f'{repeat+1}_{fault}.json'
                     relative=event_file.relative_to(ROOT/'artifacts').as_posix()

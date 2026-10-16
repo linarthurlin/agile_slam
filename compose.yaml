@@ -39,6 +39,10 @@ services:
   backend-sim:
     container_name: agile-slam-simulator
     <<: *runtime
+    environment:
+      <<: *environment
+      # Mesa llvmpipe workaround; retain original sensor specifications.
+      LP_NATIVE_VECTOR_WIDTH: "128"
     command: [xvfb-run, '-a', ros2, launch, avl_bringup, backend_sim.launch.py]
   rviz:
     container_name: agile-slam-rviz

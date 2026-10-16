@@ -43,6 +43,8 @@ See [setup](docs/setup.md), [validation](docs/validation/baseline.md), [roadmap]
 
 The current image builds five ROS packages. Sensor streams, PACMod mock interlocks and selected Nav2 scenarios have local validation; historical baseline evidence remains available. Large image/cloud checks use reliable subscriptions; best-effort transport loss was observed and remains a separate performance gate. See the validation report for evidence and limits.
 
+The [renderer investigation](docs/validation/render_stalls.md) records a passing headless route/fault regression and an unresolved dual-GUI rendering stall. GUI navigation is not yet accepted as stable. Use `python scripts/run_scenarios.py intersection-right --gui` to reproduce the current GUI acceptance case.
+
 ## Navigation experiments
 
 The current Nav2 runtime adds a generated obstacle scene, wheel-feedback odometry, a filtered obstacle scan, Smac Hybrid-A* planning, and Regulated Pure Pursuit control. See [navigation setup](docs/navigation.md), [scene candidates](docs/scenes.md), and the [simulation-first plan](docs/plans/simulation_first_plan.md).

@@ -118,3 +118,14 @@ vehicle-readonly須確認無控制傳輸；即使無Nav2 publisher，driver也�
 新增獨立 Gazebo Transport statistics 與 timestamped ROS runtime logs，持續測試右轉與長路線。以本輪驗證文件記錄成功、失敗與監測限制，不因單次重跑成功宣稱停頓根因已修復。
 
 本輪獨立監測分辨出兩類問題：Gazebo world 仍前進但 ROS cloud 逾時，以及 world statistics 也停頓。Desktop DDS 改為 MaxMessageSize=1400B／FragmentSize=1280B 後，IP fragmentation／reassembly counters 維持零，長左轉首次通過；重複右轉仍量測到約 3.954 秒的 source-progress gap，故引擎／callback／排程原因仍待定位。未放寬 watchdog 或 goal thresholds。
+
+
+## 渲染定位與 GUI 啟動修正（2026-10-16）
+
+新增無需額外權限的 Gazebo 執行緒 CPU／等待狀態／排程／資源壓力取樣，並保留獨立 world statistics。原生堆疊已將停滯定位到 Sensors／Ogre 合成 pass／Mesa llvmpipe generated shader 的等待鏈；尚未確認特定 shader 或 upstream bug。偵錯工具與暫時 SYS_PTRACE debugger 不保留在正式運行環境。
+
+128-bit LLVMpipe 通過兩次冷啟動右轉與完整 headless suite：三個連續曲線目標、90 度左右轉、controller-stop 與 backend-pause。雙 GUI 的正確起始位姿測試仍量測到 2.031 秒停滯，故不可宣稱整體穩定性已驗收。4 個渲染 workers、停用相機 noise 與 Ogre 1 比較均未解決問題，已還原。
+
+新增 --gui 測試入口，修正 Windows 交給 WSL 時遺失 AGILE_SPAWN_X/Y/YAW 的問題，加入兩個回歸測試及首個導航目標的 rear-axle 起點核對。30 個單元測試通過；行駛中與雙 GUI 的 30 秒感測器資料檢查均通過，但不覆蓋失敗的 GUI 路線驗收。原 image、sensor specs、goal／watchdog thresholds 維持。
+
+下一優先：定位具體 generated shader／compositor pass，對比可追溯的 Mesa／LLVM 更新或已驗證 GPU backend；通過雙 GUI 後再做長路線與持續動態 soak。之後才接續 Nav2 preemption／waypoints、bag replay、rolling-scan／LIO、校正及實車 PACMod CAN。完整正反證據：docs/validation/render_stalls.md。
