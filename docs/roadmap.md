@@ -1,6 +1,6 @@
 # Roadmap
 
-The executable platform includes an isolated split Humble/Fortress runtime, shared PACMod vehicle controller, ROS mock, WSLg clients, and a known-start Nav2 profile. The original single-container baseline remains available for regression comparison. It is not a measured e6 digital twin or a validated full SLAM system.
+The executable platform includes an isolated split Humble/Fortress runtime, shared PACMod vehicle controller, ROS mock, WSLg clients, and a known-start Nav2 profile. The original deployment remains in Git history; root compose.yaml is the sole active stack. It is not a measured e6 digital twin or a validated full SLAM system.
 
 The immediate simulator-first sequence is documented in the [implementation plan](plans/simulation_first_plan.md): repeat simple motion and sensor geometry tests, validate goal cancellation/unreachable cases, record/replay fixed routes, then add localization/SLAM and larger worlds.
 

@@ -1,3 +1,0 @@
-services:
-  sim:
-    command: ["xvfb-run", "-a", "ros2", "launch", "agile_navigation", "simulation.launch.py"]

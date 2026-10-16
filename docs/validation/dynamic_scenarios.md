@@ -62,3 +62,5 @@ Final-image moving-fault regression passed both cases again after adding shared 
 The combined JSON deliberately has `all_runs_passed: false`: failed development/stress trials are retained beside accepted cases. It is evidence of the current boundary, not an all-green acceptance certificate.
 
 Final default-origin GUI regression also passed on the final image: x=3 m navigation returned SUCCEEDED with 0.306 m truth position error, 0.039 rad yaw error, fresh wheel-feedback rest and zero sampled overlaps. Nav2 cancellation returned CANCELED with a zero final command; an occupied goal returned ABORTED with no nonzero commands. These action checks do not measure physical braking distance. Both GUI clients remain optional services; actuation was explicitly disabled after the checks.
+
+The latest Docker consolidation and MTU-bounded transport regression are recorded in [canonical runtime validation](canonical_runtime.md). Historical failed trials below are retained; later selected successes do not establish repeatability.

@@ -1,18 +1,19 @@
 # Split simulation runtime
 
-This experimental profile uses Ubuntu 22.04, ROS 2 Humble, Gazebo Fortress and CycloneDDS on amd64. It preserves the original Compose baseline, but the two profiles should not run together on a resource-limited desktop.
+This experimental profile uses Ubuntu 22.04, ROS 2 Humble, Gazebo Fortress and CycloneDDS on amd64. The sole active deployment is root `compose.yaml`, project `agile-slam`, image `agile_slam:humble`. Legacy deployments remain in Git history.
 
 ## Services
 
-| Service | Responsibility |
-| --- | --- |
-| core | Robot description, obstacle scan, map, Nav2 and readiness |
-| localization | Wheel-feedback odometry and known-start map alignment |
-| vehicle-control | Command freshness, speed feedback control and PACMod commands |
-| backend-sim | Gazebo, sensor bridges, PACMod mock and private joint adapter |
-| rviz / gazebo-gui | Optional independent WSLg clients |
+| Service | Container | Responsibility |
+| --- | --- | --- |
+| core | agile-slam-core | Description, obstacle scan, map, Nav2 and readiness |
+| localization | agile-slam-localization | Wheel odometry and known-start alignment |
+| vehicle-control | agile-slam-vehicle-control | Speed control and PACMod commands |
+| backend-sim | agile-slam-simulator | Gazebo server, bridges, mock and joint adapter |
+| gazebo-gui | agile-slam-gazebo | Optional Gazebo client |
+| rviz | agile-slam-rviz | Optional visualization client |
 
-All services share a private bridge, ROS domain 44 and Gazebo partition `agile-slam-next`. GUI services do not borrow a simulator network namespace. Images and service boundaries are independent concepts: these services currently share one bootstrap image.
+All services share a private bridge, ROS domain 44 and Gazebo partition `agile-slam`. GUI services do not borrow a simulator network namespace. Images and service boundaries are independent concepts: these services currently share one bootstrap image.
 
 ## Operation
 
@@ -58,3 +59,5 @@ Repeatable curved-route and moving-fault scenarios are available through `script
 `gem_description/config/simulation.json` selects the split navigation sensor workload. It disables the inherited unbridged depth and secondary RGB cameras. The bridged front RGB definition remains 800x600 at 30 Hz; LiDAR remains 10 Hz, IMU 50 Hz and GPS 20 Hz. The legacy xacro default keeps auxiliary cameras enabled. Changing this installed configuration requires rebuilding the image and restarting the whole simulation.
 
 This removes unused rendering work; it is not a validated full sensor suite or a guaranteed fix for backend stalls. The current scene's material defects and missing LiDAR firing times remain limitations.
+
+Desktop DDS datagrams are capped at 1400 bytes with 1280-byte DDS fragments for the observed 1500-byte bridge MTU. Independent per-route monitors record MTU and IP fragmentation/reassembly counters. This corrects observed fragmentation exposure but does not eliminate all simulation-progress stalls; see [current validation](validation/canonical_runtime.md).

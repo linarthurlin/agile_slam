@@ -3,7 +3,8 @@
     <General>
       <Interfaces><NetworkInterface name="eth0" multicast="true"/></Interfaces>
       <AllowMulticast>true</AllowMulticast>
-      <MaxMessageSize>65500B</MaxMessageSize><FragmentSize>4000B</FragmentSize>
+      <!-- Keep DDS UDP payloads below the 1500-byte Docker bridge MTU. -->
+      <MaxMessageSize>1400B</MaxMessageSize><FragmentSize>1280B</FragmentSize>
     </General>
     <Discovery><ParticipantIndex>auto</ParticipantIndex><MaxAutoParticipantIndex>64</MaxAutoParticipantIndex></Discovery>
   </Domain>

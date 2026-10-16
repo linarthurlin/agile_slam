@@ -10,9 +10,10 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+from monitor_gazebo import GazeboMonitor
 
 ROOT=Path(__file__).resolve().parents[1]
-COMPOSE=['docker','compose','-f',str(ROOT/'deploy/compose.next.yaml')]
+COMPOSE=['docker','compose','-f',str(ROOT/'compose.yaml')]
 ENTRY=['/agile_slam_entrypoint.sh']
 
 
@@ -56,7 +57,7 @@ def main():
     except (ValueError,FileNotFoundError,ImportError) as exc:parser.error(str(exc))
     run_id=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     folder=ROOT/'artifacts/scenarios'/run_id;folder.mkdir(parents=True)
-    manifest={'schema_version':1,'run_id':run_id,'suite':args.suite,'repeat':args.repeat,'starts':config['starts'],'fault_start':[0.0,0.0,0.0],'started_utc':datetime.now(timezone.utc).isoformat(),'git_commit':execute(['git','rev-parse','HEAD']).strip(),'git_status':execute(['git','status','--porcelain']),'image_id':execute(['docker','image','inspect','agile_slam:humble-next','--format','{{.Id}}']).strip(),'config_sha256':{p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (config_path,ROOT/'deploy/compose.next.yaml',ROOT/'ros2_ws/src/gem_description/config/vehicle.json')},'results':[],'passed':False}
+    manifest={'schema_version':1,'run_id':run_id,'suite':args.suite,'repeat':args.repeat,'starts':config['starts'],'fault_start':[0.0,0.0,0.0],'started_utc':datetime.now(timezone.utc).isoformat(),'git_commit':execute(['git','rev-parse','HEAD']).strip(),'git_status':execute(['git','status','--porcelain']),'image_id':execute(['docker','image','inspect','agile_slam:humble','--format','{{.Id}}']).strip(),'config_sha256':{p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (config_path,ROOT/'compose.yaml',ROOT/'ros2_ws/src/gem_description/config/vehicle.json')},'results':[],'passed':False}
     manifest['source_sha256']={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for base in ('scripts','ros2_ws/src','config','deploy','containers') for p in (ROOT/base).rglob('*') if p.is_file() and (p.suffix in ('.py','.json','.yaml','.xml','.sdf','.xacro','.sh','.txt') or p.name=='Dockerfile') and '__pycache__' not in p.parts}
     manifest['asset_sha256']={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'assets/small_city/worlds/small_city.sdf',ROOT/'assets/small_city/maps/small_city.yaml',ROOT/'assets/small_city/maps/small_city.pgm',ROOT/'assets/small_city/maps/small_city_scene.json')}
     (folder/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
@@ -71,7 +72,8 @@ def main():
                 for goal in config['routes'][route]:
                     output=folder/f'{repeat+1}_{goal["name"]}.json'
                     command=COMPOSE+['exec','-T','core']+ENTRY+['ros2','run','agile_navigation','check_navigation.py','--ros-args','-p',f'goal_x:={goal["x"]}','-p',f'goal_y:={goal["y"]}','-p',f'goal_yaw:={goal["yaw"]}','-p','timeout:=360.0','-p',f'scene_file:={config["scene_file"]}']
-                    execute(command,output,timeout=450)
+                    with GazeboMonitor(COMPOSE,output.with_suffix('.gazebo.jsonl')):
+                        execute(command,output,timeout=450)
                     report=json.loads(output.read_text(encoding='utf-8'))
                     manifest['results'].append({'file':output.name,'passed':report['passed']})
                     if not report['passed']:raise RuntimeError(f'Route failed: {goal["name"]}')

@@ -1,5 +1,7 @@
 # Small-city simulation profile
 
+Current deployment: use [runtime operations](runtime.md) and root `compose.yaml`. Legacy launch/overlay commands below describe the historical baseline and are retired; asset preparation and historical evidence remain applicable.
+
 The selected scene comes from leonhartyao/gazebo_models_worlds_collection. Its Classic world is converted locally for Humble / Fortress. Missing model dependencies are fetched from the official osrf/gazebo_models repository. Exact revisions are pinned in config/scenes/small_city_sources.json.
 
 ## Prepare

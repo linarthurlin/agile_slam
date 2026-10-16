@@ -1,5 +1,7 @@
 # Simulation-only Nav2 baseline
 
+Current deployment: use [runtime operations](runtime.md) and root `compose.yaml`. Legacy launch/overlay commands below describe the historical baseline and are retired; asset preparation and historical evidence remain applicable.
+
 This optional profile tests static navigation with known starting alignment. It does not use SLAM, AMCL, PACMod, or ground-truth pose as an estimator input.
 
 ## Start

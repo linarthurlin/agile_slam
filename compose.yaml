@@ -1,23 +1,74 @@
 name: agile-slam
+x-runtime: &runtime
+  image: agile_slam:humble
+  init: true
+  environment: &environment
+    ROS_DOMAIN_ID: "44"
+    AGILE_SPAWN_X: "${AGILE_SPAWN_X:-0}"
+    AGILE_SPAWN_Y: "${AGILE_SPAWN_Y:-0}"
+    AGILE_SPAWN_YAW: "${AGILE_SPAWN_YAW:-0}"
+    RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+    CYCLONEDDS_URI: file:///etc/agile_slam/desktop.xml
+    IGN_PARTITION: agile-slam
+    IGN_GAZEBO_RESOURCE_PATH: /opt/agile_assets/models
+    LIBGL_ALWAYS_SOFTWARE: "1"
+  volumes: &volumes
+    - ./config/dds/desktop.xml:/etc/agile_slam/desktop.xml:ro
+    - ./assets/small_city:/opt/agile_assets:ro
+    - ./artifacts:/artifacts
+  networks: [ros]
+  shm_size: 512mb
 services:
-  sim:
-    image: agile_slam:humble-baseline
+  core:
+    container_name: agile-slam-core
+    <<: *runtime
     build:
       context: .
       dockerfile: containers/Dockerfile
       args:
         BASE_IMAGE: agile_control_ros2:baseline-20261014
-    init: true
+    command: [ros2, launch, agile_navigation, core.launch.py, 'map_yaml:=/opt/agile_assets/maps/small_city.yaml']
+  localization:
+    container_name: agile-slam-localization
+    <<: *runtime
+    command: [ros2, launch, agile_navigation, localization.launch.py]
+  vehicle-control:
+    container_name: agile-slam-vehicle-control
+    <<: *runtime
+    command: [ros2, run, agile_vehicle, vehicle_control.py, --ros-args, -p, 'use_sim_time:=true']
+  backend-sim:
+    container_name: agile-slam-simulator
+    <<: *runtime
+    command: [xvfb-run, '-a', ros2, launch, avl_bringup, backend_sim.launch.py]
+  rviz:
+    container_name: agile-slam-rviz
+    <<: *runtime
+    profiles: [gui]
     environment:
-      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-42}
-      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
-      CYCLONEDDS_URI: file:///etc/agile_slam/cyclonedds.xml
-      LIBGL_ALWAYS_SOFTWARE: "1"
-    shm_size: 512mb
-    command: ["xvfb-run", "-a", "ros2", "launch", "avl_bringup", "baseline.launch.py"]
+      <<: *environment
+      DISPLAY: ':0'
+      QT_QPA_PLATFORM: xcb
+      QT_X11_NO_MITSHM: '1'
     volumes:
-      - ./artifacts:/artifacts
-    networks: [ros]
+      - ./config/dds/desktop.xml:/etc/agile_slam/desktop.xml:ro
+      - ./config/rviz:/gui:ro
+      - /mnt/wslg/.X11-unix:/tmp/.X11-unix:ro
+    command: [rviz2, '-d', /gui/motion.rviz, --ros-args, -p, 'use_sim_time:=true']
+  gazebo-gui:
+    container_name: agile-slam-gazebo
+    <<: *runtime
+    profiles: [gui]
+    environment:
+      <<: *environment
+      DISPLAY: ':0'
+      QT_QPA_PLATFORM: xcb
+      QT_X11_NO_MITSHM: '1'
+    volumes:
+      - ./config/dds/desktop.xml:/etc/agile_slam/desktop.xml:ro
+      - ./assets/small_city:/opt/agile_assets:ro
+      - /mnt/wslg/.X11-unix:/tmp/.X11-unix:ro
+    command: [ign, gazebo, '-g', '-v', '2']
 networks:
   ros:
+    name: agile-slam-ros
     driver: bridge

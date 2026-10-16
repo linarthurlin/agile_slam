@@ -6,7 +6,7 @@ The first milestone ports the existing GEM simulator onto a pinned Ubuntu 22.04 
 
 ## Split PACMod runtime
 
-The isolated multi-service simulation is available through scripts/deploy.py. See [runtime operation and limitations](docs/runtime.md) and [dynamic scenarios](docs/scenarios.md). It uses the shared vehicle controller and PACMod mock; the original Compose baseline remains available separately.
+The isolated multi-service simulation is available through scripts/deploy.py. See [runtime operation and limitations](docs/runtime.md) and [dynamic scenarios](docs/scenarios.md). It uses the shared vehicle controller and PACMod mock; the legacy deployment is retained in Git history.
 
 ## Layout
 
@@ -24,14 +24,16 @@ The local base image is `agile_control_ros2`, image ID `sha256:a6acca67607edcb48
 ```powershell
 python scripts/doctor.py
 python scripts/prepare_base.py
-docker compose build
-docker compose up -d
-docker compose exec sim /agile_slam_entrypoint.sh python3 /opt/agile_slam_ws/src/avl_bringup/scripts/check_baseline.py
-docker compose exec sim /agile_slam_entrypoint.sh python3 /opt/agile_slam_ws/src/avl_bringup/scripts/check_commands.py
-docker compose down
+python scripts/deploy.py build
+python scripts/deploy.py up
+python scripts/deploy.py check
+python scripts/deploy.py up --gui
+python scripts/deploy.py enable
+python scripts/deploy.py disable
+python scripts/deploy.py down
 ```
 
-The default profile uses software rendering and a private Docker bridge network. It starts simulation only, with no CAN or USB access. Ground-truth odometry is isolated under `/ground_truth/odometry`; no operational odometry TF is fabricated from it.
+The canonical `compose.yaml` uses image `agile_slam:humble`, project `agile-slam`, and explicit container names without numeric suffixes. The default profile uses software rendering and a private Docker bridge network. It starts simulation only, with no CAN or USB access. Ground-truth odometry is isolated under `/ground_truth/odometry`; no operational odometry TF is fabricated from it.
 
 To open Gazebo and RViz, run `bash scripts/gui.sh` from WSL after starting the simulator. See the setup guide for the PowerShell command.
 
@@ -39,17 +41,17 @@ See [setup](docs/setup.md), [validation](docs/validation/baseline.md), [roadmap]
 
 ## Validation status
 
-The local baseline builds all three packages, delivers all seven required streams, and passes a low-speed command-expiry test. Large image/cloud checks use reliable subscriptions; best-effort transport loss was observed and remains a separate performance gate. See the validation report for evidence and limits.
+The current image builds five ROS packages. Sensor streams, PACMod mock interlocks and selected Nav2 scenarios have local validation; historical baseline evidence remains available. Large image/cloud checks use reliable subscriptions; best-effort transport loss was observed and remains a separate performance gate. See the validation report for evidence and limits.
 
 ## Navigation experiments
 
-An optional Nav2 profile adds a generated obstacle scene, wheel-feedback odometry, a filtered obstacle scan, Smac Hybrid-A* planning, and Regulated Pure Pursuit control. See [navigation setup](docs/navigation.md), [scene candidates](docs/scenes.md), and the [simulation-first plan](docs/plans/simulation_first_plan.md).
+The current Nav2 runtime adds a generated obstacle scene, wheel-feedback odometry, a filtered obstacle scan, Smac Hybrid-A* planning, and Regulated Pure Pursuit control. See [navigation setup](docs/navigation.md), [scene candidates](docs/scenes.md), and the [simulation-first plan](docs/plans/simulation_first_plan.md).
 
 The selected outdoor scene is [small_city](docs/small_city.md), with pinned asset preparation, Fortress conversion, and a conservative road map.
 
 ## Scope
 
-Basic sensor schema/rate checks and known-start static Nav2 navigation are available. Sustained transport/recording, FAST-LIO, measured e6 geometry, full sensor profiles, calibration, and real-vehicle PACMod bringup remain subsequent milestones. The existing snapshot LiDAR must not be presented as a validated rolling-scan or deskew model. Fortress is a legacy reproduction baseline; the supported-platform migration remains planned.
+Basic sensor schema/rate checks and known-start static Nav2 navigation are available. Sustained transport/recording, FAST-LIO, measured e6 geometry, full sensor profiles, calibration, and real-vehicle PACMod bringup remain subsequent milestones. The existing snapshot LiDAR must not be presented as a validated rolling-scan or deskew model. Humble/Fortress remains the active platform; maintenance migration is planned.
 
 ## Attribution
 

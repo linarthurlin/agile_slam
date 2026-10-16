@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 ROOT=Path(__file__).resolve().parents[1]
-COMPOSE=['docker','compose','-f',str(ROOT/'deploy/compose.next.yaml')]
+COMPOSE=['docker','compose','-f',str(ROOT/'compose.yaml')]
 
 def main():
     parser=argparse.ArgumentParser()

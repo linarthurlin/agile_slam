@@ -110,3 +110,11 @@ vehicle-readonly須確認無控制傳輸；即使無Nav2 publisher，driver也�
 已新增共用 known-start fixture：Gazebo body spawn 與 wheel odometry rear-axle 初始位姿由同一組設定推導，初始位姿不讀 truth。90 度路口測試預設從 (30,0,0) body pose 出發；--start-x 0 保留長路線重現入口。新增 last_fault／last_watchdog_fault 與串流年齡記錄。
 
 目前長左轉與短右轉發現 Gazebo-derived 資料停頓約 2 秒以上，readiness 正確取消任務，但路線驗收失敗。停用未 bridge 的 depth／secondary RGB cameras 未消除此問題；保留為下一優先調查，不能宣稱全路口／全場景已驗收。
+
+## Docker 統一與持續測試（2026-10-16）
+
+依使用者要求，只保留現用 agile_slam:humble image 與 agile-slam project。根目錄 compose.yaml 為唯一入口；六個 containers 採明確 container_name，移除 -1 尾碼。舊 image／containers 已移除；agile_control_ros2 建置基底與其他專案 images 保留。使用者原有 simulation_first_plan.md 修改不變。
+
+新增獨立 Gazebo Transport statistics 與 timestamped ROS runtime logs，持續測試右轉與長路線。以本輪驗證文件記錄成功、失敗與監測限制，不因單次重跑成功宣稱停頓根因已修復。
+
+本輪獨立監測分辨出兩類問題：Gazebo world 仍前進但 ROS cloud 逾時，以及 world statistics 也停頓。Desktop DDS 改為 MaxMessageSize=1400B／FragmentSize=1280B 後，IP fragmentation／reassembly counters 維持零，長左轉首次通過；重複右轉仍量測到約 3.954 秒的 source-progress gap，故引擎／callback／排程原因仍待定位。未放寬 watchdog 或 goal thresholds。

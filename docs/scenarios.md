@@ -1,6 +1,6 @@
 # Repeatable dynamic simulation scenarios
 
-The scenario runner operates only the isolated `agile-slam-next` Compose project. It resets the simulation between routes and fault cases, disables the mock on exit, and does not expose CAN or USB devices. It closes existing GUI services during cold resets; reopen them after testing if needed.
+The scenario runner operates only the isolated `agile-slam` Compose project. It resets the simulation between routes and fault cases, disables the mock on exit, and does not expose CAN or USB devices. It closes existing GUI services during cold resets; reopen them after testing if needed.
 
 ```powershell
 python -m pip install -r scripts/requirements-scenes.txt
@@ -56,3 +56,9 @@ python scripts/run_scenarios.py intersection-left --start-x 0
 Manifests record effective starts, including command-line overrides. A passing short fixture does not establish acceptance of the long route. After changing start coordinates, restart the entire stack; the runner performs this automatically. The known-start alignment is a simulation fixture, not a real localization solution.
 
 To collect reviewed runs, including failed stress cases, use `python scripts/summarize_scenarios.py RUN_ID ... --output docs/validation/dynamic_scenarios_results.json`. This command summarizes evidence; its successful exit means the summary was written, not that its input trials passed. Inspect `all_runs_passed` and each run's `passed` field.
+
+## Canonical Docker deployment (2026-10-16)
+
+Root `compose.yaml` is the only active Compose definition. The project is `agile-slam`, the application image is `agile_slam:humble`, and all six services have explicit descriptive container names without numeric suffixes. The legacy overlays and `deploy/compose.next.yaml` are retired; their prior versions remain in Git history. Both shell wrappers now use the same Python deployment entrypoint.
+
+Navigation trials also retain independent Gazebo Transport statistics (`*.gazebo.jsonl`, `*.gazebo.summary.json`) and timestamped runtime logs. These probes use `/world/small_city/stats` without the ROS bridge. Correlate their source iteration/simulation-time progression with ROS freshness faults before attributing a gap to physics, rendering or bridge/DDS transport. Collection timing also includes host scheduling and is not a real-time guarantee.

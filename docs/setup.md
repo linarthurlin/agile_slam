@@ -1,5 +1,7 @@
 # Local baseline setup
 
+Current deployment: use [runtime operations](runtime.md) and root `compose.yaml`. Legacy launch/overlay commands below describe the historical baseline and are retired; asset preparation and historical evidence remain applicable.
+
 Prerequisites: Docker Desktop using Linux containers and WSL2 integration, Python 3, and the supplied `agile_control_ros2` image. The image must match the ID documented in the README. The public repository cannot download this local image automatically.
 
 Run `python scripts/prepare_base.py`, then `python scripts/doctor.py`. Build with `docker compose build`. Build output embeds a resolved package inventory at `/opt/agile_slam_metadata/packages.tsv`; no service rebuilds the workspace on startup.
