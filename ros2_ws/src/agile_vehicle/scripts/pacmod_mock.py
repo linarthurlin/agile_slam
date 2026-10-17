@@ -18,7 +18,7 @@ from runtime_support import config,run
 class PacmodMock(Node):
     def __init__(self):
         super().__init__('pacmod_mock')
-        self.cfg=config();self.state=MockState();self.bundle=CommandBundle();self.report_valid=True;self.commands={'accel':0.,'brake':.4,'shaft':0.,'rate':self.cfg['steering_rate']};self.receipts={}
+        self.cfg=config();self.state=MockState();self.bundle=CommandBundle(max_age=self.cfg['command_timeout']);self.report_valid=True;self.commands={'accel':0.,'brake':.4,'shaft':0.,'rate':self.cfg['steering_rate']};self.receipts={}
         self.feedback=0.;self.feedback_angle=0.;self.joint_time=0.;self.clock_time=0.;self.last_stamp=None;self.last_step=None
         self.last_watchdog_fault=None
         self.actuation=self.create_publisher(AckermannDrive,'/simulation/actuation',10)

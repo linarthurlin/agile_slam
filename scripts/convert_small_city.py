@@ -148,6 +148,34 @@ def main():
         for element in root.iter():
             if element.tag in ('normal','uri') and element.text and 'file://media/materials/textures/flat_normal.png' in element.text:
                 element.text='file:///opt/agile_assets/generated/flat_normal.png'
+        # Ogre Terra requires compute shaders unavailable on the WSL GL 4.2 path.
+        # Preserve sampled visual elevations using an ordinary mesh; collision is unchanged.
+        for visual in root.findall('.//visual'):
+            geometry=visual.find('geometry')
+            heightmap=geometry.find('heightmap') if geometry is not None else None
+            if heightmap is None:continue
+            uri=heightmap.findtext('uri')
+            if not uri.startswith('model://'):raise ValueError('Unsupported terrain image URI')
+            image_path=models/uri[len('model://'):]
+            heights=np.asarray(Image.open(image_path).convert('L'),dtype=float)/255.
+            rows,cols=heights.shape
+            sx,sy,sz=map(float,heightmap.findtext('size').split())
+            px,py,pz=map(float,heightmap.findtext('pos','0 0 0').split())
+            mesh_path=generated/(path.parent.name+'_'+visual.get('name')+'.obj')
+            lines=[]
+            for row in range(rows):
+                for col in range(cols):
+                    lines.append(f'v {px-sx/2+sx*col/(cols-1)} {py+sy/2-sy*row/(rows-1)} {pz+sz*heights[row,col]}')
+            for row in range(rows-1):
+                for col in range(cols-1):
+                    a=row*cols+col+1;b=a+1;c=a+cols;d=c+1
+                    lines.extend((f'f {a} {c} {b}',f'f {b} {c} {d}'))
+            mesh_path.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+            geometry.remove(heightmap)
+            ET.SubElement(ET.SubElement(geometry,'mesh'),'uri').text='file:///opt/agile_assets/'+mesh_path.relative_to(cache).as_posix()
+            material=visual.find('material')
+            if material is None:material=ET.SubElement(visual,'material')
+            ET.SubElement(material,'diffuse').text='.35 .4 .25 1'
         for material in root.findall('.//material'):
             script=material.find('script')
             if script is not None:

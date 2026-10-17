@@ -1,0 +1,14 @@
+{
+  "package": "ogre-next",
+  "version": "2.2.5+dfsg3-0ubuntu2",
+  "source_base": "https://archive.ubuntu.com/ubuntu/pool/universe/o/ogre-next/",
+  "files": {
+    "ogre-next_2.2.5+dfsg3.orig.tar.xz": "a8bff0ff3281ea3fb24d77e884db3c8111720d652cc4fa8eb992398d6c03a934",
+    "ogre-next_2.2.5+dfsg3-0ubuntu2.debian.tar.xz": "8918cf90f57b9d8a3613f3e10b31adfbfc8e21ecf1042244b919b7e77d9e1ee7",
+    "ogre-next_2.2.5+dfsg3-0ubuntu2.dsc": "bce8d9187349ad690ccab0c3214eac5e810c44aa79fa0c4e947c8c2eb31790c7"
+  },
+  "patch": "patches/ogre-next-2.2.5-nv-copy.patch",
+  "reference": "https://github.com/OGRECave/ogre-next/blob/v2.3.3/RenderSystems/GL3Plus/src/OgreGL3PlusTextureGpu.cpp",
+  "license": "MIT; retain matching Ubuntu package copyright",
+  "scope": "Build only the matching GL3Plus renderer target; deploy only its plugin against the installed 2.2.5 core."
+}

@@ -12,3 +12,7 @@ The source repository does not publish the supplied Docker image, hardware photo
 ## Optional city assets
 
 The small_city profile fetches pinned revisions of [gazebo_models_worlds_collection](https://github.com/leonhartyao/gazebo_models_worlds_collection) and [osrf/gazebo_models](https://github.com/osrf/gazebo_models). The collection declares GPL-3.0 and aggregates multiple sources. Assets and locally adapted derivatives remain in an ignored cache, with original checkouts, root notices, source hashes, and provenance. They are not redistributed as project-owned assets. Individual model terms still apply. See [city setup](../docs/small_city.md).
+
+## Ogre renderer compatibility patch
+
+The Docker build fetches Ubuntu's Ogre Next 2.2.5 source package, verifies the source hashes in `ogre_next.json`, applies the distribution patches and the local NV_copy_image patch, and builds only the matching GL3Plus renderer for installation. Upstream core binaries remain installed. The upstream [MIT notice](licenses/ogre-next-COPYING.txt) is retained in this repository. Ogre's package copyright is retained in the image at `/opt/agile_slam_metadata/renderer-copyright`; plugin and patch hashes are recorded beside it. See [Ogre Next](https://github.com/OGRECave/ogre-next) and the [Ubuntu source archive](https://archive.ubuntu.com/ubuntu/pool/universe/o/ogre-next/). This does not complete the provenance of the inherited application base or pin every apt dependency.

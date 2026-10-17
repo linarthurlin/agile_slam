@@ -59,7 +59,7 @@ To collect reviewed runs, including failed stress cases, use `python scripts/sum
 
 ## Canonical Docker deployment (2026-10-16)
 
-Root `compose.yaml` is the only active Compose definition. The project is `agile-slam`, the application image is `agile_slam:humble`, and all six services have explicit descriptive container names without numeric suffixes. The legacy overlays and `deploy/compose.next.yaml` are retired; their prior versions remain in Git history. Both shell wrappers now use the same Python deployment entrypoint.
+Root `compose.yaml` is the canonical Compose definition; `deploy/desktop-gpu.yaml` optionally overlays the same project. The project is `agile-slam`, the application image is `agile_slam:humble`, and all six services have explicit descriptive container names without numeric suffixes. The legacy overlays and `deploy/compose.next.yaml` are retired; their prior versions remain in Git history. Both shell wrappers now use the same Python deployment entrypoint.
 
 Navigation trials also retain independent Gazebo Transport statistics (`*.gazebo.jsonl`, `*.gazebo.summary.json`) and timestamped runtime logs. These probes use `/world/small_city/stats` without the ROS bridge. Correlate their source iteration/simulation-time progression with ROS freshness faults before attributing a gap to physics, rendering or bridge/DDS transport. Collection timing also includes host scheduling and is not a real-time guarantee.
 
@@ -76,3 +76,15 @@ The output correlates simulation-progress gaps with active threads. Wait channel
 
 
 Use `--gui` to keep Gazebo and RViz open across each scenario's cold start, for example `python scripts/run_scenarios.py intersection-right --gui`. The manifest records GUI selection. GUI load is part of that trial; it must satisfy the same goal, freshness and stopping criteria as a headless run.
+
+## Renderer and acceptance updates
+
+Use `python scripts/run_scenarios.py all --gui --rendering gpu` for the WSL NVIDIA overlay. The default remains software; renderer choice is recorded in the manifest. The runner verifies actual body truth and wheel rear-axle pose/yaw before enabling the mock. Every goal has independent 120-second simulation and 360-second wall budgets. Arrival requires advancing fresh truth, fresh ready/enabled diagnostics and at least one consecutive second of fresh wheel rest, rather than a cumulative sample count.
+
+The fault suite also includes `readiness-pause`: SIGSTOP only the uniquely matched readiness node while live commands continue, require lease inhibition and rest, resume the same PID and restart core to clear any readiness data-loss latch, require new ready heartbeats without automatic movement, then explicitly disable/enable and require movement to resume. The observer runs in localization so it survives the core restart. Host cleanup resumes a paused node even when the observer fails. This test checks publisher loss independently of simulator loss.
+
+`python scripts/check_gpu_sensors.py` cold-starts camera-only, LiDAR-only and combined sensor configurations against the baseline wall. It retains renderer provenance, image samples, schema/range results and runtime logs. It does not enable actuation or validate sensor rate, rolling scans, depth cameras, MSAA or calibration accuracy.
+
+New manifests also hash the actual runtime model/generated asset closure. The first GPU city regression retains this closure separately at `artifacts/gpu_runtime_assets.json`; map/world-only hashes would miss an adapted included terrain model.
+
+GUI runs now require both live client containers and nontrivial Gazebo/RViz X11 windows before actuation and after each goal/fault. Window existence does not certify every pixel or continuous rendering performance.

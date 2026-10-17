@@ -1,5 +1,6 @@
 """Pure control contracts; timestamps passed here are monotonic receipt times."""
 import math
+import time
 
 
 def clamp(value,low,high):
@@ -94,17 +95,81 @@ class MockState:
         return self.velocity,self.angle
 
 
+class ReadinessLease:
+    """Require live advancing heartbeats; expiry requires explicit re-enable."""
+    def __init__(self, timeout):
+        self.timeout = timeout
+        self.received = None
+        self.session = None
+        self.sequence = None
+        self.ready = False
+        self.fault_latched = False
+        self.was_permitted = False
+
+    def receive(self, session, sequence, ready, now):
+        if not isinstance(session, str) or not session or type(sequence) is not int or sequence < 1 or type(ready) is not bool or not math.isfinite(now):
+            return False
+        if session == self.session and self.sequence is not None and sequence <= self.sequence:
+            return False
+        if self.session is not None and session != self.session and self.was_permitted:
+            self.fault_latched = True
+        self.session, self.sequence = session, sequence
+        self.received, self.ready = now, ready
+        return True
+
+    def live(self, now):
+        return self.received is not None and 0 <= now-self.received <= self.timeout and self.ready
+
+    def permit(self, now):
+        if not self.live(now):
+            if self.was_permitted:
+                self.fault_latched = True
+            return False
+        if self.fault_latched:
+            return False
+        self.was_permitted = True
+        return True
+
+    def rearm(self, now):
+        if not self.live(now):
+            return False
+        self.fault_latched = False
+        self.was_permitted = False
+        return True
+
+
 class CommandBundle:
-    """Commit a coherent accelerator/brake/steering cycle across ROS topics."""
-    def __init__(self):
-        self.pending={}
-        self.last_stamp=None
-    def push(self,key,stamp,value):
-        if self.last_stamp is not None and stamp<self.last_stamp:return None
-        self.pending[key]=(stamp,value)
-        keys=('accel','brake','steer')
-        if not all(k in self.pending and self.pending[k][0]==stamp for k in keys):return None
-        self.last_stamp=stamp
-        return {k:self.pending[k][1] for k in keys}
+    """Assemble bounded, distinct advancing ROS-stamp cycles across topics.
+
+    Duplicate committed stamps never refresh command freshness. A frozen ROS
+    clock therefore cannot renew actuation permission with repeated commands.
+    """
+    def __init__(self, max_pending=64, max_age=.75):
+        self.pending = {}
+        self.last_stamp = None
+        self.max_pending = max_pending
+        self.max_age = max_age
+
+    def push(self, key, stamp, value, now=None):
+        now = time.monotonic() if now is None else now
+        if key not in ('accel', 'brake', 'steer') or not math.isfinite(now):
+            return None
+        if self.last_stamp is not None and stamp <= self.last_stamp:
+            return None
+        self.pending = {s:frame for s,frame in self.pending.items() if 0 <= now-frame['received'] <= self.max_age}
+        frame = self.pending.setdefault(stamp, {'received':now, 'values':{}})
+        if key in frame['values']:
+            return None
+        frame['values'][key] = value
+        if all(k in frame['values'] for k in ('accel', 'brake', 'steer')):
+            self.last_stamp = stamp
+            result = frame['values'].copy()
+            self.pending = {s:f for s,f in self.pending.items() if s > stamp}
+            return result
+        while len(self.pending) > self.max_pending:
+            del self.pending[min(self.pending)]
+        return None
+
     def reset(self):
-        self.pending.clear();self.last_stamp=None
+        self.pending.clear()
+        self.last_stamp = None

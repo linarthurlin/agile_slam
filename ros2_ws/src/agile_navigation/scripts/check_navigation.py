@@ -5,9 +5,11 @@ import math
 import time
 from pathlib import Path as FilePath
 from ament_index_python.packages import get_package_share_directory
+from acceptance_logic import RestWindow
 from vehicle_math import footprint_overlaps_box, footprint_overlaps_polygon
 import rclpy
 from rclpy.node import Node
+from rclpy.parameter import Parameter
 from rclpy.action import ActionClient
 from nav2_msgs.action import NavigateToPose
 from nav_msgs.msg import Odometry, Path
@@ -19,17 +21,25 @@ from rclpy.qos import qos_profile_sensor_data
 
 def main():
     rclpy.init()
-    node = Node('navigation_checker')
+    node = Node('navigation_checker',parameter_overrides=[Parameter('use_sim_time',value=True)])
     gx = node.declare_parameter('goal_x', 3.0).value
     gy = node.declare_parameter('goal_y', 0.0).value
     goal_yaw = node.declare_parameter('goal_yaw', 0.0).value
     cfg=json.loads((FilePath(get_package_share_directory('gem_description'))/'config/vehicle.json').read_text())
     timeout = node.declare_parameter('timeout', 150.0).value
+    sim_timeout = node.declare_parameter('sim_timeout', 120.0).value
+    if not all(math.isfinite(v) and v>0 for v in (timeout,sim_timeout)):raise ValueError('Route budgets must be positive and finite')
+    rest=RestWindow();truth_receipt=0.;truth_stamp=None;diagnostic_receipts={}
     observed = {'odom': None, 'commands': 0, 'path_points': 0, 'scans': 0, 'max_lateral_odom': 0.0, 'truth_rear_pose': None, 'truth_yaw': None, 'speed': None, 'rest_samples': 0, 'positive_turn_commands': 0, 'negative_turn_commands': 0, 'truth_samples': 0, 'footprint_overlap_samples': 0}
     scene_path=node.declare_parameter('scene_file',str(FilePath(get_package_share_directory('agile_navigation'))/'maps/navigation_scene.json')).value
     scene=json.loads(FilePath(scene_path).read_text())
     def truth(msg):
+        nonlocal truth_receipt,truth_stamp
+        stamp=msg.header.stamp.sec+msg.header.stamp.nanosec*1e-9
+        if truth_stamp is not None and stamp<=truth_stamp:return
         pose=msg.pose.pose
+        if not all(math.isfinite(v) for v in (pose.position.x,pose.position.y,pose.position.z,pose.orientation.x,pose.orientation.y,pose.orientation.z,pose.orientation.w)):return
+        truth_stamp=stamp;truth_receipt=time.monotonic()
         q=pose.orientation
         yaw=math.atan2(2*(q.w*q.z+q.x*q.y),1-2*(q.y*q.y+q.z*q.z))
         x,y=pose.position.x,pose.position.y
@@ -42,8 +52,11 @@ def main():
     odom_receipt=0.0
     def odometry(msg):
         nonlocal odom_receipt
-        odom_receipt=time.monotonic()
-        if rest_observation and abs(msg.twist.twist.linear.x)<.02:observed['rest_samples']+=1
+        now=time.monotonic()
+        stamp=msg.header.stamp.sec+msg.header.stamp.nanosec*1e-9
+        if not rest.observe(stamp,msg.twist.twist.linear.x,now):return
+        odom_receipt=now
+        if rest_observation:observed['rest_samples']=rest.samples
         observed['speed']=msg.twist.twist.linear.x
         observed['odom'] = [msg.pose.pose.position.x, msg.pose.pose.position.y]
         observed['max_lateral_odom'] = max(observed['max_lateral_odom'], abs(msg.pose.pose.position.y))
@@ -56,8 +69,10 @@ def main():
         observed['path_points'] = max(observed['path_points'],len(msg.poses))
     def scan(msg):
         observed['scans'] += 1
+    def diagnostic(msg,key):
+        observed[key]=json.loads(msg.data);diagnostic_receipts[key]=time.monotonic()
     for key,topic in (('readiness_diagnostics','/system/readiness'),('mock_diagnostics','/pacmod/mock/status')):
-        node.create_subscription(String,topic,lambda msg,key=key:observed.update({key:json.loads(msg.data)}),10)
+        node.create_subscription(String,topic,lambda msg,key=key:diagnostic(msg,key),10)
     # Ground truth is consumed here only by the evaluator, never the estimator/controller.
     node.create_subscription(Odometry, '/ground_truth/odometry', truth, qos_profile_sensor_data)
     node.create_subscription(Odometry, '/odometry/wheel', odometry, 10)
@@ -86,23 +101,26 @@ def main():
     result = handle.get_result_async()
     started = time.monotonic()
     deadline = started+timeout
-    while time.monotonic() < deadline and not result.done():
+    sim_started=node.get_clock().now().nanoseconds/1e9
+    while time.monotonic() < deadline and node.get_clock().now().nanoseconds/1e9-sim_started<sim_timeout and not result.done():
         rclpy.spin_once(node,timeout_sec=.1)
     status = result.result().status if result.done() else None
+    timeout_reason=None if result.done() else ('wall_budget' if time.monotonic()>=deadline else 'sim_budget')
     if not result.done():
         cancel = handle.cancel_goal_async()
         rclpy.spin_until_future_complete(node,cancel,timeout_sec=5)
     # Hold observation after the action result; success must leave the vehicle at rest.
-    rest_observation=True
-    rest_deadline=time.monotonic()+3.0
+    rest_observation=True;rest.start()
+    rest_deadline=time.monotonic()+8.0
     while time.monotonic()<rest_deadline:
         rclpy.spin_once(node,timeout_sec=.05)
+        if rest.ready(time.monotonic()) and time.monotonic()-truth_receipt<.5:break
     yaw_error=abs(math.atan2(math.sin(observed['truth_yaw']-goal_yaw),math.cos(observed['truth_yaw']-goal_yaw))) if observed['truth_yaw'] is not None else None
     final = observed['odom']
     error = math.hypot(final[0]-gx,final[1]-gy) if final else None
     truth_pose=observed['truth_rear_pose']
     truth_error=math.hypot(truth_pose[0]-gx,truth_pose[1]-gy) if truth_pose else None
-    report = {'truth_goal_error_m': truth_error, 'truth_yaw_error_rad':yaw_error, 'goal_yaw_rad':goal_yaw, 'passed': time.monotonic()-odom_receipt<1.0 and observed['rest_samples']>10 and observed['speed'] is not None and abs(observed['speed'])<.02 and yaw_error is not None and yaw_error<=.35 and observed['truth_samples'] > 0 and observed['footprint_overlap_samples'] == 0 and status == 4 and error is not None and error <= .4 and truth_error is not None and truth_error <= .4 and observed['commands'] > 0 and observed['path_points'] > 0, 'action_status': status, 'goal': [gx,gy], 'initial_odom': initial, 'final_odom': final, 'goal_error_m': error, 'wall_duration_s': time.monotonic()-started, **{k:v for k,v in observed.items() if k!='odom'}}
+    report = {'truth_goal_error_m': truth_error, 'truth_yaw_error_rad':yaw_error, 'goal_yaw_rad':goal_yaw, 'passed': rest.ready(time.monotonic()) and time.monotonic()-truth_receipt<1.0 and observed.get('readiness_diagnostics',{}).get('ready') is True and time.monotonic()-diagnostic_receipts.get('readiness_diagnostics',0)<.5 and observed.get('mock_diagnostics',{}).get('enabled') is True and not any(observed.get('mock_diagnostics',{}).get(k,True) for k in ('fault','override','timeout')) and time.monotonic()-diagnostic_receipts.get('mock_diagnostics',0)<.5 and observed['speed'] is not None and abs(observed['speed'])<.02 and yaw_error is not None and yaw_error<=.35 and observed['truth_samples'] > 0 and observed['footprint_overlap_samples'] == 0 and status == 4 and error is not None and error <= .4 and truth_error is not None and truth_error <= .4 and observed['commands'] > 0 and observed['path_points'] > 0, 'action_status': status,'route_budget_sim_s':sim_timeout,'wall_budget_s':timeout,'timeout_reason':timeout_reason,'truth_age_s':time.monotonic()-truth_receipt,'odom_age_s':time.monotonic()-odom_receipt,'consecutive_rest':rest.ready(time.monotonic()), 'goal': [gx,gy], 'initial_odom': initial, 'final_odom': final, 'goal_error_m': error, 'wall_duration_s': time.monotonic()-started, **{k:v for k,v in observed.items() if k!='odom'}}
     print(json.dumps(report,indent=2))
     node.destroy_node()
     rclpy.shutdown()

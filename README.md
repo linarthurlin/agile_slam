@@ -43,7 +43,7 @@ See [setup](docs/setup.md), [validation](docs/validation/baseline.md), [roadmap]
 
 The current image builds five ROS packages. Sensor streams, PACMod mock interlocks and selected Nav2 scenarios have local validation; historical baseline evidence remains available. Large image/cloud checks use reliable subscriptions; best-effort transport loss was observed and remains a separate performance gate. See the validation report for evidence and limits.
 
-The [renderer investigation](docs/validation/render_stalls.md) records a passing headless route/fault regression and an unresolved dual-GUI rendering stall. GUI navigation is not yet accepted as stable. Use `python scripts/run_scenarios.py intersection-right --gui` to reproduce the current GUI acceptance case.
+The [renderer investigation](docs/validation/render_stalls.md) retains the software-renderer failures. The WSL NVIDIA candidate adds a checksum-verified matching Ogre renderer plugin and a city terrain visual mesh. See [GPU remediation validation](docs/validation/gpu_runtime.md) for executed evidence and remaining gates. Use `python scripts/deploy.py up --gui --rendering gpu` for that capability-checked path; the default remains software.
 
 ## Navigation experiments
 

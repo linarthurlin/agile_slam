@@ -19,7 +19,7 @@ def main():
         if folder.parent!=base:parser.error('Run IDs must name a direct child of artifacts/scenarios.')
         manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8-sig'))
         if 'finished_utc' not in manifest:parser.error('Run is still active: '+run_id)
-        fields=('run_id','suite','repeat','gui','starts','fault_start','git_commit','git_status','image_id','config_sha256','source_sha256','asset_sha256','started_utc','finished_utc','passed','results','error','cleanup_error')
+        fields=('run_id','suite','repeat','gui','rendering','starts','fault_start','git_commit','git_status','image_id','config_sha256','source_sha256','asset_sha256','runtime_asset_sha256','started_utc','finished_utc','passed','results','error','cleanup_error')
         evidence={key:manifest[key] for key in fields if key in manifest}
         evidence['reports']={}
         for path in sorted(folder.glob('[0-9]*.json')):

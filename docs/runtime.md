@@ -30,7 +30,7 @@ python scripts/deploy.py status
 python scripts/deploy.py down
 ```
 
-Enable is explicit and intended only for the simulated backend. Starting services never enables actuation. `up --gui` delegates to Ubuntu-22.04 under WSL on Windows; override the distribution with `AGILE_WSL_DISTRO`. Software rendering is the supported desktop baseline.
+Enable is explicit and intended only for the simulated backend. Starting services never enables actuation. `up --gui` delegates to Ubuntu-22.04 under WSL on Windows; override the distribution with `AGILE_WSL_DISTRO`. Software rendering remains the default fallback. For the validated WSL NVIDIA capability path, use `python scripts/deploy.py up --gui --rendering gpu`. GPU preflight rejects missing acceleration, copy-image support or mismatched patched-plugin provenance.
 
 `python scripts/deploy.py test` exercises the ROS PACMod mock contract, including invalid reports. It deliberately latches a readiness fault and leaves the mock disabled. Restart core to clear that latch, check readiness, then explicitly enable if needed. Backend restart resets simulation time: perform `down`, then `up` to restart all clock-sensitive services together.
 
@@ -68,3 +68,13 @@ Desktop DDS datagrams are capped at 1400 bytes with 1280-byte DDS fragments for 
 The simulation backend sets `LP_NATIVE_VECTOR_WIDTH=128` for Mesa llvmpipe. The original camera resolution/rate/noise and LiDAR sampling/rate remain enabled. This is a headless-tested desktop workaround, not a GPU configuration or a change to the vehicle application images. Dual-GUI navigation still has a reproduced rendering stall and is not accepted. Mesa documents vector-width selection in its [LLVMpipe guide](https://docs.mesa3d.org/drivers/llvmpipe.html).
 
 Reducing renderer workers to four and removing the camera Gaussian noise pass both failed isolation tests; neither change is retained. Read `docs/validation/render_stalls.md` for positive and negative evidence and the remaining acceptance limits.
+
+## WSL NVIDIA renderer
+
+`deploy/desktop-gpu.yaml` is an overlay of the same project and image, not a second stack. Only the simulator receives `/dev/dxg`, read-only WSL libraries and WSLg display access. Application services retain their existing boundaries and private network.
+
+The GL3Plus plugin is rebuilt from checksum-verified Ubuntu Ogre 2.2.5 sources with an NV_copy_image fallback. Generated Ogre feature definitions must match the installed core exactly; only the renderer plugin is replaced. See `third_party/ogre_next.json`. No OpenGL version or extension is fabricated. Compute-based Terra terrain rendering is replaced during city conversion by a visual mesh sampled from the source height image; existing collision geometry is unchanged. Terrain texture blending is not reproduced.
+
+Readiness now publishes a session and advancing heartbeat sequence. Vehicle-control requires a live 0.5-second steady-time lease; its expiry latches inhibition until an explicit disable/enable cycle after readiness returns. Late lifecycle startup success cannot clear a readiness fault. PACMod cycles are buffered by distinct ROS stamps with bounded age and capacity. Repeated frozen-clock stamps do not refresh the mock watchdog. These remain simulation software contracts, not validated ECU timings.
+
+Switching rendering modes recreates backend services. Run `down` before `up --rendering gpu` or returning to software so all clock-sensitive nodes restart together. Keep the same `--rendering` selection when adding GUIs to a running stack.

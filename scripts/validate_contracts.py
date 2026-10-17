@@ -21,7 +21,7 @@ def validate():
     for key,value in actual.items():
         if not math.isclose(cfg[key],value,abs_tol=1e-6):raise ValueError(f'Geometry mismatch {key}: config={cfg[key]}, model={value}')
     if not math.isclose(xyz('base_rear_axle_joint')[0],cfg['rear_axle_x'],abs_tol=1e-6):raise ValueError('Rear control frame disagrees with geometry.')
-    for key in ('wheelbase','track','wheel_radius','max_speed','max_steer','steering_ratio','steering_rate','command_timeout','report_timeout','backend_timeout'):
+    for key in ('wheelbase','track','wheel_radius','max_speed','max_steer','steering_ratio','steering_rate','command_timeout','report_timeout','backend_timeout','readiness_timeout'):
         if not math.isfinite(cfg[key]) or cfg[key]<=0:raise ValueError(f'Invalid positive vehicle parameter: {key}')
     contract=json.loads((ROOT/'config/interfaces/runtime.json').read_text())
     if contract['sim_private_actuation']!='/simulation/actuation':raise ValueError('Private actuation contract mismatch.')

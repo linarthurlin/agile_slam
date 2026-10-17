@@ -58,3 +58,7 @@ Repeated short turns do not establish long-duration stability, long-approach acc
 ## Next investigation
 
 Prioritize mapping the busy generated shader to its Ogre compositor pass, then compare a pinned Mesa/LLVM update or a verified GPU backend. Native Linux rendering is a separate comparison, not proof of WSL2 correctness. After a candidate passes both GUIs, repeat long approaches and a sustained moving soak before promoting full desktop stability. Keep the original watchdogs and all negative evidence.
+
+## Follow-up implementation
+
+The [GPU/control remediation report](gpu_runtime.md) records the matching NV-copy renderer patch, the separate Terra compute failure, the terrain visual conversion and subsequent executed acceptance. Historical negative software-renderer evidence above remains valid; it is not overwritten by GPU trials.

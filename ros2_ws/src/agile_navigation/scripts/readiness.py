@@ -2,6 +2,8 @@
 """Activate Nav2 only after ROS data/TF readiness; inhibit on backend loss."""
 import json
 import time
+import uuid
+from readiness_state import ReadinessState
 import rclpy
 from rclpy.node import Node
 from rclpy.clock import Clock,ClockType
@@ -18,7 +20,8 @@ from tf2_ros import Buffer,TransformListener
 class Readiness(Node):
     def __init__(self):
         super().__init__('readiness')
-        self.map_ready=False;self.times={};self.last_clock=None;self.active=False;self.starting=None;self.failed=False
+        self.map_ready=False;self.times={};self.last_clock=None;self.state=ReadinessState();self.starting=None
+        self.session_id=uuid.uuid4().hex;self.heartbeat_seq=0
         self.last_fault=None;self.report_valid=None
         self.buffer=Buffer();self.listener=TransformListener(self.buffer,self)
         self.inhibit=self.create_publisher(Bool,'/vehicle/inhibit',QoSProfile(depth=1,durability=DurabilityPolicy.TRANSIENT_LOCAL))
@@ -47,10 +50,13 @@ class Readiness(Node):
         now=time.monotonic()
         return {key:now-self.times[key] if key in self.times else None for key in ('clock','cloud','odom','report')}
     def trip(self,reason):
-        if self.failed:return
+        if self.state.failed:return
         self.last_fault={'reason':reason,'stream_ages_s':self.ages(),'report_valid':self.report_valid}
         self.get_logger().error('Readiness fault: '+json.dumps(self.last_fault))
-        self.failed=True;self.active=False
+        self.state.trip()
+        self.stop_navigation()
+
+    def stop_navigation(self):
         if self.cancel.service_is_ready():self.cancel.call_async(CancelGoal.Request())
         if self.manager.service_is_ready():
             req=ManageLifecycleNodes.Request();req.command=1;self.manager.call_async(req)
@@ -59,13 +65,24 @@ class Readiness(Node):
         data=self.map_ready and all(k in self.times and now-self.times[k]<2. for k in ('clock','cloud','odom','report'))
         tf=bool(self.buffer.can_transform('map','base_rear_axle',rclpy.time.Time()))
         if self.starting is not None and self.starting.done():
-            result=self.starting.result();self.active=bool(result and result.success);self.failed=not self.active;self.starting=None
-        if not self.failed and not self.active and self.starting is None and data and tf and self.manager.service_is_ready():
+            future=self.starting;self.starting=None
+            try:
+                result=future.result()
+            except Exception as exc:
+                self.trip('startup_exception: '+str(exc))
+            else:
+                if self.state.failed:
+                    self.stop_navigation()
+                elif not self.state.complete_startup(bool(result and result.success)):
+                    self.last_fault={'reason':'startup_failed','stream_ages_s':self.ages(),'report_valid':self.report_valid}
+                    self.stop_navigation()
+        if not self.state.failed and not self.state.active and self.starting is None and data and tf and self.manager.service_is_ready():
             req=ManageLifecycleNodes.Request();req.command=0;self.starting=self.manager.call_async(req)
-        if self.active and not (data and tf):self.trip('data_stale_or_invalid' if not data else 'tf_unavailable')
-        ready=self.active and data and tf and not self.failed
+        if self.state.active and not (data and tf):self.trip('data_stale_or_invalid' if not data else 'tf_unavailable')
+        ready=self.state.active and data and tf and not self.state.failed
         msg=Bool();msg.data=not ready;self.inhibit.publish(msg)
-        status=String();status.data=json.dumps({'ready':ready,'data_ready':data,'tf_ready':tf,'nav2_active':self.active,'fault_latched':self.failed,'stream_ages_s':self.ages(),'report_valid':self.report_valid,'last_fault':self.last_fault});self.status.publish(status)
+        self.heartbeat_seq+=1
+        status=String();status.data=json.dumps({'session_id':self.session_id,'heartbeat_seq':self.heartbeat_seq,'ready':ready,'data_ready':data,'tf_ready':tf,'nav2_active':self.state.active,'fault_latched':self.state.failed,'stream_ages_s':self.ages(),'report_valid':self.report_valid,'last_fault':self.last_fault});self.status.publish(status)
 
 def main():
     rclpy.init();node=Readiness()

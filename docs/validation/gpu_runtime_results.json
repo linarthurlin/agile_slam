@@ -1,0 +1,2102 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-10-16",
+  "unit_tests_passed": 52,
+  "renderer": {
+    "renderer": "D3D12 (NVIDIA GeForce RTX 4060 Laptop GPU)",
+    "core_version": "4.2 (Core Profile) Mesa 23.2.1-1ubuntu3.1~22.04.4",
+    "accelerated": true,
+    "arb_copy_image": false,
+    "nv_copy_image": true,
+    "rendering": "gpu",
+    "exit_code": 0,
+    "stderr": "",
+    "passed": true,
+    "patched_plugin_verified": true,
+    "renderer_build": {
+      "package": "ogre-next",
+      "version": "2.2.5+dfsg3-0ubuntu2",
+      "source_base": "https://archive.ubuntu.com/ubuntu/pool/universe/o/ogre-next/",
+      "files": {
+        "ogre-next_2.2.5+dfsg3.orig.tar.xz": "a8bff0ff3281ea3fb24d77e884db3c8111720d652cc4fa8eb992398d6c03a934",
+        "ogre-next_2.2.5+dfsg3-0ubuntu2.debian.tar.xz": "8918cf90f57b9d8a3613f3e10b31adfbfc8e21ecf1042244b919b7e77d9e1ee7",
+        "ogre-next_2.2.5+dfsg3-0ubuntu2.dsc": "bce8d9187349ad690ccab0c3214eac5e810c44aa79fa0c4e947c8c2eb31790c7"
+      },
+      "patch": "patches/ogre-next-2.2.5-nv-copy.patch",
+      "reference": "https://github.com/OGRECave/ogre-next/blob/v2.3.3/RenderSystems/GL3Plus/src/OgreGL3PlusTextureGpu.cpp",
+      "license": "MIT; retain matching Ubuntu package copyright",
+      "scope": "Build only the matching GL3Plus renderer target; deploy only its plugin against the installed 2.2.5 core.",
+      "plugin_sha256": "9c73fc22dcdedff44e103d8dce36f6521c506c2db1d9760a3ebbe642e96002e7",
+      "patch_sha256": "1b0668578408247b1d256d270e389b072f3d059e6039436b345ce2a061673078"
+    }
+  },
+  "primitive": {
+    "image_id": "sha256:34dd116bdf34643097174a1ec3a46e7798f97385f209b62f953c7d291d812077",
+    "results": [
+      {
+        "sensor": "camera",
+        "passed": true,
+        "xacro_sha256": "5e89f1daa9efe835f1c0be4f91f48aad7b9d034fdc1497663906c097c0dd8754",
+        "report": {
+          "passed": true,
+          "sensor": "camera",
+          "camera_samples": 10,
+          "cloud_samples": 0,
+          "wall_error_m": null,
+          "image_valid": true,
+          "warm_fraction": 0.4089041666666667,
+          "center_rgb": [
+            84.0003125,
+            78.00015625,
+            64.00015625
+          ],
+          "image_stddev": 83.93826154001063,
+          "scope": "Stationary primitive camera color and LiDAR wall-range readback; no deskew or photometric hardware calibration."
+        }
+      },
+      {
+        "sensor": "lidar",
+        "passed": true,
+        "xacro_sha256": "bc646d8e7990c871c8452b823d95b870c0cf7896e95c418778a15bd6e521d308",
+        "report": {
+          "passed": true,
+          "sensor": "lidar",
+          "camera_samples": 0,
+          "cloud_samples": 10,
+          "wall_error_m": 0.0017773691383538015,
+          "cloud_valid": true,
+          "finite_points": 16077,
+          "wall_points": 3346,
+          "scope": "Stationary primitive camera color and LiDAR wall-range readback; no deskew or photometric hardware calibration."
+        }
+      },
+      {
+        "sensor": "both",
+        "passed": true,
+        "xacro_sha256": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+        "report": {
+          "passed": true,
+          "sensor": "both",
+          "camera_samples": 28,
+          "cloud_samples": 10,
+          "wall_error_m": 0.0017773691383538015,
+          "image_valid": true,
+          "warm_fraction": 0.4089041666666667,
+          "center_rgb": [
+            84.0,
+            78.0,
+            64.0
+          ],
+          "image_stddev": 83.93814626191285,
+          "cloud_valid": true,
+          "finite_points": 16077,
+          "wall_points": 3346,
+          "scope": "Stationary primitive camera color and LiDAR wall-range readback; no deskew or photometric hardware calibration."
+        }
+      }
+    ],
+    "passed": true
+  },
+  "moving_sensor_window": {
+    "passed": true,
+    "wall_window_s": 30.0,
+    "estimated_rtf": 0.1688883105701153,
+    "warnings": [],
+    "topics": {
+      "/sensors/imu/data_raw": {
+        "count": 253,
+        "frame_id": "IMU_link",
+        "acceleration_norm": 9.8002903582398,
+        "received_rate_wall_hz": 8.437000512998415,
+        "received_rate_stamp_hz": 50.00000000000001,
+        "backward_stamps": 0
+      },
+      "/sensors/velodyne/points": {
+        "count": 51,
+        "frame_id": "velodyne_link",
+        "fields": [
+          "x",
+          "y",
+          "z",
+          "intensity",
+          "ring"
+        ],
+        "points": 30000,
+        "finite_points": 22679,
+        "received_rate_wall_hz": 1.6938906467719943,
+        "received_rate_stamp_hz": 10.0,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/camera_info": {
+        "count": 153,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "focal_lengths": [
+          476.7014503479004,
+          476.7014980316162
+        ],
+        "received_rate_wall_hz": 5.143407479820092,
+        "received_rate_stamp_hz": 30.2969902332071,
+        "backward_stamps": 0
+      },
+      "/sensors/obstacle_scan": {
+        "count": 51,
+        "frame_id": "base_footprint",
+        "finite_ranges": 230,
+        "nearest_obstacle_m": 3.063403844833374,
+        "received_rate_wall_hz": 1.6961839469888107,
+        "received_rate_stamp_hz": 10.0,
+        "backward_stamps": 0
+      },
+      "/sensors/cameras/front/image_raw": {
+        "count": 123,
+        "frame_id": "camera_front_optical_frame",
+        "shape": [
+          800,
+          600
+        ],
+        "encoding": "rgb8",
+        "payload_valid": true,
+        "received_rate_wall_hz": 4.145587853508243,
+        "received_rate_stamp_hz": 30.295505338962,
+        "backward_stamps": 0
+      }
+    },
+    "scope": "Short delivery/schema sanity window; not a hardware accuracy, latency, or long-duration acceptance."
+  },
+  "runs": [
+    {
+      "run_id": "20261017T011548049724Z",
+      "suite": "all",
+      "gui": true,
+      "rendering": "gpu",
+      "image_id": "sha256:34dd116bdf34643097174a1ec3a46e7798f97385f209b62f953c7d291d812077",
+      "passed": false,
+      "started_utc": "2026-10-17T01:15:48.049724+00:00",
+      "finished_utc": "2026-10-17T01:29:33.657002+00:00",
+      "reports": {
+        "1_backend-pause.json": {
+          "passed": true,
+          "fault": "backend-pause",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "readiness_fault_inhibits": true,
+            "feedback_resumed": true,
+            "disabled_after_resume": true,
+            "no_auto_enable_with_live_command": true,
+            "fresh_rest_hold": true
+          },
+          "wall_time_to_observed_rest_s": 2.7038775789987994,
+          "rest_drift_m": 0.0014075590957887824,
+          "final": {
+            "speed": 1.901188019760265e-19,
+            "enabled": false,
+            "ready": false,
+            "fault_latched": true,
+            "inhibited": true,
+            "truth": [
+              0.054953506957337354,
+              3.243819790435143e-19
+            ],
+            "lease_fault": true,
+            "control_diagnostics": {
+              "state": "inhibited",
+              "enabled": false,
+              "inhibited": true,
+              "readiness_lease_live": false,
+              "readiness_lease_fault": true,
+              "report_age_s": 0.007216012003482319,
+              "target_mps": 0.3,
+              "feedback_mps": 1.901188019760265e-19,
+              "accel": 0.0,
+              "brake": 0.4
+            },
+            "mock_diagnostics": {
+              "enabled": false,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": true,
+              "gear": 3,
+              "feedback_mps": 1.901188019760265e-19,
+              "plant_target_mps": 0.0,
+              "last_watchdog_fault": {
+                "joint_age_s": 2.1529192110028816,
+                "advancing_joint_stamp_age_s": 2.1529143669904443,
+                "command_ages_s": {
+                  "accel": 2.2421895199950086,
+                  "brake": 2.2421895199950086,
+                  "shaft": 2.2421895199950086,
+                  "gear": 2.2421483840007568
+                },
+                "report_valid": true
+              },
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "readiness_diagnostics": {
+              "session_id": "598eba482d634b04b5f80751f4ff6b77",
+              "heartbeat_seq": 387,
+              "ready": false,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": false,
+              "fault_latched": true,
+              "stream_ages_s": {
+                "clock": 0.00030955899273976684,
+                "cloud": 0.047884243991575204,
+                "odom": 0.044157095995615236,
+                "report": 0.0034622870007297024
+              },
+              "report_valid": true,
+              "last_fault": {
+                "reason": "data_stale_or_invalid",
+                "stream_ages_s": {
+                  "clock": 1.9517461609939346,
+                  "cloud": 2.0491332490055356,
+                  "odom": 1.8486471969954437,
+                  "report": 1.8004918850056129
+                },
+                "report_valid": true
+              }
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_backend-pause.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "truth": [
+              -6.09560074983426e-13,
+              1.4636496928641623e-19,
+              5.925858969143312e-21,
+              -3.8711433393535535e-13
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0,
+              -1.2313729744128764e-19
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 6.095600749834436e-13,
+              "yaw_rad": 5.925858969143312e-21,
+              "speed_mps": 3.8711433393535535e-13,
+              "age_s": 0.0005213680124143139
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 1.2313729744128764e-19,
+              "age_s": 3.158199251629412e-05
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_controller-stop.json": {
+          "passed": true,
+          "fault": "controller-stop",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "watchdog_disabled": true,
+            "fresh_feedback_rest": true,
+            "controller_returned": true,
+            "no_auto_enable_with_live_command": true,
+            "fresh_rest_hold": true
+          },
+          "wall_time_to_observed_rest_s": 1.6748250119999284,
+          "rest_drift_m": 0.009020619713146882,
+          "final": {
+            "speed": 3.6082426233156014e-19,
+            "enabled": false,
+            "ready": true,
+            "fault_latched": false,
+            "inhibited": false,
+            "truth": [
+              0.10518837658856138,
+              5.8293334726258445e-19
+            ],
+            "mock_diagnostics": {
+              "enabled": false,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": true,
+              "gear": 3,
+              "feedback_mps": 3.6082426233156014e-19,
+              "plant_target_mps": 0.0,
+              "last_watchdog_fault": {
+                "joint_age_s": 0.1259630849963287,
+                "advancing_joint_stamp_age_s": 0.12595759700343478,
+                "command_ages_s": {
+                  "accel": 0.7622125579946442,
+                  "brake": 0.7622125579946442,
+                  "shaft": 0.7622125579946442,
+                  "gear": 0.7621598450059537
+                },
+                "report_valid": true
+              },
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "lease_fault": false,
+            "control_diagnostics": {
+              "state": "inhibited",
+              "enabled": false,
+              "inhibited": false,
+              "readiness_lease_live": true,
+              "readiness_lease_fault": false,
+              "report_age_s": 0.01223421300528571,
+              "target_mps": 0.3,
+              "feedback_mps": 3.6082426233156014e-19,
+              "accel": 0.0,
+              "brake": 0.4
+            },
+            "readiness_diagnostics": {
+              "session_id": "cb3f4c1171af46e2ad22d3c0d11b772b",
+              "heartbeat_seq": 458,
+              "ready": true,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": true,
+              "fault_latched": false,
+              "stream_ages_s": {
+                "clock": 0.0027466989995446056,
+                "cloud": 0.033329660989693366,
+                "odom": 0.0458756369916955,
+                "report": 0.006844295989139937
+              },
+              "report_valid": true,
+              "last_fault": null
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_controller-stop.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "truth": [
+              -2.9466379998090765e-13,
+              2.7275153396287865e-21,
+              -1.6666667519290102e-21,
+              -3.871143144130437e-13
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0,
+              -2.262149046619881e-19
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 2.9466379998090765e-13,
+              "yaw_rad": 1.6666667519290102e-21,
+              "speed_mps": 3.871143144130437e-13,
+              "age_s": 0.07467128100688569
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 2.262149046619881e-19,
+              "age_s": 5.067999882157892e-05
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_curves.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "odom": [
+              -0.87,
+              0.0,
+              0.0,
+              2.2351932919234573e-19
+            ],
+            "truth": [
+              -3.582796630952009e-13,
+              1.178149276020243e-20,
+              3.208343203548723e-21,
+              -3.8711422078558836e-13
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 3.582796630952011e-13,
+              "yaw_rad": 3.208343203548723e-21,
+              "speed_mps": 3.8711422078558836e-13,
+              "age_s": 4.098599310964346e-05
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 2.2351932919234573e-19,
+              "age_s": 0.10683883499586955
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_intersection-left.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              30.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              29.13,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "truth": [
+              29.9999999999999,
+              1.6192407556096522e-19,
+              4.077936529831102e-20,
+              8.869070388952193e-14
+            ],
+            "odom": [
+              29.13,
+              0.0,
+              0.0,
+              -2.8591486167103576e-19
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 9.947598300654581e-14,
+              "yaw_rad": 4.077936529831102e-20,
+              "speed_mps": 8.869070388952193e-14,
+              "age_s": 0.00167569299810566
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 2.8591486167103576e-19,
+              "age_s": 4.897000326309353e-05
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_intersection-right.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              30.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              29.13,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "truth": [
+              29.9999999999999,
+              1.098492056625769e-19,
+              4.1517552476686414e-20,
+              7.645873290381187e-14
+            ],
+            "odom": [
+              29.13,
+              0.0,
+              0.0,
+              -5.837331744913308e-19
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 9.947598300647467e-14,
+              "yaw_rad": 4.1517552476686414e-20,
+              "speed_mps": 7.645873290381187e-14,
+              "age_s": 0.012678276005317457
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 5.837331744913308e-19,
+              "age_s": 4.784599877893925e-05
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_left_intersection.json": {
+          "truth_goal_error_m": 0.38955892714852003,
+          "truth_yaw_error_rad": 0.1684053066928659,
+          "goal_yaw_rad": 1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "route_budget_sim_s": 120.0,
+          "wall_budget_s": 360.0,
+          "timeout_reason": null,
+          "truth_age_s": 0.006185682999785058,
+          "odom_age_s": 0.08975375301088206,
+          "consecutive_rest": true,
+          "goal": [
+            44.0,
+            12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.87535020282884,
+            11.714103870643296
+          ],
+          "goal_error_m": 0.311888070813804,
+          "wall_duration_s": 130.27727243601112,
+          "commands": 2580,
+          "path_points": 78,
+          "scans": 409,
+          "max_lateral_odom": 11.714103870643296,
+          "truth_rear_pose": [
+            44.17265423939653,
+            11.650791364168192
+          ],
+          "truth_yaw": 1.4023910201020306,
+          "speed": -5.113389388075519e-19,
+          "rest_samples": 10,
+          "positive_turn_commands": 1276,
+          "negative_turn_commands": 103,
+          "truth_samples": 2044,
+          "footprint_overlap_samples": 0,
+          "readiness_diagnostics": {
+            "session_id": "d9ac2e1b7aed46bab73aecfc0054fd93",
+            "heartbeat_seq": 1714,
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.1556321929965634,
+              "cloud": 0.24226890799764078,
+              "odom": 0.021643311003572308,
+              "report": 0.01450374700652901
+            },
+            "report_valid": true,
+            "last_fault": null
+          },
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -5.113389388075519e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          }
+        },
+        "1_left_offset.json": {
+          "truth_goal_error_m": 0.31038799806975054,
+          "truth_yaw_error_rad": 0.09643621822380806,
+          "goal_yaw_rad": 0.0,
+          "passed": true,
+          "action_status": 4,
+          "route_budget_sim_s": 120.0,
+          "wall_budget_s": 360.0,
+          "timeout_reason": null,
+          "truth_age_s": 0.16327793399977963,
+          "odom_age_s": 0.0001472269941587001,
+          "consecutive_rest": true,
+          "goal": [
+            12.0,
+            1.0
+          ],
+          "initial_odom": [
+            -0.87,
+            0.0
+          ],
+          "final_odom": [
+            11.71468646215557,
+            0.8822958387626509
+          ],
+          "goal_error_m": 0.30863908444960964,
+          "wall_duration_s": 76.74580279100337,
+          "commands": 1508,
+          "path_points": 45,
+          "scans": 231,
+          "max_lateral_odom": 0.8822958387626509,
+          "truth_rear_pose": [
+            11.713304044482575,
+            0.8810624599392687
+          ],
+          "truth_yaw": 0.09643621822380806,
+          "speed": 2.448550414724351e-19,
+          "rest_samples": 13,
+          "positive_turn_commands": 554,
+          "negative_turn_commands": 96,
+          "truth_samples": 1155,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -1.7870850760010116e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "session_id": "1dccdd5ded1140ea9af91c4bdc088033",
+            "heartbeat_seq": 1149,
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.0854600919992663,
+              "cloud": 0.13341799899353646,
+              "odom": 0.03172058599011507,
+              "report": 0.017436928988900036
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "1_readiness-pause.json": {
+          "passed": false,
+          "fault": "readiness-pause",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "lease_loss_inhibits": true,
+            "fresh_feedback_rest": true,
+            "heartbeat_returned": true,
+            "no_auto_enable_with_live_command": true,
+            "fresh_rest_hold": true,
+            "explicit_disable": true,
+            "disabled_report_observed": true,
+            "explicit_reenable": true,
+            "motion_after_explicit_reenable": false
+          },
+          "wall_time_to_observed_rest_s": 1.814267933004885,
+          "rest_drift_m": 0.0012006168153343572,
+          "final": {
+            "speed": 3.982388785014412e-20,
+            "enabled": true,
+            "ready": false,
+            "fault_latched": true,
+            "inhibited": true,
+            "truth": [
+              0.12380211208527038,
+              8.759910973053463e-19
+            ],
+            "lease_fault": true,
+            "control_diagnostics": {
+              "state": "inhibited",
+              "enabled": true,
+              "inhibited": true,
+              "readiness_lease_live": false,
+              "readiness_lease_fault": true,
+              "report_age_s": 0.02259488399431575,
+              "target_mps": 0.3,
+              "feedback_mps": -5.6895393270513944e-21,
+              "accel": 0.0,
+              "brake": 0.4
+            },
+            "mock_diagnostics": {
+              "enabled": true,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": false,
+              "gear": 3,
+              "feedback_mps": 3.982388785014412e-20,
+              "plant_target_mps": 0.0,
+              "last_watchdog_fault": null,
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "readiness_diagnostics": {
+              "session_id": "aee212cd59cf4bcebc2d8f49bd4e8b40",
+              "heartbeat_seq": 514,
+              "ready": false,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": false,
+              "fault_latched": true,
+              "stream_ages_s": {
+                "clock": 0.16535781799757387,
+                "cloud": 0.3361647540004924,
+                "odom": 0.011849920003442094,
+                "report": 0.02505341899814084
+              },
+              "report_valid": true,
+              "last_fault": {
+                "reason": "data_stale_or_invalid",
+                "stream_ages_s": {
+                  "clock": 1.9235126699932152,
+                  "cloud": 2.1437104599899612,
+                  "odom": 1.7592429539945442,
+                  "report": 1.762896506988909
+                },
+                "report_valid": true
+              }
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_readiness-pause.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "truth": [
+              -2.9466379998090765e-13,
+              2.7275153396287865e-21,
+              -1.6666667519290102e-21,
+              -3.871143144130437e-13
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0,
+              -2.262149046619881e-19
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 2.9466379998090765e-13,
+              "yaw_rad": 1.6666667519290102e-21,
+              "speed_mps": 3.871143144130437e-13,
+              "age_s": 0.09202974099025596
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 2.262149046619881e-19,
+              "age_s": 3.842699516098946e-05
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_return_center.json": {
+          "truth_goal_error_m": 0.31251529363087976,
+          "truth_yaw_error_rad": 0.11933243959973758,
+          "goal_yaw_rad": 0.0,
+          "passed": true,
+          "action_status": 4,
+          "route_budget_sim_s": 120.0,
+          "wall_budget_s": 360.0,
+          "timeout_reason": null,
+          "truth_age_s": 0.18495224999787752,
+          "odom_age_s": 0.06265272499877028,
+          "consecutive_rest": true,
+          "goal": [
+            36.0,
+            0.0
+          ],
+          "initial_odom": [
+            27.716911796466707,
+            -1.0730599098987654
+          ],
+          "final_odom": [
+            35.72104314523677,
+            -0.12090526209137992
+          ],
+          "goal_error_m": 0.30403126355817267,
+          "wall_duration_s": 44.3612035309925,
+          "commands": 859,
+          "path_points": 30,
+          "scans": 157,
+          "max_lateral_odom": 1.1995404477724,
+          "truth_rear_pose": [
+            35.71017287832018,
+            -0.11690187462990226
+          ],
+          "truth_yaw": 0.11933243959973758,
+          "speed": 1.8234810086885383e-19,
+          "rest_samples": 13,
+          "positive_turn_commands": 430,
+          "negative_turn_commands": 197,
+          "truth_samples": 785,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 1.8234810086885383e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "session_id": "1dccdd5ded1140ea9af91c4bdc088033",
+            "heartbeat_seq": 2630,
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.1591135850030696,
+              "cloud": 0.20312547200592235,
+              "odom": 0.061663233005674556,
+              "report": 0.017206575008458458
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 0.10720530447458414,
+          "truth_yaw_error_rad": 0.028299038906875795,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "route_budget_sim_s": 120.0,
+          "wall_budget_s": 360.0,
+          "timeout_reason": null,
+          "truth_age_s": 0.08176663600897882,
+          "odom_age_s": 6.334600038826466e-05,
+          "consecutive_rest": true,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.90964281467046,
+            -11.90790041533127
+          ],
+          "goal_error_m": 0.12902230209087515,
+          "wall_duration_s": 136.00615632999688,
+          "commands": 2692,
+          "path_points": 75,
+          "scans": 421,
+          "max_lateral_odom": 11.90790041533127,
+          "truth_rear_pose": [
+            44.018946008675336,
+            -11.894482105485551
+          ],
+          "truth_yaw": -1.5990953657017724,
+          "speed": 4.074840890837828e-19,
+          "rest_samples": 9,
+          "positive_turn_commands": 295,
+          "negative_turn_commands": 1803,
+          "truth_samples": 2106,
+          "footprint_overlap_samples": 0,
+          "readiness_diagnostics": {
+            "session_id": "3e8f2e3b226f452b8d784d338de4790b",
+            "heartbeat_seq": 1845,
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.020803741994313896,
+              "cloud": 0.16406057799758855,
+              "odom": 0.08504087799519766,
+              "report": 0.007449604003340937
+            },
+            "report_valid": true,
+            "last_fault": null
+          },
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 2.656708253488392e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          }
+        },
+        "1_right_offset.json": {
+          "truth_goal_error_m": 0.2970230300430056,
+          "truth_yaw_error_rad": 0.14900150620272684,
+          "goal_yaw_rad": 0.0,
+          "passed": true,
+          "action_status": 4,
+          "route_budget_sim_s": 120.0,
+          "wall_budget_s": 360.0,
+          "timeout_reason": null,
+          "truth_age_s": 0.12446686899056658,
+          "odom_age_s": 0.0039541870064567775,
+          "consecutive_rest": true,
+          "goal": [
+            28.0,
+            -1.0
+          ],
+          "initial_odom": [
+            11.71468646215557,
+            0.8822958387626509
+          ],
+          "final_odom": [
+            27.716911796466707,
+            -1.0730599098987654
+          ],
+          "goal_error_m": 0.29236395368465423,
+          "wall_duration_s": 81.36851858301088,
+          "commands": 1600,
+          "path_points": 54,
+          "scans": 291,
+          "max_lateral_odom": 1.0730599098987654,
+          "truth_rear_pose": [
+            27.710364551664792,
+            -1.0658330269970282
+          ],
+          "truth_yaw": -0.14900150620272687,
+          "speed": 8.06157246983121e-19,
+          "rest_samples": 13,
+          "positive_turn_commands": 243,
+          "negative_turn_commands": 586,
+          "truth_samples": 1455,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": 8.06157246983121e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "session_id": "1dccdd5ded1140ea9af91c4bdc088033",
+            "heartbeat_seq": 2091,
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.08062024600803852,
+              "cloud": 0.10646913001255598,
+              "odom": 0.04061271600949112,
+              "report": 0.01731916901189834
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        }
+      },
+      "gazebo_stats": {
+        "1_left_intersection.gazebo.summary.json": {
+          "samples": 1299,
+          "max_wall_gap_s": 0.23500000010244548,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792200060.081849,
+            "monotonic_s": 1104662.312,
+            "sim_s": 2.125,
+            "iterations": 2125,
+            "rtf": 0.2194,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792200205.6338258,
+            "monotonic_s": 1104807.875,
+            "sim_s": 43.953,
+            "iterations": 43953,
+            "rtf": 0.3437,
+            "paused": false
+          }
+        },
+        "1_left_offset.gazebo.summary.json": {
+          "samples": 780,
+          "max_wall_gap_s": 0.21899999980814755,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792199786.5607946,
+            "monotonic_s": 1104388.796,
+            "sim_s": 1.8450000000000002,
+            "iterations": 1845,
+            "rtf": 0.2551,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792199873.733272,
+            "monotonic_s": 1104475.968,
+            "sim_s": 25.982,
+            "iterations": 25982,
+            "rtf": 0.3179,
+            "paused": false
+          }
+        },
+        "1_return_center.gazebo.summary.json": {
+          "samples": 458,
+          "max_wall_gap_s": 0.1720000000204891,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792199970.561557,
+            "monotonic_s": 1104572.796,
+            "sim_s": 58.099,
+            "iterations": 58099,
+            "rtf": 0.4135,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792200021.593781,
+            "monotonic_s": 1104623.828,
+            "sim_s": 74.816,
+            "iterations": 74816,
+            "rtf": 0.3433,
+            "paused": false
+          }
+        },
+        "1_right_intersection.gazebo.summary.json": {
+          "samples": 1286,
+          "max_wall_gap_s": 0.2649999998975545,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792200254.4854684,
+            "monotonic_s": 1104856.718,
+            "sim_s": 1.92,
+            "iterations": 1920,
+            "rtf": 0.2738,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792200406.1047072,
+            "monotonic_s": 1105008.343,
+            "sim_s": 44.798,
+            "iterations": 44798,
+            "rtf": 0.3229,
+            "paused": false
+          }
+        },
+        "1_right_offset.gazebo.summary.json": {
+          "samples": 821,
+          "max_wall_gap_s": 0.18799999984912574,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792199876.5988367,
+            "monotonic_s": 1104478.828,
+            "sim_s": 26.929,
+            "iterations": 26929,
+            "rtf": 0.4084,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792199967.9029825,
+            "monotonic_s": 1104570.14,
+            "sim_s": 57.104,
+            "iterations": 57104,
+            "rtf": 0.4316,
+            "paused": false
+          }
+        }
+      },
+      "final_disabled": true,
+      "acceptance_limit": "Failed overall; early Gazebo client absent, later GUI configuration changed; readiness recovery test expectation corrected afterward."
+    },
+    {
+      "run_id": "20261017T013242389894Z",
+      "suite": "faults",
+      "gui": true,
+      "rendering": "gpu",
+      "image_id": "sha256:de279e4ae7a7781d32177d4d0db9f0d12318e5e3c195287db53c1b9d66d09801",
+      "passed": true,
+      "started_utc": "2026-10-17T01:32:42.390419+00:00",
+      "finished_utc": "2026-10-17T01:35:24.317639+00:00",
+      "reports": {
+        "1_backend-pause.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_backend-pause.json": {
+          "passed": true,
+          "fault": "backend-pause",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "readiness_fault_inhibits": true,
+            "feedback_resumed": true,
+            "disabled_after_resume": true,
+            "no_auto_enable_with_live_command": true,
+            "fresh_rest_hold": true
+          },
+          "wall_time_to_observed_rest_s": 2.8674187409924343,
+          "rest_drift_m": 0.002031255614103736,
+          "final": {
+            "speed": 3.376794794181508e-19,
+            "enabled": false,
+            "ready": false,
+            "fault_latched": true,
+            "inhibited": true,
+            "truth": [
+              0.06802303093568482,
+              4.33152153874552e-19
+            ],
+            "mock_diagnostics": {
+              "enabled": false,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": true,
+              "gear": 3,
+              "feedback_mps": 3.376794794181508e-19,
+              "plant_target_mps": 0.0,
+              "last_watchdog_fault": {
+                "joint_age_s": 2.1893592569977045,
+                "advancing_joint_stamp_age_s": 2.1893564390047686,
+                "command_ages_s": {
+                  "accel": 2.2887740250007482,
+                  "brake": 2.2887740250007482,
+                  "shaft": 2.2887740250007482,
+                  "gear": 2.2885798500064993
+                },
+                "report_valid": true
+              },
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "lease_fault": true,
+            "control_diagnostics": {
+              "state": "inhibited",
+              "enabled": false,
+              "inhibited": true,
+              "readiness_lease_live": false,
+              "readiness_lease_fault": true,
+              "report_age_s": 0.0030271819996414706,
+              "target_mps": 0.3,
+              "feedback_mps": 3.376794794181508e-19,
+              "accel": 0.0,
+              "brake": 0.4
+            },
+            "readiness_diagnostics": {
+              "session_id": "635bdb09712e48aba0e5d8803357fe35",
+              "heartbeat_seq": 406,
+              "ready": false,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": false,
+              "fault_latched": true,
+              "stream_ages_s": {
+                "clock": 0.0010835799912456423,
+                "cloud": 0.047648284991737455,
+                "odom": 0.08817123399057891,
+                "report": 0.003111924001132138
+              },
+              "report_valid": true,
+              "last_fault": {
+                "reason": "data_stale_or_invalid",
+                "stream_ages_s": {
+                  "clock": 1.952446274997783,
+                  "cloud": 2.047583759005647,
+                  "odom": 1.84828883499722,
+                  "report": 1.821191673996509
+                },
+                "report_valid": true
+              }
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_backend-pause.start.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_backend-pause.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "odom": [
+              -0.87,
+              0.0,
+              0.0,
+              1.7157942756875017e-19
+            ],
+            "truth": [
+              -4.4258778518497953e-13,
+              9.284492505296357e-20,
+              1.4635286431889752e-21,
+              -3.8711418215732196e-13
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 4.4258778518498927e-13,
+              "yaw_rad": 1.4635286431889752e-21,
+              "speed_mps": 3.8711418215732196e-13,
+              "age_s": 2.623099135234952e-05
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 1.7157942756875017e-19,
+              "age_s": 0.001518603996373713
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_controller-stop.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_controller-stop.json": {
+          "passed": true,
+          "fault": "controller-stop",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "watchdog_disabled": true,
+            "fresh_feedback_rest": true,
+            "controller_returned": true,
+            "no_auto_enable_with_live_command": true,
+            "fresh_rest_hold": true
+          },
+          "wall_time_to_observed_rest_s": 1.7504714090027846,
+          "rest_drift_m": 0.001459016985256606,
+          "final": {
+            "speed": -1.487907851097986e-20,
+            "enabled": false,
+            "ready": true,
+            "fault_latched": false,
+            "inhibited": false,
+            "truth": [
+              0.13749819217341658,
+              9.8143668521733e-19
+            ],
+            "mock_diagnostics": {
+              "enabled": false,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": true,
+              "gear": 3,
+              "feedback_mps": -1.487907851097986e-20,
+              "plant_target_mps": 0.0,
+              "last_watchdog_fault": {
+                "joint_age_s": 0.0794643129920587,
+                "advancing_joint_stamp_age_s": 0.07946033299958799,
+                "command_ages_s": {
+                  "accel": 0.7624074269988341,
+                  "brake": 0.7624074269988341,
+                  "shaft": 0.7624074269988341,
+                  "gear": 0.7623447469959501
+                },
+                "report_valid": true
+              },
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "lease_fault": false,
+            "control_diagnostics": {
+              "state": "inhibited",
+              "enabled": false,
+              "inhibited": false,
+              "readiness_lease_live": true,
+              "readiness_lease_fault": false,
+              "report_age_s": 0.004187012993497774,
+              "target_mps": 0.3,
+              "feedback_mps": -1.487907851097986e-20,
+              "accel": 0.0,
+              "brake": 0.4
+            },
+            "readiness_diagnostics": {
+              "session_id": "7c043ffb4c9f49d999b77a41086e189c",
+              "heartbeat_seq": 450,
+              "ready": true,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": true,
+              "fault_latched": false,
+              "stream_ages_s": {
+                "clock": 0.06166419500368647,
+                "cloud": 0.1653393140004482,
+                "odom": 0.024281001999042928,
+                "report": 0.006555615997058339
+              },
+              "report_valid": true,
+              "last_fault": null
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_controller-stop.start.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_controller-stop.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "truth": [
+              -3.036469347002959e-13,
+              5.210700127565748e-21,
+              -1.3371828795298394e-21,
+              -3.87114298027302e-13
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0,
+              9.461726213218641e-20
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 3.0364693470029597e-13,
+              "yaw_rad": 1.3371828795298394e-21,
+              "speed_mps": 3.87114298027302e-13,
+              "age_s": 0.14763006700377446
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 9.461726213218641e-20,
+              "age_s": 6.052700337022543e-05
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_readiness-pause.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_readiness-pause.json": {
+          "passed": true,
+          "fault": "readiness-pause",
+          "checks": {
+            "initial_ready": true,
+            "moving_before_fault": true,
+            "lease_loss_inhibits": true,
+            "fresh_feedback_rest": true,
+            "heartbeat_returned_ready_after_core_restart": true,
+            "no_auto_resume_with_live_command": true,
+            "fresh_rest_hold": true,
+            "explicit_disable": true,
+            "disabled_report_observed": true,
+            "explicit_reenable": true,
+            "motion_after_explicit_reenable": true
+          },
+          "wall_time_to_observed_rest_s": 1.8356165519944625,
+          "rest_drift_m": 0.0,
+          "final": {
+            "speed": 0.16932460665704296,
+            "enabled": true,
+            "ready": true,
+            "fault_latched": false,
+            "inhibited": false,
+            "truth": [
+              0.1426617028036665,
+              3.38122374132733e-18
+            ],
+            "mock_diagnostics": {
+              "enabled": true,
+              "ready": true,
+              "fault": false,
+              "override": false,
+              "timeout": false,
+              "gear": 3,
+              "feedback_mps": 0.11959744244814675,
+              "plant_target_mps": 0.2296121318448885,
+              "last_watchdog_fault": null,
+              "scope": "Provisional ROS mock, no CAN/firmware validation"
+            },
+            "lease_fault": false,
+            "control_diagnostics": {
+              "state": "tracking",
+              "enabled": true,
+              "inhibited": false,
+              "readiness_lease_live": true,
+              "readiness_lease_fault": false,
+              "report_age_s": 0.014401910011656582,
+              "target_mps": 0.3,
+              "feedback_mps": 0.11959744244814675,
+              "accel": 0.4643432104268309,
+              "brake": 0.0
+            },
+            "readiness_diagnostics": {
+              "session_id": "234b69e681a543458def0d7ed90dbb77",
+              "heartbeat_seq": 58,
+              "ready": true,
+              "data_ready": true,
+              "tf_ready": true,
+              "nav2_active": true,
+              "fault_latched": false,
+              "stream_ages_s": {
+                "clock": 0.0016537629999220371,
+                "cloud": 0.07021833800536115,
+                "odom": 0.038245567004196346,
+                "report": 0.012513719993876293
+              },
+              "report_valid": true,
+              "last_fault": null
+            }
+          },
+          "scope": "Simulated faults. Backend pause freezes physics; wall time is not real stopping distance or ECU watchdog timing."
+        },
+        "1_readiness-pause.start.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_readiness-pause.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              -0.87,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "odom": [
+              -0.87,
+              0.0,
+              0.0,
+              7.321180986101326e-20
+            ],
+            "truth": [
+              -3.954004577404545e-13,
+              4.574577034711373e-20,
+              3.8304197172090765e-21,
+              -3.871144449761907e-13
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 3.954004577404571e-13,
+              "yaw_rad": 3.8304197172090765e-21,
+              "speed_mps": 3.871144449761907e-13,
+              "age_s": 4.458900366444141e-05
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 7.321180986101326e-20,
+              "age_s": 0.004973083006916568
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        }
+      },
+      "gazebo_stats": {},
+      "final_disabled": true
+    },
+    {
+      "run_id": "20261017T013543754766Z",
+      "suite": "intersection-right",
+      "gui": true,
+      "rendering": "gpu",
+      "image_id": "sha256:de279e4ae7a7781d32177d4d0db9f0d12318e5e3c195287db53c1b9d66d09801",
+      "passed": true,
+      "started_utc": "2026-10-17T01:35:43.755893+00:00",
+      "finished_utc": "2026-10-17T01:40:16.054121+00:00",
+      "reports": {
+        "1_intersection-right.start.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_intersection-right.start.json": {
+          "passed": true,
+          "expected": {
+            "truth": [
+              30.0,
+              0.0,
+              0.0
+            ],
+            "odom": [
+              29.13,
+              0.0,
+              0.0
+            ]
+          },
+          "observed": {
+            "truth": [
+              29.9999999999999,
+              1.098492056625769e-19,
+              4.1517552476686414e-20,
+              7.645873290381187e-14
+            ],
+            "odom": [
+              29.13,
+              0.0,
+              0.0,
+              -5.837331744913308e-19
+            ]
+          },
+          "errors": {
+            "truth": {
+              "position_m": 9.947598300647467e-14,
+              "yaw_rad": 4.1517552476686414e-20,
+              "speed_mps": 7.645873290381187e-14,
+              "age_s": 0.013962801996967755
+            },
+            "odom": {
+              "position_m": 0.0,
+              "yaw_rad": 0.0,
+              "speed_mps": 5.837331744913308e-19,
+              "age_s": 4.3626001570373774e-05
+            }
+          },
+          "scope": "Test-only truth preflight; no operational localization or control uses truth."
+        },
+        "1_right_intersection.gui.json": {
+          "passed": true,
+          "containers_running": true,
+          "windows": {
+            "gazebo": true,
+            "rviz": true
+          },
+          "scope": "X11 client existence and container liveness; visual content requires separate inspection."
+        },
+        "1_right_intersection.json": {
+          "truth_goal_error_m": 0.22010149153107944,
+          "truth_yaw_error_rad": 0.0007742306829445766,
+          "goal_yaw_rad": -1.5707963267948966,
+          "passed": true,
+          "action_status": 4,
+          "route_budget_sim_s": 120.0,
+          "wall_budget_s": 360.0,
+          "timeout_reason": null,
+          "truth_age_s": 0.05078376398887485,
+          "odom_age_s": 0.1727808930008905,
+          "consecutive_rest": true,
+          "goal": [
+            44.0,
+            -12.0
+          ],
+          "initial_odom": [
+            29.13,
+            0.0
+          ],
+          "final_odom": [
+            43.907509719942354,
+            -11.909452229900532
+          ],
+          "goal_error_m": 0.12943473480919976,
+          "wall_duration_s": 201.89853059200686,
+          "commands": 4004,
+          "path_points": 84,
+          "scans": 438,
+          "max_lateral_odom": 11.909452229900532,
+          "truth_rear_pose": [
+            44.1998331889214,
+            -11.907742950514832
+          ],
+          "truth_yaw": -1.5715705574778411,
+          "speed": -6.491461620976024e-19,
+          "rest_samples": 6,
+          "positive_turn_commands": 0,
+          "negative_turn_commands": 1985,
+          "truth_samples": 2192,
+          "footprint_overlap_samples": 0,
+          "mock_diagnostics": {
+            "enabled": true,
+            "ready": true,
+            "fault": false,
+            "override": false,
+            "timeout": false,
+            "gear": 3,
+            "feedback_mps": -6.491461620976024e-19,
+            "plant_target_mps": 0.0,
+            "last_watchdog_fault": null,
+            "scope": "Provisional ROS mock, no CAN/firmware validation"
+          },
+          "readiness_diagnostics": {
+            "session_id": "fd280508733b458c9fc78c86fbb15087",
+            "heartbeat_seq": 2579,
+            "ready": true,
+            "data_ready": true,
+            "tf_ready": true,
+            "nav2_active": true,
+            "fault_latched": false,
+            "stream_ages_s": {
+              "clock": 0.03606670300359838,
+              "cloud": 0.28965367999626324,
+              "odom": 0.1580902769928798,
+              "report": 0.0035753809934249148
+            },
+            "report_valid": true,
+            "last_fault": null
+          }
+        }
+      },
+      "gazebo_stats": {
+        "1_right_intersection.gazebo.summary.json": {
+          "samples": 1887,
+          "max_wall_gap_s": 0.3440000000409782,
+          "gaps_over_one_second": [],
+          "first": {
+            "wall_unix_s": 1792200988.772955,
+            "monotonic_s": 1105591.015,
+            "sim_s": 2.079,
+            "iterations": 2079,
+            "rtf": 0.2745,
+            "paused": false
+          },
+          "last": {
+            "wall_unix_s": 1792201212.0295017,
+            "monotonic_s": 1105814.265,
+            "sim_s": 46.626,
+            "iterations": 46626,
+            "rtf": 0.2624,
+            "paused": false
+          }
+        }
+      },
+      "final_disabled": true
+    }
+  ],
+  "tested_source_sha256": {
+    "scripts/analyze_gazebo_process.py": "5a966ec05a4ffd50e36ae66390e7bb3240fab868dcf31ebc5ea87d24161118d9",
+    "scripts/bag_smoke.sh": "2101fd05cb2d4bab06bb4e0a8fc21bc398b17cfc506c86ab860211584f817a6c",
+    "scripts/capture_x11.py": "743ff7d36251f2c34f67491bc5ccd24285bfa07da785e6fe29a06033437d7ef1",
+    "scripts/check_gpu_sensors.py": "23449da0078d77f2336498014a9c03ee70effae9ee47e003e45e715e7a4cfa5d",
+    "scripts/check_gui.py": "604898ddd0f32e767a5f9086f5d33947dfb91a83b901db393d53b3e3a80831e8",
+    "scripts/check_motion_stop.py": "f57715d3f2b900cc235f509b91fbf5ee4ccee461adcbf2d4e21dc8b2a938dc39",
+    "scripts/check_nav2_actions.py": "456cdd6c756c7514c405a128665945cebc37da9896ad336be09d9ccd8c3ba696",
+    "scripts/check_renderer.py": "d55c0f49200787184f178a922fbf26f4a484d4f30e5dfa1b1a742c3bf6bd742f",
+    "scripts/check_source.py": "cb3bc4e4ae50487ffe60f2f7641b80d5c73d2363cd00e2d0df1394497db2aad5",
+    "scripts/convert_small_city.py": "db7d2832dd304750a0e440a92a1dc45f3dded2d799649537bdd46c2160e29837",
+    "scripts/deploy.py": "9b43bcd1d070044ac4aa22fb9fbed5afc78b929672233c83a92f870299f0ddee",
+    "scripts/doctor.py": "8c5f4e6d2def708621f71175231ea023f365dcb0f2488588a8f5a06364373405",
+    "scripts/generate_scene.py": "ebece1c42f80ee04a16ec1443d00554f5d7824ba3c946215cd25a5713e8d4dd1",
+    "scripts/gui.sh": "a4dbe49cba9acfc3616b6598d3aa4cd11b4cbdd76d7ae26dd302bc10036db888",
+    "scripts/monitor_gazebo.py": "b1dcadd53a962f4c045a05987166859435283aaf400e3fef47a652094df8239b",
+    "scripts/prepare_base.py": "6f424c95fa7ee40ab0eede129a56ba25fca8d6f698b01564b78be0a9b1014641",
+    "scripts/prepare_small_city.py": "80471500cbc13192bd04d4837188a66077be74ff83464edf39ecf881796d6d83",
+    "scripts/requirements-scenes.txt": "b619f422823359a0b15648579dd423f0d5c12c18f175b4fc39c22dee493702fe",
+    "scripts/run_scenarios.py": "55a31e465661c9fdd0c38f2766df7331376c4566cb12f5a22922c9d08a54941f",
+    "scripts/sample_gazebo_process.py": "2e260ebeacfbed28d1817064e57f9f015d9fc913d853afd243cb486a22c8e0cd",
+    "scripts/small_city.sh": "ecbc75f91a125456ec262f1f81f0da15e70e59a90dd57392dae4a37affd8554a",
+    "scripts/summarize_scenarios.py": "05ec4e38e187afb40df8f6b1c6abaa195f84c5b546e962aa979dc04c864e2038",
+    "scripts/validate_contracts.py": "63c32730c867bf1bc7ee607aab54e48b1ec4a374ddf62435695d0d747f22707f",
+    "scripts/validate_scenarios.py": "7de75bdd8e743cd05581fd5bbb136acab373bb950d3fab5102aba75d352d218c",
+    "ros2_ws/src/agile_navigation/CMakeLists.txt": "ccfffd0403cf9919cfa861b956d83abc9cfdfe77cf54659f896121881f5223bf",
+    "ros2_ws/src/agile_navigation/package.xml": "f5a7475dbadb149cad344b004b535ec531f94aca259f83517df013e66d6f7008",
+    "ros2_ws/src/agile_vehicle/CMakeLists.txt": "9f2f072779cc96fb4bf628a9d35cc6ba8fd36cb0e9c5f7db54124e7bbd382e56",
+    "ros2_ws/src/agile_vehicle/package.xml": "df8231e5e79f3e7ae4f5612595062f2b88e2a968ddac503d3efabc12136a12fc",
+    "ros2_ws/src/avl_bringup/CMakeLists.txt": "4b516878d82275019368a803fe74f1d7968110cfc2fc602ebbac06ecf3eec50f",
+    "ros2_ws/src/avl_bringup/package.xml": "0b730bc5e20c1a72494b8b4e22b2d7ccd44e23611c1cfb062efae32fb28e1341",
+    "ros2_ws/src/gem_description/CMakeLists.txt": "f32abb5b1e0f1c715e5899e249e6efd77b5848d13c6472c19efb7c7a42c495a2",
+    "ros2_ws/src/gem_description/package.xml": "8c6fa33c29a842f2a1108aef5a17922f9f4de052c4b5392397b6bf7e53b17ef2",
+    "ros2_ws/src/gem_gazebo/CMakeLists.txt": "fb4c3289a87b3156b98bdf7012b5f7d62b85b82623d64df1f0a6dd0e902a6e34",
+    "ros2_ws/src/gem_gazebo/package.xml": "9c9c25cb43bac3b76e26858d1a717349616b1481fcc01974c81d9c2ac0d4a20a",
+    "ros2_ws/src/agile_navigation/config/nav2.yaml": "6fa9f294202ecb62fb6bf56578e4d778fff40c6335f141915733dbade5a4e1c1",
+    "ros2_ws/src/agile_navigation/config/navigate.xml": "084dd8cef3d4977f00239031dbf8f59a2cd8550db71ba26721099dce7c709df0",
+    "ros2_ws/src/agile_navigation/config/navigate_pacmod.xml": "cf07a33f28321d2cc259941e8ff56bb0ed5d649cee5137a5d3dac11de7a7a092",
+    "ros2_ws/src/agile_navigation/config/navigate_through.xml": "04d6036e0d0f7836d48715706992ae44fe9ab4974171218806eaca272e150926",
+    "ros2_ws/src/agile_navigation/launch/core.launch.py": "a740105f550a3f196ab0f5b56e8f61fafeab8b672da2a95cd7c978e5aa61f829",
+    "ros2_ws/src/agile_navigation/launch/localization.launch.py": "4361e286ec793efa3f898abdf783a2c5bfb1bb8b05f112e99fb129eb4a45efec",
+    "ros2_ws/src/agile_navigation/launch/simulation.launch.py": "520dfb7aa73d949b0b1bacdfafc3cde0809eb3c8a18fec3a118126e515196067",
+    "ros2_ws/src/agile_navigation/maps/navigation.yaml": "3cca277abfa06d9738482aa792f8c562f75b42334231509aa5f3057df08e1513",
+    "ros2_ws/src/agile_navigation/maps/navigation_scene.json": "9555ee4d95cf9224056e72f86be078f60498ab9d5adfc9035019f069c53a7be8",
+    "ros2_ws/src/agile_navigation/scripts/acceptance_logic.py": "7dbb5a95d37981982d93634b8adab6208186b92aacd5e4002a37abedb1a31ba0",
+    "ros2_ws/src/agile_navigation/scripts/check_navigation.py": "57d089ef0f41391f5b11903f6dff9e759b9854b00c40aad527b50ad6ca4d84ea",
+    "ros2_ws/src/agile_navigation/scripts/check_primitive_sensors.py": "4c449ca800676df3fc43a304742e5c8586c2df117e996e168e0dd43ea2dc43dc",
+    "ros2_ws/src/agile_navigation/scripts/check_sensors.py": "487751f6210dc2bb506a19cea815870a09b1d76c20c1d950fd6c7522f658755e",
+    "ros2_ws/src/agile_navigation/scripts/check_start_pose.py": "2eb9ceda5274254b5c8c7efdbd32ec96c23c5bbb269297a60f9b78eef2bbc2e2",
+    "ros2_ws/src/agile_navigation/scripts/obstacle_scan.py": "1328c904ddb5762188e1ac8df0111c0e50863fdd10c7f68fd666bdce8649d83b",
+    "ros2_ws/src/agile_navigation/scripts/readiness.py": "5d990e6e507f20101255b3696e37bb82205285c1cb97ec3741768f2f858ea79c",
+    "ros2_ws/src/agile_navigation/scripts/readiness_state.py": "d6a0eb1405e8d2737710b5d3728f802dafe258d614ad8ce768823c3431fea772",
+    "ros2_ws/src/agile_navigation/scripts/twist_to_ackermann.py": "f4e71b22c4b7363300319474d5e40a3b9a2a31987aec1b1c211558abfe5a8f1a",
+    "ros2_ws/src/agile_navigation/scripts/vehicle_math.py": "4dd68b73d75c5cf65cc9cd89a76fd2cbae9eae6836443f3ccc472db32858ba23",
+    "ros2_ws/src/agile_navigation/scripts/wheel_odometry.py": "26d073046622f0ba63b6bafb114307b15eaaeff55b9bdeeb24063543735611a3",
+    "ros2_ws/src/agile_vehicle/scripts/check_dynamic_fault.py": "1ce374e9f195f76ea393f62b999cdfd3bf8187f412212abc0aed6f68f03c616d",
+    "ros2_ws/src/agile_vehicle/scripts/check_pacmod_runtime.py": "c7619abb5f415ebb5178ecf7290429a7ec6d2cda71ede36b2f7caec3523c2f9d",
+    "ros2_ws/src/agile_vehicle/scripts/control_logic.py": "96b7e5d3b4f604c46bb6e1562c5e9bbcd37d5303a446ccfab4ab9f7aabab56d2",
+    "ros2_ws/src/agile_vehicle/scripts/pacmod_mock.py": "eb6b15b3aa322fa405b5b3d0b195ef4020261d6113cc4b460e9a0eaa5f016bb8",
+    "ros2_ws/src/agile_vehicle/scripts/runtime_probe.py": "4e62bb3ce8d78fd8c10d7f6ce779c3eef04ac953b18a97bfbde3826cbcc8c977",
+    "ros2_ws/src/agile_vehicle/scripts/runtime_support.py": "506888cf8bad85d0384790b0598b22e5e5e20e3672980f23e04fd19bc81d666a",
+    "ros2_ws/src/agile_vehicle/scripts/vehicle_control.py": "a817b8e111b4515cbeeadc3a54f9a91efd260acbb4e97744c1c22f7c5a739fa0",
+    "ros2_ws/src/avl_bringup/launch/backend_sim.launch.py": "dcfbb3249f0c346f0dc7a927df272dc5aaef4c9e88c088047a4c3b28e92388ba",
+    "ros2_ws/src/avl_bringup/launch/baseline.launch.py": "8e11360d10a6ebde523e04b2d1faf3e3af55cb6a8170cb735f3370f442defaf0",
+    "ros2_ws/src/avl_bringup/launch/description.launch.py": "d60de326e3e49a8b6bbce8a766d4cdfc7c6bad3ba8aedd18c9a0f2746352f054",
+    "ros2_ws/src/avl_bringup/scripts/check_baseline.py": "0ba16c92a4785a856b87356185d37889a36238c878ad8b8dbd090d5f4d880b43",
+    "ros2_ws/src/avl_bringup/scripts/check_commands.py": "11bb073a50ef926ea24e64ac61ed29cda9b5f29e4c4d9f922139c69d260bf723",
+    "ros2_ws/src/gem_description/config/simulation.json": "694b0e1f4a71e3591adff699d4709ffae4aeb819dc06367266ff890e546abea0",
+    "ros2_ws/src/gem_description/config/vehicle.json": "42004b6acd0a35487c9093335d27b62c2e98cae4af64a59aeb9a66d7ec80ac76",
+    "ros2_ws/src/gem_description/launch/gem_description.launch.py": "d9f4e8354c25f4137362c9767eb900a94bc02bea976a96ae2e7a4e40a04afa63",
+    "ros2_ws/src/gem_description/urdf/gem.urdf.xacro": "96b359fe3a6d6375046651212ba707a1e7c2a66548c74113153bdd1ef1339798",
+    "ros2_ws/src/gem_description/urdf/macros.xacro": "32aaaaccb4e0027105d819049b7b89dea1e304393a6ff1f9bd95bb896a1c8dc5",
+    "ros2_ws/src/gem_description/urdf/materials.xacro": "8e287fe4704a1ff8aed5cc7b9d577eb538099b240af4e7e68c7d4fe647627e0f",
+    "ros2_ws/src/gem_gazebo/config/gem_ackermann_control_params_ros2.yaml": "fe109eb63f6cdb75c33eb31b3236ec25d233cf038a4a65a9ef13e3c24eb94c1c",
+    "ros2_ws/src/gem_gazebo/config/gem_joint_control_params_ros2.yaml": "f787a262792ad173f9cca3cfb78abb0de0a283c16cc4c914c690aff5f436158b",
+    "ros2_ws/src/gem_gazebo/config/gz_bridge.yaml": "f2e897048446d87e0157bab4b2d8b356c091ec0895b284abcebf7b276853d107",
+    "ros2_ws/src/gem_gazebo/scripts/gem_control.py": "0c7460b10500ddab0d2b3fb21b8d6788fd6c8b5b0a990eb4f99f08aa5160d98a",
+    "ros2_ws/src/gem_gazebo/worlds/baseline.sdf": "373975329d7ee103043d93fc3a6a1add7d0b193f2a74799b82cf1f4b1afa2776",
+    "ros2_ws/src/gem_gazebo/worlds/navigation.sdf": "a2eba62b146bb571f02724a9a48d586831c87d54a91cf97f591693d6f3534982",
+    "config/dds/cyclonedds.xml": "0d5c5c1f9f2e8564b21d100e957b65c95d95c4061fe6adc9b87851501704dbac",
+    "config/dds/desktop.xml": "95c169f8d72a2ad17d346faf94061cdf91f3efc51f54a5656a35c3007549d6ff",
+    "config/interfaces/runtime.json": "34b56d6bbd263ed5946f75e888498e0959516b9fad0d68ac8b3f4a18037c19f7",
+    "config/scenarios/navigation.json": "e1d16b4b3951121c027fbcb4c5950b58dd6387aefe0a54f9c41bcbdae6f2d4da",
+    "config/scenarios/small_city.json": "f24021b28cd7f0f9ce82bacbbf2b9995a56df6751c0e8e0c43a3a595c0f2ddd0",
+    "config/scenes/small_city_sources.json": "06b4f311a67a64be8d2d8e3a459eb0215ae2fb29addc2868d561cd80b8c814bf",
+    "config/vehicle/e6_references.json": "d69595fcafa6eaff4c27a0dc74785f33b948deab5e129871fdf1ceaf6a40886d",
+    "deploy/desktop-gpu.yaml": "59901cf499ebfde4a337ae3a06000e953734d1d7b39834088b83d29f8ca16d4b",
+    "containers/build_renderer.py": "83f35e61659307de2f434dc8ea0ae087dcfa8d2ffab2a546342cc30c1f73388a",
+    "containers/Dockerfile": "0eed502cb05c215d768e9b1cabd34796805e3204e33cff729058a35f9926c46b",
+    "containers/entrypoint.sh": "a1250aadd4891ec91d4d978854d5289be089e6e092833416acf2d89f6e973c03"
+  },
+  "runtime_asset_closure_sha256": "0917a84642ba6e98b6a1514a349530a7d7327c993efe302c320c84f668086303",
+  "terrain_mesh_sha256": "337bae4359cc3ade4d52d6808d7e6ab16dadd8c29a070902c5fb1d3744b5b6bf",
+  "remaining_gates": [
+    "Continuous moving 20-minute dual-GUI soak",
+    "Complete repeated route suite with verified dual GUIs",
+    "Long-approach repetitions",
+    "Depth/cubemap/MSAA variants",
+    "Sustained transport and dynamic recording/replay",
+    "Clean source-pinned application base",
+    "Real hardware/PACMod and rolling-scan LIO validation"
+  ],
+  "software_fallback": {
+    "start": {
+      "passed": true,
+      "expected": {
+        "truth": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "odom": [
+          -0.87,
+          0.0,
+          0.0
+        ]
+      },
+      "observed": {
+        "odom": [
+          -0.87,
+          0.0,
+          0.0,
+          1.6955127228040318e-19
+        ],
+        "truth": [
+          -3.4908683750724896e-13,
+          1.3066094561121129e-20,
+          2.2615339744431903e-21,
+          -3.87114193171327e-13
+        ]
+      },
+      "errors": {
+        "truth": {
+          "position_m": 3.490868375072492e-13,
+          "yaw_rad": 2.2615339744431903e-21,
+          "speed_mps": 3.87114193171327e-13,
+          "age_s": 6.72719907015562e-05
+        },
+        "odom": {
+          "position_m": 0.0,
+          "yaw_rad": 0.0,
+          "speed_mps": 1.6955127228040318e-19,
+          "age_s": 0.019696900999406353
+        }
+      },
+      "scope": "Test-only truth preflight; no operational localization or control uses truth."
+    },
+    "navigation": {
+      "truth_goal_error_m": 0.30225775696119067,
+      "truth_yaw_error_rad": 0.03887892421684586,
+      "goal_yaw_rad": 0.0,
+      "passed": true,
+      "action_status": 4,
+      "route_budget_sim_s": 120.0,
+      "wall_budget_s": 150.0,
+      "timeout_reason": null,
+      "truth_age_s": 0.1271726109989686,
+      "odom_age_s": 0.1392192680068547,
+      "consecutive_rest": true,
+      "goal": [
+        3.0,
+        0.0
+      ],
+      "initial_odom": [
+        -0.87,
+        0.0
+      ],
+      "final_odom": [
+        2.715769392975123,
+        -0.09274578391931287
+      ],
+      "goal_error_m": 0.29897962874506673,
+      "wall_duration_s": 25.184748918007244,
+      "commands": 476,
+      "path_points": 14,
+      "scans": 80,
+      "max_lateral_odom": 0.09274578391931287,
+      "truth_rear_pose": [
+        2.712273183616518,
+        -0.09259066247217543
+      ],
+      "truth_yaw": -0.038878924216845856,
+      "speed": 6.241629320514374e-19,
+      "rest_samples": 11,
+      "positive_turn_commands": 0,
+      "negative_turn_commands": 124,
+      "truth_samples": 400,
+      "footprint_overlap_samples": 0,
+      "mock_diagnostics": {
+        "enabled": true,
+        "ready": true,
+        "fault": false,
+        "override": false,
+        "timeout": false,
+        "gear": 3,
+        "feedback_mps": 6.241629320514374e-19,
+        "plant_target_mps": 0.0,
+        "last_watchdog_fault": null,
+        "scope": "Provisional ROS mock, no CAN/firmware validation"
+      },
+      "readiness_diagnostics": {
+        "session_id": "f9bfeb7c5db74c2ba65bcefece1cc58f",
+        "heartbeat_seq": 552,
+        "ready": true,
+        "data_ready": true,
+        "tf_ready": true,
+        "nav2_active": true,
+        "fault_latched": false,
+        "stream_ages_s": {
+          "clock": 0.1001070389902452,
+          "cloud": 0.18394544499460608,
+          "odom": 0.11278074099391233,
+          "report": 0.009268362991861068
+        },
+        "report_valid": true,
+        "last_fault": null
+      }
+    },
+    "pacmod": {
+      "passed": true,
+      "checks": {
+        "private_actuation_only_mock": true,
+        "no_legacy_bypass": true,
+        "disabled_no_motion": true,
+        "explicit_enable": true,
+        "closed_loop_motion": true,
+        "command_expiry_stop": true,
+        "override_stop": true,
+        "override_clear_no_auto_enable": true,
+        "fault_stop": true,
+        "fault_clear_no_auto_enable": true,
+        "invalid_setpoint_stop": true,
+        "invalid_report_inhibits": true,
+        "final_disabled_rest": true
+      },
+      "final": {
+        "ready": false,
+        "speed": -1.1994765931490818e-19,
+        "enabled": false,
+        "mock": {
+          "enabled": false,
+          "ready": false,
+          "fault": false,
+          "override": false,
+          "timeout": true,
+          "gear": 3,
+          "feedback_mps": -1.1994765931490818e-19,
+          "plant_target_mps": 0.0,
+          "last_watchdog_fault": null,
+          "scope": "Provisional ROS mock, no CAN/firmware validation"
+        },
+        "control": {
+          "state": "inhibited",
+          "enabled": false,
+          "inhibited": false,
+          "readiness_lease_live": true,
+          "readiness_lease_fault": false,
+          "report_age_s": null,
+          "target_mps": 0.0,
+          "feedback_mps": -1.1994765931490818e-19,
+          "accel": 0.0,
+          "brake": 0.4
+        }
+      },
+      "scope": "ROS mock contract, no CAN/firmware or measured vehicle dynamics."
+    },
+    "disable": {
+      "passed": true,
+      "action": "disable",
+      "state": {
+        "system": {},
+        "mock": {
+          "enabled": false,
+          "ready": true,
+          "fault": false,
+          "override": false,
+          "timeout": false,
+          "gear": 3,
+          "feedback_mps": 1.030068987922474e-19,
+          "plant_target_mps": 0.0,
+          "last_watchdog_fault": null,
+          "scope": "Provisional ROS mock, no CAN/firmware validation"
+        },
+        "control": {
+          "state": "inhibited",
+          "enabled": true,
+          "inhibited": false,
+          "readiness_lease_live": true,
+          "readiness_lease_fault": false,
+          "report_age_s": 0.004967731001670472,
+          "target_mps": 0.0,
+          "feedback_mps": 1.030068987922474e-19,
+          "accel": 0.0,
+          "brake": 0.4
+        }
+      },
+      "graph": [
+        "bt_navigator",
+        "bt_navigator_navigate_through_poses_rclcpp_node",
+        "bt_navigator_navigate_to_pose_rclcpp_node",
+        "controller_manager",
+        "controller_server",
+        "global_costmap",
+        "gz_ros2_control",
+        "joint_state_broadcaster",
+        "left_front_wheel_controller",
+        "left_rear_wheel_controller",
+        "left_steering_controller",
+        "lifecycle_manager_map",
+        "lifecycle_manager_navigation",
+        "local_costmap",
+        "map_server",
+        "obstacle_scan",
+        "pacmod_mock",
+        "planner_server",
+        "readiness",
+        "right_front_wheel_controller",
+        "right_rear_wheel_controller",
+        "right_steering_controller",
+        "robot_state_publisher",
+        "ros_gz_bridge",
+        "ros_gz_image",
+        "runtime_probe",
+        "simulation_actuator_adapter",
+        "static_transform_publisher_PJYLsfsdlYpAMBDp",
+        "transform_listener_impl_745098007030",
+        "transform_listener_impl_780dc0005a80",
+        "vehicle_control",
+        "wheel_odometry"
+      ]
+    }
+  }
+}

@@ -18,5 +18,6 @@
   "body_front_x": 1.6,
   "body_rear_x": -1.5,
   "body_half_width": 0.8,
-  "minimum_turning_radius": 4.0
+  "minimum_turning_radius": 4.0,
+  "readiness_timeout": 0.5
 }

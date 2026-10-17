@@ -20,6 +20,13 @@ class WslGuiCommandTests(unittest.TestCase):
             command=deploy.wsl_gui_command('Ubuntu-22.04','/project/deploy.py')
         self.assertEqual(command[5:8],['AGILE_SPAWN_X=0','AGILE_SPAWN_Y=0','AGILE_SPAWN_YAW=0'])
 
+    def test_gpu_headless_forwarding_preserves_pose_and_rendering(self):
+        with patch.dict(deploy.os.environ,{'AGILE_SPAWN_X':'30'},clear=True):
+            command=deploy.wsl_up_command('Ubuntu-22.04','/project/deploy.py',False,'gpu')
+        self.assertIn('AGILE_SPAWN_X=30',command)
+        self.assertEqual(command[-3:],['up','--rendering','gpu'])
+        self.assertNotIn('--gui',command)
+
 
 if __name__=='__main__':
     unittest.main()

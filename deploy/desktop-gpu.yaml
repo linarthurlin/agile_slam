@@ -1,0 +1,15 @@
+# GPU sensor-server overlay; GUI clients retain the canonical software renderer.
+x-gpu-environment: &gpu-environment
+  AGILE_WSL_GPU: "1"
+  DISPLAY: ':0'
+  LIBGL_ALWAYS_SOFTWARE: "0"
+  GALLIUM_DRIVER: d3d12
+  MESA_D3D12_DEFAULT_ADAPTER_NAME: NVIDIA
+  LD_LIBRARY_PATH: /usr/lib/wsl/lib
+services:
+  backend-sim:
+    environment: *gpu-environment
+    devices: [/dev/dxg:/dev/dxg]
+    volumes:
+      - /usr/lib/wsl:/usr/lib/wsl:ro
+      - /mnt/wslg/.X11-unix:/tmp/.X11-unix:ro
