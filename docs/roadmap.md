@@ -1,21 +1,201 @@
-# Roadmap
+# Pending Task Roadmap
 
-The executable platform includes an isolated split Humble/Fortress runtime, shared PACMod vehicle controller, ROS mock, WSLg clients, and a known-start Nav2 profile. The original deployment remains in Git history; root compose.yaml is the sole active stack. It is not a measured e6 digital twin or a validated full SLAM system.
+Status date: 2026-10-28
+Baseline: main at commit 1803b75; one pre-existing local change in docs/plans/simulation_first_plan.md is intentionally preserved.
+Platform: Ubuntu 22.04 / ROS 2 Humble / Gazebo Fortress on Windows + WSL2 + Docker Desktop.
 
-The immediate simulator-first sequence is documented in the [implementation plan](plans/simulation_first_plan.md): repeat simple motion and sensor geometry tests, validate goal cancellation/unreachable cases, record/replay fixed routes, then add localization/SLAM and larger worlds.
+## Mission and boundaries
 
-Existing workstreams:
+The current stack is a simulation and software-integration baseline. It is not a measured GEM e6 digital twin, a validated LIO/SLAM system, or a real-vehicle deployment. The PACMod mock is part of the simulated control path; no CAN interface or physical PACMod driver is enabled.
 
-1. [Sustained transport and record/replay](https://github.com/linarthurlin/agile_slam/issues/1).
-2. [FAST-LIO input contracts and rolling-scan validation](https://github.com/linarthurlin/agile_slam/issues/2).
-3. [GEM e6 geometry and full sensor/PACMod profiles](https://github.com/linarthurlin/agile_slam/issues/3).
+Keep simulation and hardware backends behind the same ROS contracts where possible. Treat hardware mode as unavailable until its sensor inventory, vehicle host, PACMod generation, firmware, DBC and safety behavior are verified. Do not use simulator truth as an operational localization input.
 
-See [navigation operation](navigation.md), [validation](validation/navigation.md), and [scene candidates](scenes.md). Known-start identity alignment is a temporary navigation test assumption; AMCL/SLAM must replace it before evaluating global localization.
+## Current baseline
 
-The development workflow is local build/integration validation, followed by a reviewable commit with updated evidence. GitHub Actions checks source/configuration, kinematics/watchdog regressions, and generated scene/map consistency. It does not build the private local base image or exercise GPU/CAN hardware.
+- One Compose project, agile-slam, with six named services/containers and one shared application image.
+- Four core services: core, localization, vehicle-control and backend-sim; optional GUI clients: gazebo-gui and rviz.
+- Shared Nav2 → vehicle-control → PACMod ROS commands → PACMod mock → simulated joints path.
+- Wheel odometry and known-start map alignment; no operational LIO/SLAM.
+- Snapshot LiDAR with x/y/z/intensity/ring and no per-point time.
+- 52 Python unit tests pass; source/config, generated scene/map and vehicle/interface checks pass.
+- Targeted historical GPU/sensor, route and moving-fault tests passed; full repeated dual-GUI and sustained acceptance remain open.
+- Runtime is intentionally stopped while WSL/Docker are paused.
 
-Detailed implementation plans use Traditional Chinese under `docs/plans/`. Other code, configuration, documentation, issue descriptions, and commit messages use English.
+## Priority definitions
 
-The preferred refactoring platform is a shared amd64 Ubuntu 22.04/Humble/Fortress runtime for Windows/WSL2 simulation and native Linux vehicle deployment. See [ADR 0002](architecture/0002-humble-jammy-baseline.md) and the [updated target plan](plans/target_architecture_plan.md). The split simulation and PACMod mock are implemented; vehicle OS/version verification and actual hardware integration remain open. Jazzy/Harmonic is a later maintenance candidate. Humble/Fortress support and Jammy standard security maintenance end in May 2027, so maintenance-path assessment is an explicit milestone.
+- P0: Must be resolved before real-vehicle actuation.
+- P1: Required for the next dependable simulator release or before the dated support transition.
+- P2: Important capability expansion after the baseline is repeatable.
+- P3: Later optimization or research after the preceding gates pass.
 
-The next implementation scope is consolidated in the [implementation baseline](architecture/implementation-baseline.md), with a [Traditional Chinese execution plan](plans/implementation_baseline.md) and [read-only environment audit](validation/architecture_audit.json). The split simulation and PACMod mock have initial validation. Hardware deployment remains unavailable. See [scenario operation](scenarios.md) and [dynamic validation](validation/dynamic_scenarios.md) for executed results and remaining gates.
+## Roadmap
+
+### R0 — Restore one accurate project status
+
+**Priority:** P1
+**Status:** Open
+
+The existing docs/current_state.md describes an earlier single-container deployment and stale image/domain values. Align the canonical state page with the six-service Compose runtime and link the current system report.
+
+**Acceptance criteria**
+
+- Record the reviewed commit, local modifications, image/base provenance, service names, ROS domain and Gazebo partition.
+- Separate verified facts from configured values, assumptions and unknown vehicle hardware.
+- Link the latest passing and failing validation evidence; preserve historical failures.
+- Keep user-authored changes to the simulator-first plan intact.
+
+### R1 — Close readiness and input-validation gaps
+
+**Priority:** P1 for simulator reliability; P0 before hardware use
+**Status:** Open
+
+- Add a steady-time freshness check for dynamic TF used by readiness; reject stale or non-advancing transforms.
+- Validate JointState names, array lengths, finite position/velocity values and stamps before steering kinematics.
+- Add malformed sensor, stale-but-republished report, readiness-process loss and stale-TF regression cases.
+- Verify the controller and mock remain inhibited on each failure and require explicit re-enable after recovery.
+- Keep ROS/simulation time separate from monotonic safety receipt time.
+
+**Acceptance criteria**
+
+- Each injected fault has a machine-readable case report and retained first-fault diagnostics.
+- Stale or malformed input cannot satisfy readiness or renew actuation permission.
+- Recovery never automatically enables the mock.
+
+### R2 — Re-establish repeatable simulator acceptance
+
+**Priority:** P1
+**Status:** Pending runtime; Docker/WSL are intentionally stopped
+
+- Resume the existing deployment only when continuing runtime validation.
+- Run cold-start checks for default software rendering and the GPU sensor-server overlay.
+- Repeat straight, offset-curve and left/right intersection routes from known poses; include cancellation, occupied/unreachable goals and controller/backend faults.
+- Complete the moving 20-minute dual-GUI soak and a repeated route suite with real Gazebo and RViz windows verified.
+- Track simulation time and wall time separately; capture RTF, topic stamp rate, wall receive rate, freshness faults, DDS/IP counters, CPU, memory and restart state.
+
+**Acceptance criteria**
+
+- Every route passes existing position/yaw and consecutive-rest criteria in repeated cold runs.
+- No unexplained readiness latch, sensor timestamp regression or automatic re-enable occurs.
+- Publish measured RTF and wall-time sensor throughput; do not label a slower-than-wall simulator real time.
+
+### R3 — Complete transport and dynamic record/replay
+
+**Priority:** P1
+**Status:** Partial: stationary smoke evidence exists; dynamic acceptance remains open
+
+- Record moving routes with required sensor, TF, clock, odometry, command and diagnostic topics.
+- Define recording QoS overrides and a run manifest with source, image, configuration, scene and sensor profile fingerprints.
+- Test late subscribers to transient/static TF, replay clock ownership, pause/reset/rewind and independent ROS domain playback.
+- Measure sustained message loss and latency rather than relying only on topic presence or monotonic stamps.
+
+**Acceptance criteria**
+
+- A recorded route replays with one authoritative /clock and valid TF for late joiners.
+- Sensor schema and deterministic scenario metrics meet documented tolerances.
+- Missing messages, QoS incompatibility and replay time errors fail with clear diagnostics.
+
+### R4 — Confirm physical vehicle and sensor inventory
+
+**Priority:** P0 before hardware integration
+**Status:** Blocked on physical facts
+
+Collect and version a hardware manifest for:
+
+- GEM e6 model year, measured wheelbase/track, axle origin, steering ratio/rate and sensor mounting positions.
+- Vehicle computer CPU, Linux distribution/kernel, network interfaces, GPU and available container runtime.
+- Velodyne model and firmware; three front LiDAR models; camera and RealSense models, serials and available streams.
+- PACMod board generation/revision, firmware, vehicle type, DBC, CAN adapter and existing ROS driver.
+- IMU and GNSS model, frame convention, timestamp source and synchronization method.
+
+The PACMod2 upstream README describes board revision 2, states that its driver does not support PACMod3, and lists GEM e2/e4/e6 model year 2016+ among supported vehicles. Hardware generation still must be checked on this vehicle before selecting a driver.
+
+**Acceptance criteria**
+
+- Unknowns are either measured or explicitly tagged unresolved; no inferred e6 parameters silently replace the e2 simulation values.
+- Sensor topic, frame, unit, timestamp, QoS and driver version contracts are recorded.
+
+### R5 — Build hardware-faithful sensor and calibration profiles
+
+**Priority:** P2
+**Status:** Not started
+
+- Model each confirmed sensor separately with versioned calibration profiles.
+- For the actual Velodyne, implement and validate scan cadence, ring mapping, return/intensity semantics, point ordering and per-point acquisition times needed by the selected driver/LIO input.
+- Define camera intrinsics, optical frames, depth scale/encoding, IMU axes/noise and GNSS frame/time behavior from device specifications and measurements.
+- Keep calibration truth separate from estimator inputs; add known-target and held-out calibration tests.
+- Include timing offset, jitter, dropout, noise and extrinsic perturbation sweeps.
+
+**Acceptance criteria**
+
+- Simulated message schemas match the selected hardware-driver contract.
+- LIO deskew is evaluated against independently known motion and scan timing.
+- Calibration results include uncertainty, configuration version and held-out residuals.
+
+### R6 — Integrate and evaluate localization / SLAM
+
+**Priority:** P2
+**Status:** Not started; FAST-LIO in the inherited image is not a validated running pipeline
+
+- Pin the source revision and dependency chain for the chosen LIO/SLAM implementation.
+- Define one owner per TF edge; remove known-start identity alignment from SLAM evaluation.
+- Validate LiDAR/IMU extrinsics, timestamps, frame transforms, initialization and reset behavior.
+- Evaluate map quality, ATE/RPE, drift, loop closure, degraded geometry and sensor failure on repeatable routes and recorded bags.
+
+**Acceptance criteria**
+
+- Estimator consumes only sensor inputs; ground truth is restricted to the evaluator.
+- Results can be replayed from a versioned bag and manifest.
+- Failure and recovery behavior is documented, not hidden by map alignment.
+
+### R7 — Make images reproducible and prepare the support transition
+
+**Priority:** P1
+**Status:** Open
+
+The build inherits a local base-image tag and leaves some apt dependencies floating. Additionally, ROS 2 Humble, Gazebo Fortress and Ubuntu 22.04 standard support are scheduled to end in May 2027. See the official [ROS 2 Humble release announcement](https://discourse.ros.org/t/ros-2-humble-hawksbill-released/25729), [Gazebo release schedule](https://gazebosim.org/docs/latest/releases/) and [Ubuntu release cycle](https://ubuntu.com/about/release-cycle).
+
+- Capture and enforce the base image digest, package versions, source revisions and third-party renderer patch provenance.
+- Produce a clean build without relying on undocumented local packages; retain license notices.
+- Before 2027-02, choose a support strategy with the vehicle computer and driver inventory in hand.
+- Evaluate a separate Ubuntu 24.04 / ROS 2 Jazzy / Gazebo Harmonic candidate; keep Humble/Fortress as the rollback baseline until all ROS packages, sensor drivers, PACMod interfaces, rendering and route acceptance pass.
+- Do not assume a container OS choice removes host kernel, SocketCAN, USB, NIC or GPU compatibility requirements.
+
+**Acceptance criteria**
+
+- An independent clean host can build or pull an immutable release image and verify its provenance.
+- A selected supported platform has repeatable CI and simulator evidence before production migration.
+- The transition plan accounts for OS, ROS, Gazebo and vendor-driver support separately.
+
+### R8 — Implement real vehicle modes and PACMod backend
+
+**Priority:** P0 before any actuator test
+**Status:** Not started; CLI currently fails closed for hardware/replay modes
+
+- Implement an explicit hardware sensor/vehicle backend and a verified passive vehicle-readonly mode.
+- Use the driver matching the confirmed PACMod board; validate actual command/report topics and DBC.
+- Isolate CAN device access and make actuator enable a separate, explicit operation.
+- Test boot, disable, gear, command limits, steering conversion/rate, accelerator/brake interlock, stale reports, override, CAN timeout, process restart and emergency stop on a bench setup.
+- Prove vehicle-readonly transmits no actuator/control frames; absence of Nav2 alone is not proof of passive operation.
+- Keep replay unable to open actuator transport.
+
+**Acceptance criteria**
+
+- Bench CAN captures prove the expected frames and no transmission in read-only/replay mode.
+- Every communication or readiness fault inhibits commands, records a cause and requires deliberate recovery.
+- Only after bench acceptance, perform an approved low-speed closed-course validation with a measured vehicle configuration.
+
+## External compatibility references
+
+- [ROS 2 Humble release announcement](https://discourse.ros.org/t/ros-2-humble-hawksbill-released/25729)
+- [Gazebo ROS/Gazebo pairings](https://gazebosim.org/docs/jetty/ros_installation/)
+- [Gazebo release schedule](https://gazebosim.org/docs/latest/releases/)
+- [Ubuntu release cycle](https://ubuntu.com/about/release-cycle)
+- [PACMod2 upstream driver](https://github.com/astuff/pacmod2)
+
+## Related project evidence
+
+- [System inspection and code review (Traditional Chinese)](reviews/system_report_20261028.md)
+- [Runtime operations and current limitations](runtime.md)
+- [GPU/runtime validation](validation/gpu_runtime.md)
+- [Dynamic scenario validation](validation/dynamic_scenarios.md)
+- [Traditional Chinese simulator-first implementation plan](plans/simulation_first_plan.md)
