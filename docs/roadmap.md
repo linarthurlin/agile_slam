@@ -105,7 +105,7 @@ Collect and version a hardware manifest for:
 - Vehicle computer CPU, Linux distribution/kernel, network interfaces, GPU and available container runtime.
 - Velodyne model and firmware; three front LiDAR models; camera and RealSense models, serials and available streams.
 - PACMod board generation/revision, firmware, vehicle type, DBC, CAN adapter and existing ROS driver.
-- IMU and GNSS model, frame convention, timestamp source and synchronization method.
+- IMU and GNSS model (UM982 if selected), receiver/carrier/firmware, dual-antenna baseline, frame convention, timestamp source and synchronization method.
 
 The PACMod2 upstream README describes board revision 2, states that its driver does not support PACMod3, and lists GEM e2/e4/e6 model year 2016+ among supported vehicles. Hardware generation still must be checked on this vehicle before selecting a driver.
 
@@ -122,6 +122,9 @@ The PACMod2 upstream README describes board revision 2, states that its driver d
 - Model each confirmed sensor separately with versioned calibration profiles.
 - For the actual Velodyne, implement and validate scan cadence, ring mapping, return/intensity semantics, point ordering and per-point acquisition times needed by the selected driver/LIO input.
 - Define camera intrinsics, optical frames, depth scale/encoding, IMU axes/noise and GNSS frame/time behavior from device specifications and measurements.
+- Bring the existing 20 Hz Gazebo NavSat model onto /sensors/gnss/fix; validate the Humble bridge mapping and add a simulation adapter for meaningful covariance, fix status, perturbations and dropouts.
+- Integrate a UM982 hardware driver behind the same ROS contract. Audit Humble compatibility, parsing, timestamps, heading convention, covariance, diagnostics and license before adopting an upstream community driver.
+- Record a separate dual-antenna heading interface, antenna baseline/mounting offset, serial configuration, PPS/time source and RTCM correction path where RTK is required.
 - Keep calibration truth separate from estimator inputs; add known-target and held-out calibration tests.
 - Include timing offset, jitter, dropout, noise and extrinsic perturbation sweeps.
 
@@ -139,6 +142,7 @@ The PACMod2 upstream README describes board revision 2, states that its driver d
 - Pin the source revision and dependency chain for the chosen LIO/SLAM implementation.
 - Define one owner per TF edge; remove known-start identity alignment from SLAM evaluation.
 - Validate LiDAR/IMU extrinsics, timestamps, frame transforms, initialization and reset behavior.
+- Evaluate GNSS separately from LIO: transform NavSatFix with a validated heading/datum, fuse only measured covariance, and ensure there is one TF authority.
 - Evaluate map quality, ATE/RPE, drift, loop closure, degraded geometry and sensor failure on repeatable routes and recorded bags.
 
 **Acceptance criteria**
@@ -184,6 +188,25 @@ The build inherits a local base-image tag and leaves some apt dependencies float
 - Every communication or readiness fault inhibits commands, records a cause and requires deliberate recovery.
 - Only after bench acceptance, perform an approved low-speed closed-course validation with a measured vehicle configuration.
 
+### R9 — Add an optional development container
+
+**Priority:** P3
+**Status:** Not started; optional developer-experience improvement
+
+A Dev Container is VS Code configuration for opening a development environment inside a container. It can reuse Docker Compose, but it is not a replacement for the runtime Compose architecture and does not imply one container per ROS node or sensor.
+
+- First make the ROS/Humble build inputs reproducible (R7); do not make a developer container depend on an undocumented local-only image as its final setup.
+- Add a dedicated .devcontainer/devcontainer.json and development-only Compose service or file for colcon, rosdep, linting and unit tests.
+- Do not auto-start Gazebo, RViz, PACMod or hardware drivers when opening the editor.
+- Do not mount the Docker socket, CAN device or physical sensor devices into the default development container.
+- Keep normal simulation and vehicle runtime launched through the existing explicit deployment commands.
+
+**Acceptance criteria**
+
+- A clean WSL checkout can open the development container and build/test the ROS workspace with documented commands.
+- Opening/rebuilding the Dev Container does not start the simulator or any hardware mode.
+- The runtime Compose files remain the source of truth for deploying the simulator and future vehicle profile.
+
 ## External compatibility references
 
 - [ROS 2 Humble release announcement](https://discourse.ros.org/t/ros-2-humble-hawksbill-released/25729)
@@ -191,6 +214,15 @@ The build inherits a local base-image tag and leaves some apt dependencies float
 - [Gazebo release schedule](https://gazebosim.org/docs/latest/releases/)
 - [Ubuntu release cycle](https://ubuntu.com/about/release-cycle)
 - [PACMod2 upstream driver](https://github.com/astuff/pacmod2)
+- [ros_gz_bridge Humble message mappings](https://github.com/gazebosim/ros_gz/blob/humble/ros_gz_bridge/README.md)
+- [Unicore UM982 specification](https://en.unicorecomm.com/products/um982/)
+- [Unicore UM982eb evaluation board](https://en.unicorecomm.com/products/um982eb/)
+- [Dev Containers documentation](https://code.visualstudio.com/docs/devcontainers/create-dev-container)
+ [ros_gz_bridge NavSat conversion implementation](https://github.com/gazebosim/ros_gz/blob/humble/ros_gz_bridge/src/convert/sensor_msgs.cpp)
+- [ROS REP 103 coordinate conventions](https://github.com/ros-infrastructure/rep/blob/master/rep-0103.rst)
+- [robot_localization navsat_transform_node](https://github.com/cra-ros-pkg/robot_localization/blob/rolling-devel/doc/navsat_transform_node.rst)
+- [UM982 ROS 2 community driver](https://github.com/AIRLab-POLIMI/um982_ros2_driver)
+- [UM982eb user manual](https://en.unicorecomm.com/uploads/file/UM982eb_User%20Manual_EN_R1.2.pdf)
 
 ## Related project evidence
 

@@ -88,8 +88,82 @@ Windows Docker CLI 回報 client 29.5.2，但無法連到 Docker Desktop Linux E
 - 模擬 LiDAR 發布 30,000 點，欄位 x/y/z/intensity/ring，約每 0.1 秒一筆模擬時間資料。
 - IMU 約 50 Hz、前方 RGB 和 CameraInfo 約 30 Hz，均為設定／模擬時間頻率，不代表相同的 wall-time 吞吐率。
 - LiDAR 是 snapshot scan，沒有逐點 firing time；目前無法據此驗證真實 Velodyne rolling scan 或 LIO deskew。
-- depth／輔助相機在目前 navigation workload 關閉或未橋接；GPS、三顆前 LiDAR、多相機與 RealSense 尚未構成完整驗收 profile。
+- depth／輔助相機在目前 navigation workload 關閉或未橋接；三顆前 LiDAR、多相機與 RealSense 尚未構成完整驗收 profile。Gazebo 內有 20 Hz NavSat 模型，但目前沒有 bridge mapping，尚未形成 ROS GNSS stream。
 - 場景轉換為支援 WSL GPU rendering 修改 terrain visual mesh；碰撞幾何／道路地圖維持既有來源，但 terrain texture blending 沒有完整重現。
+
+### Docker service 邊界與各感測器資料路徑
+
+目前 Compose 以「功能與生命週期」切服務，不是每個 ROS node 或每顆 sensor 各開一個 container。六個 service 共用 agile_slam:humble image；image 是軟體檔案系統，service/container 是各自啟動的執行個體，各自有啟停生命週期，並配置自己的 command、網路與 volume。
+
+| Compose service／container | 目前責任 | 感測器與硬體切割 |
+|---|---|---|
+| core／agile-slam-core | 地圖、Nav2、readiness 與任務層 | 消費 ROS topics；不直接接 Gazebo 或實體裝置 |
+| localization／agile-slam-localization | wheel odometry、known-start map alignment | 消費 joint feedback；目前不是 LIO 或 GNSS fusion |
+| vehicle-control／agile-slam-vehicle-control | /cmd_vel 到 PACMod command 的速度閉迴路 | 透過 ROS command/report contract；不直接擁有 CAN 裝置 |
+| backend-sim／agile-slam-simulator | Gazebo server、車輛 spawn/controllers、ros_gz_bridge、ros_gz_image、PACMod mock | Gazebo sensor plugins 與 bridge nodes 都由這一個 service 啟動；沒有獨立 sensor containers |
+| gazebo-gui／agile-slam-gazebo | 可選 Gazebo GUI client | 與 server 分開，方便 GUI 關閉時模擬後端仍運作 |
+| rviz／agile-slam-rviz | 可選 RViz client | 透過 ROS 2 DDS 讀取資料；不是 sensor driver |
+
+感測器的三個層次分別放在車輛模型、sim backend bridge、ROS 消費者：
+
+1. **模型／資料生成**：sensor 的位置、頻率、視場與噪聲在 URDF/Xacro 的 link 和 Gazebo sensor tag 設定，例如 ros2_ws/src/gem_description/urdf/gem.urdf.xacro、gem.gazebo。
+2. **格式與 topic 邊界**：ros2_ws/src/gem_gazebo/config/gz_bridge.yaml 定義 Gazebo Transport 到 ROS 2 的訊息映射；相機影像另由 ros_gz_image bridge。這些 bridge process 現在由 backend_sim.launch.py 一起啟動。
+3. **功能消費者**：core、localization、RViz 等只依賴穩定的 ROS topic/message contract，不應各自知道資料來自 Gazebo、bag 或硬體 driver。
+
+| Sensor／stream | 模型與目前頻率 | ROS 邊界和狀態 |
+|---|---|---|
+| LiDAR | Gazebo GPU LiDAR，16 rings × 1875 samples，約 10 Hz | /scan/points → /sensors/velodyne/points，PointCloud2；不是 Velodyne 原生 UDP packet，且沒有 per-point firing time |
+| IMU | Gazebo IMU，50 Hz | /imu → /sensors/imu/data_raw，sensor_msgs/Imu |
+| 前相機 | 主 RGB 800×600，30 Hz | 影像由 ros_gz_image 發布至 /sensors/cameras/front/image_raw；CameraInfo 由 ros_gz_bridge 發布至 /sensors/cameras/front/camera_info |
+| GNSS／NavSat | Gazebo NavSat model，20 Hz，Gazebo topic /navsat | **未列在目前 gz_bridge.yaml，所以現在尚無 ROS /sensors/gnss/fix。** 模型存在不等於資料已接進 ROS graph |
+| Ground truth | Gazebo world plugin | /ground_truth/odometry，僅供 evaluator 對照，不能餵給 operational localization |
+
+**實車 backend 的建議切法**：不以「一顆 sensor 一個 container」為預設。先按裝置權限、依賴與故障隔離需求分組；例如網路型 LiDAR 和 camera/IMU 可由 sensor driver services 管理，UM982 若需要獨立 serial 權限或獨立重啟可設 gnss-driver service，PACMod/CAN 則放在權限明確隔離的 actuator service。它們透過同一 ROS 2 contract 接到共用 localization、Nav2 與 vehicle-control。未來可在同一 Compose 專案定義 sim／vehicle profiles，但每次啟動必須只選一個 backend；這個硬體 profile 目前尚未實作。
+#### 新增 UM982 GNSS 的建議步驟
+
+**先完成模擬 ROS contract，再接實體 receiver。** 目前已經有可重用的 Gazebo NavSat source，無須先另造一個 Gazebo sensor。上游 [ros_gz_bridge Humble mapping](https://github.com/gazebosim/ros_gz/blob/humble/ros_gz_bridge/README.md) 支援 sensor_msgs/msg/NavSatFix 與 ignition::msgs::NavSat；[轉換實作](https://github.com/gazebosim/ros_gz/blob/humble/ros_gz_bridge/src/convert/sensor_msgs.cpp)會把 covariance 標為 unknown，並固定回報 STATUS_FIX。因此它可用於驗 topic、時間戳與基本經緯度資料，不能代表 RTK fixed/float 狀態，也不能直接用來驗證 UM982 covariance 或高精度定位。可在 bridge 後加一個 simulator GNSS adapter，從 scenario 設定產生可控的 covariance、fix status、偏差、dropout 與 heading 行為，再送入共用 topic。
+
+建議介面與責任如下：
+
+- **位置**：固定 sensor_msgs/msg/NavSatFix topic /sensors/gnss/fix，統一 frame_id、時間戳來源、座標基準、QoS 與有效 fix/covariance 語意。
+- **雙天線 heading**：UM982 的 heading 不放進 NavSatFix。依最後選定 driver 另出明確的 heading interface（例如有正確 covariance 的 sensor_msgs/Imu orientation），並轉成 ROS 慣例：[REP 103 ENU](https://github.com/ros-infrastructure/rep/blob/master/rep-0103.rst)，yaw 由東向為零且逆時針增加。確認兩天線 baseline 朝向、安裝偏角及資料中的 compass heading 方向。
+- **融合**：GNSS driver 只負責接收、解析和發布；定位層再用 robot_localization 的 navsat_transform_node 將 NavSatFix 配合 odometry 與 earth-referenced heading 轉成車輛世界座標的 odometry，交給 EKF 融合；此資料流符合 [robot_localization navsat_transform_node](https://github.com/cra-ros-pkg/robot_localization/blob/rolling-devel/doc/navsat_transform_node.rst) 的 odometry、heading 與 NavSatFix 輸入設計。由單一定位節點負責相關 TF，GNSS 與 LiDAR SLAM 分開驗證。
+- **實體接線**：[UM982](https://en.unicorecomm.com/products/um982/) 是 48-pin LGA 模組，介面包括 LVTTL UART；不能當成直接插 PC 的 USB 感測器。先確認使用 [UM982eb 評估板](https://en.unicorecomm.com/products/um982eb/)或何種 carrier、UART 電平、供電、兩支天線與 host serial adapter。評估板使用限制另見[官方手冊](https://en.unicorecomm.com/uploads/file/UM982eb_User%20Manual_EN_R1.2.pdf)；不直接假設適合量產安裝。硬體 container 只映射指定 serial device，使用穩定 /dev/serial/by-id/ 路徑和最小 device 權限。
+- **RTK**：若要求 RTK，還要決定 RTCM correction 來源（基地台或 NTRIP）、傳輸介面、失去 corrections 的行為及秘密資料保存方式。UM982 支援 RTCM v3.x；RTK 狀態應由 driver diagnostics 明確輸出，不可由 topic 存在推斷。
+- **driver 選型**：查到的[社群 UM982 ROS 2 driver](https://github.com/AIRLab-POLIMI/um982_ros2_driver) README 明列 Jazzy，並使用 GPL；目前不是本專案 Humble 可直接採用的已驗證依賴。先在 Humble clean build/bench 測試、審查 log parser、時間戳與 license，再決定移植或實作精簡 driver。
+- **驗收**：以靜止、直線、定圓、遮蔽／失鎖、RTCM 中斷、heading 方向與已知 datum 測試；比對 bag 重播結果、ENU 投影、covariance、update rate、stale/dropout diagnostics。模擬 ground truth 僅可進 evaluator 作誤差量測。
+
+建議的未來硬體資料流：
+
+~~~text
+SIMULATION
+[Gazebo model: LiDAR / IMU / RGB / NavSat]
+                  |
+        Gazebo Transport topics
+                  v
+[backend-sim: Gazebo + ros_gz_bridge + image bridge + PACMod mock]
+                  |
+          ROS 2 sensor contracts
+                  v
+[core/Nav2] [localization & GNSS fusion] [vehicle-control]
+
+VEHICLE
+[Velodyne Ethernet driver] [camera/IMU drivers] [UM982 serial driver]
+                  |
+        Same ROS 2 sensor contracts
+                  v
+[core/Nav2] [localization & GNSS fusion] [vehicle-control]
+                                                        |
+                                                 PACMod/CAN backend
+~~~
+
+### Dev Container 是什麼、是否適合本專案
+
+目前 repository 沒有 .devcontainer 設定。Dev Container 是給 VS Code 使用的開發環境描述檔，通常由 devcontainer.json 搭配 Dockerfile 或 Docker Compose，讓編輯器在 Linux container 中提供 ROS、colcon、rosdep、除錯和測試工具。[VS Code 官方說明](https://code.visualstudio.com/docs/devcontainers/create-dev-container)
+
+它不是另一種 ROS 架構，也不取代目前的 Compose runtime。它不決定每顆 sensor 是否獨立一個 service；它只描述「寫 code、建置、除錯」時編輯器應連到哪個開發 container。Dev Container 可以透過 Compose 使用既有 image/service，也可以定義專用開發 service。
+
+**建議採用，但作為可選的開發入口，排在 image 可重現建置之後。** 本專案的 Dockerfile 目前依賴本機基底 tag；若直接讓 Dev Container 依賴這個 tag，換電腦仍無法重建。先固定基底和套件來源，再做專用 dev image/service，啟動後執行 colcon build、lint 和 unit tests。開啟開發環境不應自動啟動 Gazebo/RViz，也不應預設映射實車 serial、CAN 或 Docker socket。模擬和未來實車仍由明確的部署 Compose profile/command 啟動。
 
 ## 程式碼審查發現
 
