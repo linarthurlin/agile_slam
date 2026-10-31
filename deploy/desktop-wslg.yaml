@@ -1,0 +1,16 @@
+services:
+  gazebo:
+    environment:
+      DISPLAY: ":0"
+      QT_QPA_PLATFORM: xcb
+      QT_X11_NO_MITSHM: "1"
+    volumes:
+      - /mnt/wslg/.X11-unix:/tmp/.X11-unix:ro
+
+  rviz:
+    environment:
+      DISPLAY: ":0"
+      QT_QPA_PLATFORM: xcb
+      QT_X11_NO_MITSHM: "1"
+    volumes:
+      - /mnt/wslg/.X11-unix:/tmp/.X11-unix:ro

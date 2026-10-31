@@ -1,0 +1,26 @@
+{
+  "name": "Agile SLAM ROS 2 Humble",
+  "dockerComposeFile": [
+    "../compose.yaml",
+    "../compose.dev.yaml"
+  ],
+  "service": "dev",
+  "runServices": [
+    "dev"
+  ],
+  "workspaceFolder": "/workspaces/Agile_SLAM",
+  "shutdownAction": "stopCompose",
+  "overrideCommand": false,
+  "remoteUser": "agile",
+  "updateRemoteUserUID": true,
+  "postCreateCommand": "bash -lc 'source /opt/ros/humble/setup.bash && if [ -f /workspace/ros_ws/install/setup.bash ]; then source /workspace/ros_ws/install/setup.bash; fi && source /opt/agile_slam_ws/install/setup.bash && colcon build --base-paths /workspaces/Agile_SLAM/ros2_ws/src'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-iot.vscode-ros",
+        "ms-python.python",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

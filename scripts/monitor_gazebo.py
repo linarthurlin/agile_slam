@@ -15,7 +15,7 @@ class GazeboMonitor:
     def network_snapshot(self):
         snapshot={}
         code="import json, os; from pathlib import Path; lines=Path('/proc/net/snmp').read_text().splitlines(); names=lines[0].split()[1:]; values=lines[1].split()[1:]; fields=dict(zip(names,map(int,values))); print(json.dumps({'render_environment':{k:os.environ.get(k) for k in ('LIBGL_ALWAYS_SOFTWARE','LP_NUM_THREADS','LP_NATIVE_VECTOR_WIDTH','GALLIUM_DRIVER')},'mtu':int(Path('/sys/class/net/eth0/mtu').read_text()),'ip':{k:fields[k] for k in ('ReasmReqds','ReasmOKs','ReasmFails','ReasmTimeout','FragOKs','FragFails','FragCreates')}}))"
-        for service in ('core','backend-sim'):
+        for service in ('autonomy','localization','vehicle-control','sim-bridge','gazebo'):
             try:
                 result=subprocess.run(self.compose+['exec','-T',service,'python3','-c',code],capture_output=True,text=True,encoding='utf-8',timeout=10)
                 snapshot[service]=json.loads(result.stdout) if result.returncode==0 else {'error':result.stderr}
@@ -26,12 +26,12 @@ class GazeboMonitor:
         self.network_before=self.network_snapshot()
         self.stream=self.output.open('w',encoding='utf-8')
         self.errors=self.output.with_suffix('.stderr.log').open('w',encoding='utf-8')
-        command=self.compose+['exec','-T','backend-sim','sh','-c','echo $$ > "$1"; exec timeout --signal=INT 450 ign topic -e -t /world/small_city/stats --json-output','sh',self.pidfile]
+        command=self.compose+['exec','-T','gazebo','sh','-c','echo $$ > "$1"; exec timeout --signal=INT 450 ign topic -e -t /world/small_city/stats --json-output','sh',self.pidfile]
         self.process=subprocess.Popen(command,stdout=subprocess.PIPE,stderr=self.errors,text=True,encoding='utf-8',bufsize=1)
         self.thread=threading.Thread(target=self.read,daemon=True);self.thread.start()
         self.resources=self.output.with_suffix(".process.jsonl").open("w",encoding="utf-8")
         sampler=Path(__file__).with_name("sample_gazebo_process.py").read_text(encoding="utf-8-sig")
-        self.resource_process=subprocess.Popen(self.compose+["exec","-T","backend-sim","python3","-u","-c",sampler,self.pidfile],stdout=self.resources,stderr=self.errors)
+        self.resource_process=subprocess.Popen(self.compose+["exec","-T","gazebo","python3","-u","-c",sampler,self.pidfile],stdout=self.resources,stderr=self.errors)
         return self
 
     def read(self):
@@ -48,7 +48,7 @@ class GazeboMonitor:
         network_after=self.network_snapshot()
         # Stop only the probe's bounded timeout process, never the Gazebo server.
         cleanup='if [ -r "$1" ]; then pid=$(cat "$1"); case "$pid" in *[!0-9]*|"") ;; *) if [ -r "/proc/$pid/cmdline" ] && tr "\\000" " " < "/proc/$pid/cmdline" | grep -q "^timeout --signal=INT 450 ign topic"; then kill -TERM "$pid"; fi ;; esac; rm -f -- "$1"; fi'
-        try:subprocess.run(self.compose+['exec','-T','backend-sim','sh','-c',cleanup,'sh',self.pidfile],capture_output=True,timeout=10)
+        try:subprocess.run(self.compose+['exec','-T','gazebo','sh','-c',cleanup,'sh',self.pidfile],capture_output=True,timeout=10)
         except Exception as exc:self.error=str(exc)
         try:self.process.wait(timeout=5)
         except subprocess.TimeoutExpired:self.process.terminate();self.process.wait(timeout=5)
@@ -64,7 +64,7 @@ class GazeboMonitor:
         summary['ip_counter_delta']={service:{key:network_after[service]['ip'][key]-before['ip'][key] for key in before['ip']} for service,before in self.network_before.items() if 'ip' in before and 'ip' in network_after[service]}
         self.output.with_suffix('.summary.json').write_text(json.dumps(summary,indent=2)+'\n',encoding='utf-8')
         try:
-            logs=subprocess.run(self.compose+['logs','--no-color','--timestamps','backend-sim','core'],capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=15)
+            logs=subprocess.run(self.compose+['logs','--no-color','--timestamps','gazebo','sim-bridge','autonomy','localization','vehicle-control'],capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=15)
             self.output.with_suffix('.runtime.log').write_text(logs.stdout,encoding='utf-8')
         except Exception as exc:self.output.with_suffix('.runtime.log').write_text('Log collection failed: '+str(exc),encoding='utf-8')
         return False

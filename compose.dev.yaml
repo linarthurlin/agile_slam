@@ -1,0 +1,21 @@
+name: agile-slam-dev
+
+services:
+  dev:
+    container_name: 0025-dev
+    image: agile_slam:dev-humble
+    build:
+      context: .
+      dockerfile: containers/Dockerfile
+      target: dev
+      args:
+        BASE_IMAGE: agile_control_ros2:baseline-20261014
+    init: true
+    working_dir: /workspaces/Agile_SLAM
+    volumes:
+      - .:/workspaces/Agile_SLAM:cached
+    command: [sleep, infinity]
+    environment:
+      ROS_DOMAIN_ID: "44"
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      ROS_LOG_DIR: /tmp/ros_logs

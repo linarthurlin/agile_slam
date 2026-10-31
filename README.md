@@ -2,59 +2,52 @@
 
 A ROS 2 platform for GEM sensor integration, calibration, and SLAM experiments.
 
-The first milestone ports the existing GEM simulator onto a pinned Ubuntu 22.04 / ROS 2 Humble image. The imported vehicle remains an e2-derived surrogate; it is not yet a measured GEM e6 model.
+The active baseline is Ubuntu 22.04, ROS 2 Humble, Gazebo Fortress, and amd64. The imported vehicle remains an e2-derived surrogate; it is not a measured GEM e6 model.
 
-## Split PACMod runtime
+## Architecture
 
-The isolated multi-service simulation is available through scripts/deploy.py. See [runtime operation and limitations](docs/runtime.md) and [dynamic scenarios](docs/scenarios.md). It uses the shared vehicle controller and PACMod mock; the legacy deployment is retained in Git history.
+The runtime is split into small services: autonomy, localization, vehicle-control, Gazebo, and a simulation bridge. Gazebo GUI can be selected at startup inside the Gazebo service; RViz remains optional. A separate Dev Container supports editing and colcon builds without starting simulation.
 
-## Layout
+See [runtime operations and limitations](docs/runtime.md), [setup](docs/setup.md), and the [architecture decisions](docs/architecture/).
 
-- `containers/`: derived runtime and entrypoint.
-- `ros2_ws/src/`: simulator packages and platform bringup.
-- `config/`: shared runtime configuration.
-- `scripts/`: environment audit and validation tools.
-- `docs/`: setup, validation, and implementation plans.
-- `third_party/`: source provenance and retained license information.
+## Repository layout
 
-## Baseline
+- `.devcontainer/`: VS Code Dev Container configuration.
+- `containers/`: shared runtime image, developer target, and process entrypoints.
+- `compose.yaml`, `compose.sim.yaml`, `compose.dev.yaml`: common runtime, simulation, and development services.
+- `deploy/`: WSLg and GPU-specific Compose overlays.
+- `ros2_ws/src/`: ROS 2 packages and platform bringup.
+- `config/`: shared runtime configuration and interface contracts.
+- `scripts/`: deployment, environment inspection, and validation tools.
+- `docs/`: setup, validation, and implementation records.
+- `third_party/`: source provenance and license information.
 
-The local base image is `agile_control_ros2`, image ID `sha256:a6acca67607edcb48e66adfec152714ad480b0b0854587c6dcca72034f2084ca`. It includes Humble, FAST-LIO, PACMod2, Nav2, and RViz. It is not distributed by this repository.
+## Local base image
+
+The build uses the local image `agile_control_ros2`, ID `sha256:a6acca67607edcb48e66adfec152714ad480b0b0854587c6dcca72034f2084ca`. It includes ROS 2 Humble, FAST-LIO, PACMod2 messages/driver, Nav2, and RViz. It is not distributed by this repository.
 
 ```powershell
 python scripts/doctor.py
+python -m pip install -r scripts/requirements-scenes.txt
+python scripts/prepare_small_city.py
 python scripts/prepare_base.py
 python scripts/deploy.py build
 python scripts/deploy.py up
 python scripts/deploy.py check
-python scripts/deploy.py up --gui
-python scripts/deploy.py enable
-python scripts/deploy.py disable
+python scripts/deploy.py status
 python scripts/deploy.py down
 ```
 
-The canonical `compose.yaml` uses image `agile_slam:humble`, project `agile-slam`, and explicit container names without numeric suffixes. The default profile uses software rendering and a private Docker bridge network. It starts simulation only, with no CAN or USB access. Ground-truth odometry is isolated under `/ground_truth/odometry`; no operational odometry TF is fabricated from it.
+Use `python scripts/deploy.py up --gui` to cold-start Gazebo with its GUI and open RViz through WSLg. Every `up` starts the full project from a clean state so all simulation-time consumers restart together.
 
-To open Gazebo and RViz, run `bash scripts/gui.sh` from WSL after starting the simulator. See the setup guide for the PowerShell command.
+## Simulation boundary
 
-See [setup](docs/setup.md), [validation](docs/validation/baseline.md), [roadmap](docs/roadmap.md), and the [implementation plan](docs/plans/implementation_plan.md). Plans are written in Traditional Chinese; code, configuration, operational documentation, and commit messages are written in English.
+The simulator publishes ROS sensor data; it does not emulate serial, USB, Ethernet sensor protocols, NTRIP/RTCM, SocketCAN, or CAN frames. PACMod is represented by a `pacmod2_msgs` ROS-level mock that maps commands to Gazebo joints and creates feedback reports. No physical device is exposed to the simulation Compose project.
 
-## Validation status
+## Status and limitations
 
-The current image builds five ROS packages. Sensor streams, PACMod mock interlocks and selected Nav2 scenarios have local validation; historical baseline evidence remains available. Large image/cloud checks use reliable subscriptions; best-effort transport loss was observed and remains a separate performance gate. See the validation report for evidence and limits.
+The new split runtime and Dev Container configuration are implemented but have not yet received a clean build or runtime acceptance run. Existing test and navigation reports refer to the previous topology.
 
-The [renderer investigation](docs/validation/render_stalls.md) retains the software-renderer failures. The WSL NVIDIA candidate adds a checksum-verified matching Ogre renderer plugin and a city terrain visual mesh. See [GPU remediation validation](docs/validation/gpu_runtime.md) for executed evidence and remaining gates. Use `python scripts/deploy.py up --gui --rendering gpu` for that capability-checked path; the default remains software.
+The current vehicle is an e2-derived surrogate. LIO, rolling-scan LiDAR timing, full sensor profiles, calibration, the UM982 serial service, the real PACMod2/CAN driver service, and vehicle deployment mode remain future milestones. See [the roadmap](docs/roadmap.md) and the [simulation-first plan](docs/plans/simulation_first_plan.md).
 
-## Navigation experiments
-
-The current Nav2 runtime adds a generated obstacle scene, wheel-feedback odometry, a filtered obstacle scan, Smac Hybrid-A* planning, and Regulated Pure Pursuit control. See [navigation setup](docs/navigation.md), [scene candidates](docs/scenes.md), and the [simulation-first plan](docs/plans/simulation_first_plan.md).
-
-The selected outdoor scene is [small_city](docs/small_city.md), with pinned asset preparation, Fortress conversion, and a conservative road map.
-
-## Scope
-
-Basic sensor schema/rate checks and known-start static Nav2 navigation are available. Sustained transport/recording, FAST-LIO, measured e6 geometry, full sensor profiles, calibration, and real-vehicle PACMod bringup remain subsequent milestones. The existing snapshot LiDAR must not be presented as a validated rolling-scan or deskew model. Humble/Fortress remains the active platform; maintenance migration is planned.
-
-## Attribution
-
-Imported GEM assets retain their upstream BSD licenses. See [third-party notices](third_party/README.md). The base image contains additional dependencies with their own licenses; publishing this source repository does not redistribute that image.
+Project code, README, configuration, and operational documentation use English. Implementation plans use Traditional Chinese.

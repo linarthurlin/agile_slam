@@ -1,4 +1,6 @@
-# Current system state
+# Historical system snapshot
+
+This snapshot records the prior combined simulator topology. The split-service implementation is tracked in [ADR 0003](architecture/0003-simulation-service-split.md) and [runtime operations](runtime.md); the new topology has not yet been built or runtime-validated.
 
 Latest update (2026-10-15): the selected small_city profile is running with software Ogre2, Nav2, and WSLg GUI clients. See [city setup](small_city.md) and [city validation](validation/small_city.md) for current evidence and performance limits. The snapshot below documents the earlier baseline; navigation adds a fourth source package.
 

@@ -7,7 +7,7 @@ x-gpu-environment: &gpu-environment
   MESA_D3D12_DEFAULT_ADAPTER_NAME: NVIDIA
   LD_LIBRARY_PATH: /usr/lib/wsl/lib
 services:
-  backend-sim:
+  gazebo:
     environment: *gpu-environment
     devices: [/dev/dxg:/dev/dxg]
     volumes:

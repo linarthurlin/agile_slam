@@ -1,11 +1,11 @@
 # 感測器、車輛與 PACMod 整合澄清及實作計畫
 
-日期：2026-10-15（America/Los_Angeles）。使用者目前沒有 Velodyne 型號、e6 年份及 PACMod firmware／DBC 資料。既有正常運行的模型與 GUI 不因本次研究直接切換；候選規格須標示來源與未知項目。
+修訂日期：2026-10-31（America/Los_Angeles）。使用者目前沒有 Velodyne 型號、e6 年份及 PACMod firmware／DBC 資料。既有正常運行的模型與 GUI 不因本次研究直接切換；候選規格須標示來源與未知項目。
 
 ## 1. Velodyne 相容性分成三層
 
 1. ROS 介面：固定 driver revision、topic、frame、QoS、PointCloud2 fields／datatype／offset／point_step／row_step、organized／unorganized 與無回波規則。官方 ROS2 PointcloudXYZIRT 使用 x/y/z/intensity float32、ring uint16、time float32；需核對實車所用 driver，而非假設所有版本相同。
-2. 量測語意：光束角度、laser ID 到 ring 對應、firing 順序、RPM、return mode、距離、強度與逐點時間。Velodyne 原始硬體送 packets；PointCloud2 是 driver 解碼產物。先做解碼後介面相容，packet/CAN 等低層 driver 測試另立 gate。
+2. 量測語意：光束角度、laser ID 到 ring 對應、firing 順序、RPM、return mode、距離、強度與逐點時間。Velodyne 原始硬體送 packets；PointCloud2 是 driver 解碼產物。Gazebo 直接產生符合已選 driver ROS schema 的 sensor data，不模擬 Velodyne UDP packet／driver transport；packet 與 driver 測試只能在實體 sensor 或硬體 bench 驗證。
 3. 動態物理：每點在自己的 firing time，從當時的 sensor pose 對當時場景求交。不能替同一時刻生成的整圈快照補一欄時間，便宣稱能驗證 deskew。
 
 目前 gpu_lidar：16 個等間距垂直 samples、1875 個水平 samples、10 Hz、無逐點 time。不能據此認定實車是 VLP16；VLP16 僅作可明確標示的開發候選。
@@ -47,9 +47,35 @@
 - https://github.com/ethz-asl/kalibr/wiki
 - https://github.com/koide3/direct_visual_lidar_calibration
 
-## 4. PACMod 為必做控制路徑
+## 4. 模擬資料邊界與 UM982／RTK 整合
 
-使用者要求 PACMod 必須實作，提升為下一批整合工作的必要項目，不再視為可選配件。先以 image 內實際存在的 pacmod2_msgs 建立 mock profile；實車板卡世代仍為待確認，不能宣稱 PACMod3 相容。
+### 硬體拓撲解讀
+
+UM982 原廠手冊中的 ANT1（主天線）與 ANT2（從天線）是同一顆 UM982 接收模組的兩個天線輸入；該模組可計算位置與雙天線航向。MJRTK-982 的 Base/Rover 快速指南則描述兩個實體模組及 Base TXD → Rover RXD 的 RTCM 串列連結，這是另一種配置。現有公開資料沒有證明「母／子 receiver 經單一自訂 adapter 合成一條 USB serial stream」是標準接法；軟體不得先假設只會有一個 tty。Vehicle bring-up 依實際 Linux 裝置枚舉映射一個或多個 tty 至 0025-gnss。
+
+車上若使用一顆雙天線 UM982，兩天線提供位置／航向 baseline；RTK corrections 仍由 NTRIP caster 或獨立 Base station 提供。修正來源目前未知，列為 vehicle integration gate。若使用實體 Base/Rover pair，須另定義 Base 的固定位置、RTCM 傳輸路徑與天線配置；它不等同於雙天線 heading。
+
+### Simulation 只模擬 ROS 感測器資料
+
+- Gazebo／ROS adapter 直接發布 sensor_msgs/msg/NavSatFix 及一個明確定義的 heading/status ROS contract；不建立 fake serial port、UM982 byte protocol、USB device、NTRIP/RTCM link 或 receiver emulator。
+- GNSS data profile 可注入位置雜訊／covariance、延遲、跳點、漂移、遮蔽／dropout；另以 diagnostics/status scenario 表示 FIXED、FLOAT、SINGLE、NO_FIX 等品質狀態。不要把 RTK FLOAT/FIXED 硬塞進 NavSatStatus.status 的不相符 enum。
+- 雙天線 heading 由模擬車身真值 yaw 加上指定誤差生成，輸出介面與硬體 driver 正規化後一致；truth topic 只供 evaluator，不能餵給 localization。
+- 這能驗證 ROS 資料契約、定位融合、品質降級與故障回復，不能驗證 UM982 serial parser、NTRIP、RTCM 傳輸、載波相位解算或實機固定解。需要檢查 parser 時可用真實接收器錄下的 bytes 做離線單元測試；serial／RTK 硬體驗收仍在 vehicle bench 完成。
+
+### ROS 與 localization 接法
+
+硬體與 simulation 正規化為共同的 GNSS position、heading、quality 與 diagnostics contract。NavSatFix 提供全域位置；獨立 heading adapter 依已核對的 UM982 heading reference、角度正負、單位及 ENU/NED 慣例轉成 localization 可用的方向觀測。不得將 GNSS heading 假裝成完整 IMU（尤其不能假造 angular velocity／acceleration）。
+
+LIO／wheel odometry 維持連續的 odom → base_link；以 robot_localization/navsat_transform_node 將 GNSS position 投影至世界座標，再由全域 estimator 產生 map → odom。GNSS 可修正全域漂移及提供航向參考，不直接取代 LIO，也不在未確認演算法支援前當成 FAST-LIO 的 GNSS factor。base_link 至 GNSS 天線的 lever arm、天線 baseline、datum、heading convention、covariance 與時間戳都納入 calibration/config manifest。
+
+來源：
+- UM982 原廠手冊：https://m.unicorecomm.com/assets/UM982_User_Manual_R1.7/index.html
+- MJRTK-982 Base/Rover 快速指南：https://manuals.plus/m/3098ac7c60295eaf5f50f0dc509fe298edf6a8e7f208c3fd840880c5c742a7f40
+- robot_localization navsat_transform：https://github.com/cra-ros-pkg/robot_localization/blob/rolling-devel/doc/navsat_transform_node.rst
+
+## 5. PACMod 為必做控制路徑
+
+使用者要求 simulation 與 vehicle 軟體統一採用 pacmod2_msgs／PACMod2 driver contract，PACMod 為必要控制路徑。Simulation 只 mock ROS command/report，不模擬 CAN；車上要使用 PACMod2 driver 與真實 CAN。實車板卡／firmware／DBC 仍需核對後才能啟用，不可由 ROS mock 推論硬體相容。
 
 控制鏈：Nav2 cmd_vel → vehicle controller（速度閉迴路、方向盤角命令）→ PACMod commands → PACMod mock／模擬車輛 adapter → ros2_control joints。以實際 joint feedback／模擬車速產生 reports，回到 controller。mock profile 必須停用現有直接 Twist-to-Ackermann 路徑，避免繞過 PACMod 或兩個 command writers 競爭。
 
@@ -64,13 +90,13 @@
 
 階段 A：ROS 介面及狀態機 mock（disabled/enabled/override/fault、gear、command/report timeout、油門煞車互鎖、轉向角／速率限制、速度 feedback）。mock 的油門煞車到速度模型參數明確標為工程假設，不冒充真實 firmware／力學；先不加入延遲 plant。
 階段 B：Nav2 經 PACMod mock 行車，驗證 PID、限幅、到站保持、取消、失聯、report 無效／過期、override/fault、reset，並證明沒有旁路命令。
-階段 C：取得實車板卡／firmware／DBC 後，接真正 driver 與適用的 CAN／vcan 測試。ROS mock 通過不等於 CAN 編碼或 ECU 行為已驗證。
+階段 C：取得實車板卡／firmware／DBC 後，在 vehicle hardware bench 接真正 PACMod2 driver 與實際 CAN/ECU，驗證 frames 和回報。simulation 不啟動 CAN/vcan，不測 CAN encoding 或 ECU 行為；ROS mock 通過不等於硬體已驗證。
 
 驗收要求：disabled 不驅動；fault/override 依定義退出自動控制且不自行重新 enable；上層命令過期後不得藉 timer 重新發布而掩蓋；無效車速 report 不可繼續正常閉迴路；不允許非預期油門與煞車同時輸出；速度與控制狀態 report 必須反映回授，不能僅回送 command。
 
 來源：https://github.com/astuff/pacmod2 （官方硬體世代與 CAN 介面參考；其預設 branch ROS API 不能直接取代本機 ROS2 訊息契約。）
 
-## 5. 接續順序
+## 6. 接續順序
 
 1. 鎖定 inventory、資料契約與現有模型 geometry；保留可用基線。
 2. PACMod ROS mock、速度閉迴路與狀態／故障測試，完成 Nav2 經 PACMod 的低速控制鏈。

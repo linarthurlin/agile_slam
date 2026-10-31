@@ -1,6 +1,6 @@
 # Repeatable dynamic simulation scenarios
 
-The scenario runner operates only the isolated `agile-slam` Compose project. It resets the simulation between routes and fault cases, disables the mock on exit, and does not expose CAN or USB devices. It closes existing GUI services during cold resets; reopen them after testing if needed.
+The scenario runner operates only the isolated `agile-slam` Compose project using `compose.yaml` plus `compose.sim.yaml`. It resets the full simulation between routes and fault cases, disables the mock on exit, and does not expose CAN or USB devices. A cold reset also closes the Gazebo GUI; restart with `--gui` when a visible run is needed.
 
 ```powershell
 python -m pip install -r scripts/requirements-scenes.txt
@@ -31,7 +31,7 @@ The ROS observer first requires ready/enabled mock, fresh truth and speed above 
 - `controller-stop`: stop vehicle-control while moving; require mock watchdog disable and fresh speed/truth at rest. Restart the controller while continuing to publish commands; require no automatic enable and a fresh three-second rest hold.
 - `backend-pause`: pause the entire simulation backend while moving; require shared readiness fault/inhibit. Resume it; require fresh feedback, disabled mock and no automatic movement despite continuing commands.
 
-Backend pause freezes Gazebo physics and its sensors. No physical stop observation is available during the pause. The report's elapsed wall time includes host orchestration and is not ECU timing or stopping distance. A full backend stop has the same observability limitation until a new simulation starts; the earlier at-rest stop test remains separate.
+Backend pause freezes the Gazebo server and its sensors while autonomy and bridge processes remain alive. No physical stop observation is available during the pause. The report's elapsed wall time includes host orchestration and is not ECU timing or stopping distance. A full Gazebo stop has the same observability limitation until a new simulation starts; the earlier at-rest stop test remains separate.
 
 The observer uses monotonic receipt times and fresh samples. Recovery clears no readiness latch automatically. After a backend-pause scenario, cold-start the stack before normal navigation.
 
@@ -59,7 +59,7 @@ To collect reviewed runs, including failed stress cases, use `python scripts/sum
 
 ## Canonical Docker deployment (2026-10-16)
 
-Root `compose.yaml` is the canonical Compose definition; `deploy/desktop-gpu.yaml` optionally overlays the same project. The project is `agile-slam`, the application image is `agile_slam:humble`, and all six services have explicit descriptive container names without numeric suffixes. The legacy overlays and `deploy/compose.next.yaml` are retired; their prior versions remain in Git history. Both shell wrappers now use the same Python deployment entrypoint.
+The simulation project combines `compose.yaml` and `compose.sim.yaml`; WSLg and GPU settings are optional overlays. Its five headless containers have explicit `0025-` names. RViz is an optional sixth container; the optional Dev Container uses a separate `agile-slam-dev` project. This new topology has not yet been acceptance-tested.
 
 Navigation trials also retain independent Gazebo Transport statistics (`*.gazebo.jsonl`, `*.gazebo.summary.json`) and timestamped runtime logs. These probes use `/world/small_city/stats` without the ROS bridge. Correlate their source iteration/simulation-time progression with ROS freshness faults before attributing a gap to physics, rendering or bridge/DDS transport. Collection timing also includes host scheduling and is not a real-time guarantee.
 
@@ -75,13 +75,13 @@ python scripts/analyze_gazebo_process.py artifacts/scenarios/RUN_ID/1_right_inte
 The output correlates simulation-progress gaps with active threads. Wait channels and CPU activity alone do not identify a specific shader or prove causality. Native debugger captures are separate intrusive diagnostics and must not count as navigation acceptance.
 
 
-Use `--gui` to keep Gazebo and RViz open across each scenario's cold start, for example `python scripts/run_scenarios.py intersection-right --gui`. The manifest records GUI selection. GUI load is part of that trial; it must satisfy the same goal, freshness and stopping criteria as a headless run.
+Use `--gui` to run Gazebo with its GUI and make RViz available across each scenario's cold start, for example `python scripts/run_scenarios.py intersection-right --gui`. The Gazebo GUI and server share `0025-gazebo`; RViz remains separate. The manifest records GUI selection. GUI load is part of that trial; it must satisfy the same goal, freshness and stopping criteria as a headless run.
 
 ## Renderer and acceptance updates
 
 Use `python scripts/run_scenarios.py all --gui --rendering gpu` for the WSL NVIDIA overlay. The default remains software; renderer choice is recorded in the manifest. The runner verifies actual body truth and wheel rear-axle pose/yaw before enabling the mock. Every goal has independent 120-second simulation and 360-second wall budgets. Arrival requires advancing fresh truth, fresh ready/enabled diagnostics and at least one consecutive second of fresh wheel rest, rather than a cumulative sample count.
 
-The fault suite also includes `readiness-pause`: SIGSTOP only the uniquely matched readiness node while live commands continue, require lease inhibition and rest, resume the same PID and restart core to clear any readiness data-loss latch, require new ready heartbeats without automatic movement, then explicitly disable/enable and require movement to resume. The observer runs in localization so it survives the core restart. Host cleanup resumes a paused node even when the observer fails. This test checks publisher loss independently of simulator loss.
+The fault suite also includes `readiness-pause`: SIGSTOP only the uniquely matched readiness node while live commands continue, require lease inhibition and rest, resume the same PID and restart autonomy to clear any readiness data-loss latch, require new ready heartbeats without automatic movement, then explicitly disable/enable and require movement to resume. The observer runs in localization so it survives the autonomy restart. Host cleanup resumes a paused node even when the observer fails. This test checks publisher loss independently of simulator loss.
 
 `python scripts/check_gpu_sensors.py` cold-starts camera-only, LiDAR-only and combined sensor configurations against the baseline wall. It retains renderer provenance, image samples, schema/range results and runtime logs. It does not enable actuation or validate sensor rate, rolling scans, depth cameras, MSAA or calibration accuracy.
 

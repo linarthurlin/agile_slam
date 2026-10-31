@@ -40,10 +40,22 @@ RUN source /opt/ros/humble/setup.bash && \
     dpkg-query -W > /opt/agile_slam_metadata/packages.tsv
 COPY config/dds/cyclonedds.xml /etc/agile_slam/cyclonedds.xml
 COPY containers/entrypoint.sh /agile_slam_entrypoint.sh
-RUN chmod +x /agile_slam_entrypoint.sh
+COPY containers/run_gazebo.sh /usr/local/bin/agile-run-gazebo
+RUN chmod +x /agile_slam_entrypoint.sh /usr/local/bin/agile-run-gazebo
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp \
     CYCLONEDDS_URI=file:///etc/agile_slam/cyclonedds.xml \
     ROS_DOMAIN_ID=42 \
     ROS_LOG_DIR=/tmp/ros_logs
 ENTRYPOINT ["/agile_slam_entrypoint.sh"]
 CMD ["bash"]
+
+FROM runtime AS dev
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends git gdb nano \
+    && rm -rf /var/lib/apt/lists/* \
+    && if ! getent passwd agile >/dev/null; then useradd --create-home --shell /bin/bash agile; fi \
+    && mkdir -p /workspaces/Agile_SLAM /home/agile \
+    && chown -R agile:agile /workspaces/Agile_SLAM /home/agile
+USER agile
+WORKDIR /workspaces/Agile_SLAM
+CMD ["sleep", "infinity"]

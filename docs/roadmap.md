@@ -1,19 +1,20 @@
 # Pending Task Roadmap
 
-Status date: 2026-10-28
-Baseline: main at commit 1803b75; one pre-existing local change in docs/plans/simulation_first_plan.md is intentionally preserved.
+Status date: 2026-10-31
+Implementation state: simulation service split and Dev Container configuration are being added; a clean image build and runtime acceptance have not yet been run. The user's edits to `docs/plans/simulation_first_plan.md` remain preserved.
 Platform: Ubuntu 22.04 / ROS 2 Humble / Gazebo Fortress on Windows + WSL2 + Docker Desktop.
 
 ## Mission and boundaries
 
-The current stack is a simulation and software-integration baseline. It is not a measured GEM e6 digital twin, a validated LIO/SLAM system, or a real-vehicle deployment. The PACMod mock is part of the simulated control path; no CAN interface or physical PACMod driver is enabled.
+The current stack is a simulation and software-integration baseline. It is not a measured GEM e6 digital twin, a validated LIO/SLAM system, or a real-vehicle deployment. The PACMod mock is part of the simulated control path at the pacmod2_msgs ROS command/report layer only; simulation does not emulate CAN. No physical CAN interface or PACMod driver is enabled.
 
 Keep simulation and hardware backends behind the same ROS contracts where possible. Treat hardware mode as unavailable until its sensor inventory, vehicle host, PACMod generation, firmware, DBC and safety behavior are verified. Do not use simulator truth as an operational localization input.
 
 ## Current baseline
 
-- One Compose project, agile-slam, with six named services/containers and one shared application image.
-- Four core services: core, localization, vehicle-control and backend-sim; optional GUI clients: gazebo-gui and rviz.
+- The new Compose definition targets five headless runtime containers: autonomy, localization, vehicle-control, Gazebo, and sim-bridge. RViz is optional; the Dev Container uses a separate project.
+- The expected runtime containers use explicit `0025-` names and one shared application image.
+- This configuration has not been built or started. Existing validation reports cover the prior combined backend-sim topology.
 - Shared Nav2 → vehicle-control → PACMod ROS commands → PACMod mock → simulated joints path.
 - Wheel odometry and known-start map alignment; no operational LIO/SLAM.
 - Snapshot LiDAR with x/y/z/intensity/ring and no per-point time.
@@ -107,7 +108,7 @@ Collect and version a hardware manifest for:
 - PACMod board generation/revision, firmware, vehicle type, DBC, CAN adapter and existing ROS driver.
 - IMU and GNSS model (UM982 if selected), receiver/carrier/firmware, dual-antenna baseline, frame convention, timestamp source and synchronization method.
 
-The PACMod2 upstream README describes board revision 2, states that its driver does not support PACMod3, and lists GEM e2/e4/e6 model year 2016+ among supported vehicles. Hardware generation still must be checked on this vehicle before selecting a driver.
+The chosen software contract is pacmod2_msgs/PACMod2 for both simulation and vehicle profiles. The physical board, firmware and DBC must still be verified before vehicle use; a ROS mock validates neither CAN frames nor ECU behavior.
 
 **Acceptance criteria**
 
@@ -119,12 +120,12 @@ The PACMod2 upstream README describes board revision 2, states that its driver d
 **Priority:** P2
 **Status:** Not started
 
-- Model each confirmed sensor separately with versioned calibration profiles.
+- In simulation, generate sensor values in Gazebo or ROS adapters and publish ROS messages directly using the selected hardware-facing data contract. Do not emulate serial, USB, NTRIP/RTCM, CAN, or sensor Ethernet protocols; keep device and protocol tests in vehicle-only or hardware-bench work.
 - For the actual Velodyne, implement and validate scan cadence, ring mapping, return/intensity semantics, point ordering and per-point acquisition times needed by the selected driver/LIO input.
 - Define camera intrinsics, optical frames, depth scale/encoding, IMU axes/noise and GNSS frame/time behavior from device specifications and measurements.
-- Bring the existing 20 Hz Gazebo NavSat model onto /sensors/gnss/fix; validate the Humble bridge mapping and add a simulation adapter for meaningful covariance, fix status, perturbations and dropouts.
-- Integrate a UM982 hardware driver behind the same ROS contract. Audit Humble compatibility, parsing, timestamps, heading convention, covariance, diagnostics and license before adopting an upstream community driver.
-- Record a separate dual-antenna heading interface, antenna baseline/mounting offset, serial configuration, PPS/time source and RTCM correction path where RTK is required.
+- Keep GNSS simulation data-level: Gazebo/ROS adapters publish NavSatFix plus normalized heading/quality diagnostics with configurable covariance, noise, latency, drift, jumps and dropouts. Do not emulate serial ports, UM982 byte protocols, USB devices, NTRIP/RTCM transport, CAN, or receiver carrier-phase solving in simulation.
+- Integrate the UM982 hardware driver only in the vehicle overlay behind the same ROS data contract. Audit Humble compatibility, serial endpoint enumeration, parsing, timestamps, heading reference, covariance, diagnostics and license before adopting an upstream driver.
+- Record dual-antenna heading, measured baseline and lever arms, the actual serial endpoint mapping, PPS/time source, and the external NTRIP or Base-to-Rover RTCM path when that correction source is identified. Use captured receiver bytes for offline parser unit tests if needed; physical serial/RTK behavior requires the real receiver.
 - Keep calibration truth separate from estimator inputs; add known-target and held-out calibration tests.
 - Include timing offset, jitter, dropout, noise and extrinsic perturbation sweeps.
 
@@ -191,20 +192,20 @@ The build inherits a local base-image tag and leaves some apt dependencies float
 ### R9 — Add an optional development container
 
 **Priority:** P3
-**Status:** Not started; optional developer-experience improvement
+**Status:** Configuration implemented; clean build and editor lifecycle acceptance pending
 
 A Dev Container is VS Code configuration for opening a development environment inside a container. It can reuse Docker Compose, but it is not a replacement for the runtime Compose architecture and does not imply one container per ROS node or sensor.
 
-- First make the ROS/Humble build inputs reproducible (R7); do not make a developer container depend on an undocumented local-only image as its final setup.
-- Add a dedicated .devcontainer/devcontainer.json and development-only Compose service or file for colcon, rosdep, linting and unit tests.
-- Do not auto-start Gazebo, RViz, PACMod or hardware drivers when opening the editor.
+- The initial Dev Container inherits the existing local Humble image. Replace that dependency after the build becomes source-reproducible (R7).
+- `.devcontainer/devcontainer.json` and `compose.dev.yaml` add a development-only service and Dockerfile target.
+- The configured startup runs colcon in the mounted workspace and does not request Gazebo, RViz, PACMod, or hardware drivers.
 - Do not mount the Docker socket, CAN device or physical sensor devices into the default development container.
 - Keep normal simulation and vehicle runtime launched through the existing explicit deployment commands.
 
 **Acceptance criteria**
 
-- A clean WSL checkout can open the development container and build/test the ROS workspace with documented commands.
-- Opening/rebuilding the Dev Container does not start the simulator or any hardware mode.
+- A WSL checkout opens the development container and builds the ROS workspace from the mounted source.
+- Opening/rebuilding the Dev Container does not start or reset the simulator or a hardware mode.
 - The runtime Compose files remain the source of truth for deploying the simulator and future vehicle profile.
 
 ## External compatibility references

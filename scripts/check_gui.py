@@ -8,7 +8,7 @@ import subprocess
 import time
 
 ROOT=Path(__file__).resolve().parents[1]
-NAMES=('agile-slam-gazebo','agile-slam-rviz')
+NAMES=('0025-gazebo','0025-rviz')
 
 
 def windows_present(tree):

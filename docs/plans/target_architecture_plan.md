@@ -2,7 +2,7 @@
 
 本輪已重新審查；即將實作的批次、介面與驗收，以 [統一實作基準](implementation_baseline.md) 為準。本文件保留較完整的架構研究及維護決策。
 
-日期：2026-10-15（America/Los_Angeles）。前提：開發電腦為 Windows＋WSL2；GEM e6 搭載一般 x86_64 Linux PC，不是 Jetson。使用者表示實車可能是 Ubuntu 22，但精確 VERSION_ID 尚未核對；GPU 及 sensor／PACMod 型號仍未知。此文件定義建議目標，尚未安裝新 WSL distro、搬移 checkout、替換 Compose 或改動實車。
+修訂日期：2026-10-31（America/Los_Angeles）。前提：開發電腦為 Windows＋WSL2；GEM e6 搭載一般 x86_64 Linux PC，不是 Jetson。使用者表示實車可能是 Ubuntu 22，但精確 VERSION_ID 尚未核對；GPU 及 sensor／PACMod 型號仍未知。此文件定義建議目標，尚未安裝新 WSL distro、搬移 checkout、替換 Compose 或改動實車。
 
 ## 1. 架構決策（依使用者平台限制修訂）
 
@@ -35,7 +35,7 @@ Windows 11 提供編輯器與桌面；沿用 WSL2 Ubuntu 22.04 提供 Linux shel
 
 新開發 checkout、build cache、assets 與工作中 bags 放在 WSL Linux filesystem 或 Docker named volumes；Windows D: 保留既有 checkout、備份及匯出，不在遷移前移除原路徑。Windows 編輯器透過 WSL integration 存取；Dev Container 與 runtime 共用基底／依賴。這可減少跨檔案系統 I/O、權限、case／換行差異；實際性能仍須量測。
 
-核心 ROS 與 Gazebo server 預設在 containers，不要求 Windows 原生 ROS。RViz／Gazebo GUI 是獨立可選 tools services，透過 WSLg 顯示。圖形相關 socket、Mesa／WSL driver mounts 僅在 desktop overlay，不能進車載共用 base。
+核心 ROS 與 Gazebo server 預設在 containers，不要求 Windows 原生 ROS。RViz 是獨立可選 tools service；Gazebo GUI 作為 Gazebo container 內的可選 process，兩者都透過 WSLg 顯示。圖形相關 socket、Mesa／WSL driver mounts 僅在 desktop overlay，不能進車載共用 base。
 
 ### 實車端
 
@@ -50,9 +50,9 @@ Windows 11 提供編輯器與桌面；沿用 WSL2 Ubuntu 22.04 提供 Linux shel
 | core | description／TF、必要感測器前處理、map、Nav2、任務及 readiness coordinator | 讀取不同 geometry／calibration／clock／localization profile |
 | localization | 可替換 LIO、全域定位／map alignment | wheel-only debug、LIO、已知 map localization 或 replay；每條 TF 唯一 authority |
 | vehicle-control | 目標速度／路輪角轉換、速度閉迴路、command arbitration、PACMod adapter、command/report freshness | 相同程式與 interface；可有不同實測 tuning，板卡版本由 adapter 選擇 |
-| backend-sim | Gazebo server、spawn、sim joints、sensor bridges、PACMod mock | 僅 sim 啟動，獨立於 core 生命週期 |
-| backend-hardware | 真實 sensor drivers、PACMod driver／CAN transport | 僅 vehicle-readonly 或 vehicle；只讀模式禁止 actuator output |
-| tools | RViz、Gazebo GUI、recorder、diagnostics／evaluation | 可選；不承擔車輛控制的必要功能 |
+| backend-sim | Gazebo server、spawn、sim joints、ROS sensor data bridges／fault adapters、pacmod2_msgs mock | 僅 sim 啟動；不模擬 Serial／USB／NTRIP／RTCM／CAN transport；獨立於 core 生命週期 |
+| backend-hardware | 真實 sensor drivers（含 serial GNSS）與 PACMod2 driver／CAN transport | 僅 vehicle-readonly 或 vehicle；只讀模式禁止 actuator output |
+| tools | RViz、recorder、diagnostics／evaluation；Gazebo GUI 是 backend-sim container 內可選啟動的 process | 可選；不承擔車輛控制的必要功能 |
 
 這是功能分組，不要求六群一開始全部各一 image。推薦一份 pinned runtime base，再用 multi-stage targets 產生 core、sim、drivers、tools；localization 依 eigen/PCL/CUDA 相依需求有獨立 target。相同依賴可共用 image 執行多個 services。依 SDK、裝置權限或獨立重啟需求拆 sensor driver，避免每個 ROS node 一個容器。
 
@@ -62,14 +62,14 @@ Windows 11 提供編輯器與桌面；沿用 WSL2 Ubuntu 22.04 提供 Linux shel
 
 固定高層 /cmd_vel 型別（Twist 或 TwistStamped 依所選 Nav2 release 明確配置，不交由 defaults 漂移），由 vehicle-control 轉成明確定義的目標速度與路輪角。可用 AckermannDriveStamped 作內部標準化 setpoint；速度閉迴路再產生 PACMod 油門／煞車與方向盤角命令。
 
-sim：Nav2 → 共用 vehicle-control → PACMod messages → mock → 模擬 actuator adapter → Gazebo joints → PACMod feedback reports。
-vehicle：Nav2 → 同一 vehicle-control → 對應板卡 messages → PACMod driver → CAN／ECU → feedback reports。
+sim：Nav2 → 共用 vehicle-control → pacmod2_msgs → ROS-level mock → 模擬 actuator adapter → Gazebo joints → PACMod feedback reports；不產生 CAN frames。
+vehicle：Nav2 → 同一 vehicle-control → pacmod2_msgs → PACMod2 driver → 實體 CAN／ECU → feedback reports。
 
 未知板卡前以已核對的 pacmod2_msgs 作 provisional contract；實車若為 PACMod3，替換對應 adapter／mock／driver message contract，保持上層 setpoint 與 controller 邏輯。不得以 pacmod2_msgs 宣稱可直接控制 PACMod3。
 
-PACMod mock 包含 enable／gear／override／fault、互鎖、限幅、報告有效性與 timeout；不加入使用者已移除的 delayed plant 作必備功能。控制 backend 只有一個，不能留有 Nav2→joint 的旁路。停止 Gazebo 時 vehicle-control 應進不可用／停止狀態，core 不必跟著 process shutdown；關閉 simulator 不代表可在原 session 無條件切到真車。
+PACMod mock 在 pacmod2_msgs ROS 層包含 enable／gear／override／fault、互鎖、限幅、report validity 與 command/report freshness；不模擬 CAN/vcan、ECU frames 或 serial-like transport，也不加入使用者已移除的 delayed plant 作必備功能。控制 backend 只有一個，不能留有 Nav2→joint 的旁路。停止 Gazebo 時 vehicle-control 應進不可用／停止狀態，core 不必跟著 process shutdown；關閉 simulator 不代表可在原 session 無條件切到真車。
 
-Sensor contract 包含 PointCloud2 layout、ring／firing time、scan stamp、frame、CameraInfo、IMU axis／units／covariance、QoS、有效範圍與版本。truth 只進 evaluator；nominal/estimated calibration 決定演算法使用的 TF／內參。unknown sensor 型號持續明確標示，不能以 generic depth camera 冒稱完整 RealSense 模擬。
+Sensor contract 包含 PointCloud2 layout、ring／firing time、scan stamp、frame、CameraInfo、IMU axis／units／covariance、GNSS position／heading／quality、QoS、有效範圍與版本。Simulation 直接產生 ROS data 並可注入 noise/dropout/fault，不模擬 Serial／USB／RTCM／CAN transport。truth 只進 evaluator；nominal/estimated calibration 決定演算法使用的 TF／內參。unknown sensor 型號持續明確標示，不能以 generic depth camera 冒稱完整 RealSense 模擬。
 
 ## 6. 網路與時間
 
@@ -119,7 +119,7 @@ agile_slam/
 | A0 | 確認實車 OS／inventory、Humble driver source／build matrix、WSLg GPU＋sensor feasibility | PACMod messages/driver source 可追溯、LIO選定版本可建置、GUI及sensor正常；任何不相容先解決或選有測試的過渡 adapter |
 | A1 | clean Humble base＋core／sim／tools targets；沿用 small_city Fortress 轉換 | 乾淨環境可重建；同時檢查世界 physics／materials／collision；既有3/8/16m測試回歸 |
 | A2 | 獨立 core/localization/vehicle-control/backend，Compose overlays＋readiness | 關 Gazebo 不殺 core；graph無重複TF／commands；GUI不依附sim namespace；跨容器cloud/image通過 |
-| A3 必做 | PACMod mock／adapter／速度閉迴路與故障回歸 | enable、gear、override、fault、stale command/report、互鎖、取消、停止及重啟不自動enable |
+| A3 必做 | pacmod2_msgs ROS mock／adapter／速度閉迴路與故障回歸 | enable、gear、override、fault、stale command/report、互鎖、取消、停止及重啟不自動enable；不模擬 CAN/vcan |
 | A4 | 固定 scenario runner、動態bags與CI | 直行／左右轉／路口各三次，軌跡／heading／collision與停止指標；replay無實體輸出 |
 | A5 | 真實 firing-time rolling Velodyne、LIO、calibration profiles | deskew開關／時間offset對照；held-out校正與估計器真值隔離 |
 | A6 | 車載 Linux readonly bringup與compute-in-loop | 真實sensor/PACMod/DBC確認，USB/NIC/CAN/time/CPU/GPU/SSD負載，使用與sim相同Humble core image digest |

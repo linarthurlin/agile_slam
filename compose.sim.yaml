@@ -1,0 +1,71 @@
+name: agile-slam
+
+x-sim-runtime: &sim-runtime
+  image: agile_slam:humble
+  init: true
+  environment: &sim-environment
+    ROS_DOMAIN_ID: "44"
+    AGILE_SPAWN_X: "${AGILE_SPAWN_X:-0}"
+    AGILE_SPAWN_Y: "${AGILE_SPAWN_Y:-0}"
+    AGILE_SPAWN_YAW: "${AGILE_SPAWN_YAW:-0}"
+    AGILE_WORLD: "${AGILE_WORLD:-/opt/agile_assets/worlds/small_city.sdf}"
+    RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+    CYCLONEDDS_URI: file:///etc/agile_slam/desktop.xml
+    IGN_PARTITION: agile-slam
+    IGN_GAZEBO_RESOURCE_PATH: /opt/agile_assets/models
+    LIBGL_ALWAYS_SOFTWARE: "1"
+    ROS_LOG_DIR: /tmp/ros_logs
+  volumes:
+    - ./config/dds/desktop.xml:/etc/agile_slam/desktop.xml:ro
+    - ./assets/small_city:/opt/agile_assets:ro
+    - ./artifacts:/artifacts
+  networks: [ros]
+  shm_size: 512mb
+
+services:
+  gazebo:
+    container_name: 0025-gazebo
+    <<: *sim-runtime
+    profiles: [sim]
+    environment:
+      <<: *sim-environment
+      AGILE_GAZEBO_GUI: "${AGILE_GAZEBO_GUI:-0}"
+      LP_NATIVE_VECTOR_WIDTH: "128"
+    command: [/usr/local/bin/agile-run-gazebo]
+    healthcheck:
+      test: [CMD-SHELL, "ign service -l 2>/dev/null | grep -Fq '/world/small_city/create'"]
+      interval: 2s
+      timeout: 3s
+      retries: 60
+      start_period: 10s
+
+  sim-bridge:
+    container_name: 0025-sim-bridge
+    <<: *sim-runtime
+    profiles: [sim]
+    command: [ros2, launch, avl_bringup, sim_bridge.launch.py]
+    depends_on:
+      gazebo:
+        condition: service_healthy
+      autonomy:
+        condition: service_started
+
+  rviz:
+    container_name: 0025-rviz
+    <<: *sim-runtime
+    profiles: [visualization]
+    environment:
+      <<: *sim-environment
+      DISPLAY: ":0"
+      QT_QPA_PLATFORM: xcb
+      QT_X11_NO_MITSHM: "1"
+    volumes:
+      - ./config/dds/desktop.xml:/etc/agile_slam/desktop.xml:ro
+      - ./config/rviz:/gui:ro
+      - ./artifacts:/artifacts
+    command: [rviz2, -d, /gui/motion.rviz, --ros-args, -p, use_sim_time:=true]
+
+networks:
+  ros:
+    name: agile-slam-ros
+    driver: bridge

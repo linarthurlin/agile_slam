@@ -5,15 +5,17 @@
 
 > 2026-10-14 修訂：專案更名 Agile_SLAM。已核對既有 agile_control_ros2 image，內含 Humble、FAST-LIO、PACMod2，但未找到 Gazebo；優先復用它建立 derived image，初期單一 container，再依 DDS 驗收拆分。環境與部署決策以 [Docker／WSL2 修訂](docker_wsl_deployment.md) 為準。
 
+> 2026-10-31 架構修訂：模擬感測器只產生 ROS 資料，不模擬 Serial／USB／RTCM／CAN transport；PACMod 模擬使用 pacmod2_msgs command/report mock，透過 Gazebo joints 回授。vehicle mode 才使用真實 sensor drivers、UM982 serial 與 PACMod2 CAN driver。Compose 服務、GNSS／RTK 接法與驗收順序以 [模擬／實車部署計畫](sim_vehicle_deployment_plan.md)、[感測器與 PACMod 計畫](sensor_vehicle_pacmod_plan.md) 及 [目標架構計畫](target_architecture_plan.md) 為準。
+
 ## 1. 決策摘要
 
 將 `D:\UCSD\Lectures\AVL\golf_cart_sim-main` 的可用資產移植至 `D:\UCSD\Lectures\AVL\Agile_SLAM`，建立研究平台，而不是將現有 simulator 原封不動改名。保留來源快照與授權，另外建構 e6 車輛描述、感測器模型、ROS 2 contracts、PACMod adapter、校正工具及評測管線。
 
-建議採用兩階段環境：先在 Ubuntu 22.04／ROS 2 Humble／Fortress 的隔離環境重現來源，固定可工作的 baseline；主平台目標為 Ubuntu 24.04／ROS 2 Jazzy／Gazebo Harmonic，須以實車 driver、SDK、PACMod message package 的 compatibility spike 通過為升級條件。官方搭配是 Humble–Fortress、Jazzy–Harmonic；不能把 Dockerfile 的發行版字串替換視為完成移植。[Gazebo ROS 安裝矩陣](https://gazebosim.org/docs/harmonic/ros_installation/)
+目前實作主線維持 Ubuntu 22.04／ROS 2 Humble／Gazebo Fortress，先固定可重現的 simulator 與共用 ROS runtime。Ubuntu 24.04／Jazzy／Harmonic 僅列為後續維護遷移候選，須另做實車 driver、SDK、PACMod message package 與 Gazebo plugin 相容性 spike；不是本次架構重整前置條件。Humble–Fortress 與 Jazzy–Harmonic 是各自的官方配對，不能只替換 Dockerfile 發行版字串。[Gazebo ROS 安裝矩陣](https://gazebosim.org/docs/harmonic/ros_installation/)
 
-以目前日期，Fortress 已超過官方列出的 2026 年 9 月支援終點，因此只作重現用的過渡環境；不要將新平台長期綁在它上面。Harmonic 的支援期限較長；實作時再次核對依賴與發布政策。[Gazebo release lifecycle](https://gazebosim.org/docs/latest/releases/)
+Fortress 已超過官方列出的 2026 年 9 月支援終點；本專案因現有可用基線及 Humble 相容性，暫作短期、可重現的主線。另立後續支援遷移評估，在切換前完成套件、plugin、sensor output、PACMod、GUI 與路線回歸；不在本次直接升級。實作時重新核對 release lifecycle。[Gazebo release lifecycle](https://gazebosim.org/docs/latest/releases/)
 
-平台須支援三種 backend：`sim`、`replay`、`real`。上層感測器處理與 SLAM 保持相同介面，backend 差異集中在 bringup、driver、車輛 I/O 與時間來源。先完成感測器可信度與可重播能力，再建立 Velodyne＋主要 IMU 的 SLAM 基線；camera／RealSense／前方三顆 LiDAR 逐步加入比較，不以全部融合為第一個里程碑。
+平台以 sim、vehicle-readonly、vehicle、replay 四個模式管理；上層感測器處理與 SLAM 共用 ROS data contracts，backend 差異集中在資料來源、hardware drivers、裝置權限與時間來源。Simulation 只產生 ROS sensor data，不模擬 Serial／USB／RTCM／CAN transport。先完成感測器可信度與可重播能力，再建立 Velodyne＋主要 IMU 的 SLAM 基線；camera／RealSense／前方三顆 LiDAR 逐步加入比較，不以全部融合為第一個里程碑。
 
 ## 2. 已核對的輸入與限制
 
@@ -48,8 +50,8 @@ flowchart LR
   D --> E[Map / trajectory / diagnostics]
   D --> N[Optional Nav2 / controller]
   N --> V[Command arbiter + vehicle controller]
-  V --> P[PACMod adapter]
-  P --> S[Sim DBW plant or real CAN driver]
+  V --> P[pacmod2_msgs command/report contract]
+  P --> S[ROS mock and Gazebo joints or real PACMod2 CAN driver]
   G[Simulation truth] --> Q[Offline evaluator]
   E --> Q
 ```
@@ -67,7 +69,7 @@ Agile_SLAM/
     setup/                    # WSL/Linux/container/real bringup
     procedures/               # calibration、record/replay、validation
   third_party/golf_cart_sim/   # 原始快照、LICENSE、SOURCE.yaml、checksums
-  containers/                 # baseline、jazzy、headless、GPU variants
+  containers/                 # baseline、humble、headless、GPU variants
   scripts/                    # doctor、build、launch、record、evaluate
   config/
     vehicles/gem_e6.yaml
@@ -120,12 +122,12 @@ Linux build、install、log、bag 與模型 cache 放 WSL ext4／Docker named vo
 - 用一個確定的 ROS/Gazebo 配對 image；禁止 apt wildcard `ros-humble-gz*`，列出必要依賴，以 rosdep 補 package dependencies。
 - lock vcs repos commit、SDK、GTSAM、GPU dependencies、container digest；第一次可用後輸出 resolved version manifest。
 - build stage 跑 colcon 一次，runtime source 固定 install；service 不在啟動時重編 workspace。
-- profiles：`headless`、`gui-wsl`、`gui-linux`、`gpu`、`real`。CPU path 與 GPU path 分開驗證；GPU lidar 的 rendering 與 SLAM CUDA 運算各自量測。
+- profiles：`sim`、`headless`、`gui-wsl`、`gui-linux`、`gpu`、`vehicle-readonly`、`vehicle`、`replay`。CPU path 與 GPU path 分開驗證；GPU lidar 的 rendering 與 SLAM CUDA 運算各自量測。
 - 同一 runtime profile 統一 RMW／DDS 設定；先單機／單容器，再驗證跨程序與跨主機 discovery。不要預設 Docker Desktop host networking 等同 Linux。
-- sim 不需要 `/dev` 或 privileged；real 只傳必要裝置／CAN/network capabilities。各 run 固定 ROS_DOMAIN_ID，避免接到實車 command graph。
+- sim 不需要 `/dev` 或 privileged；vehicle 只傳必要裝置／CAN/network capabilities。各 run 固定 ROS_DOMAIN_ID，避免接到實車 command graph。
 - 暫定建議開發機 8 cores／32 GB RAM／NVMe；全車影像與 GPU SLAM 依 benchmark 決定 VRAM、解析度與頻率，不承諾特定硬體即可達即時。
 
-目標 CLI（尚未實作）：`scripts/doctor`、`scripts/build --profile jazzy`、`ros2 launch avl_bringup platform.launch.py backend:=sim sensor_profile:=minimal world:=calibration seed:=42`。每個命令必須有 preflight 與失敗原因；不能靠固定 sleep 等待 Gazebo 啟動，改用 spawn result、controller readiness 與 lifecycle 狀態。
+目標 CLI（尚未實作）：`scripts/doctor`、`scripts/build --profile humble`、`ros2 launch avl_bringup platform.launch.py backend:=sim sensor_profile:=minimal world:=calibration seed:=42`。每個命令必須有 preflight 與失敗原因；不能靠固定 sleep 等待 Gazebo 啟動，改用 spawn result、controller readiness 與 lifecycle 狀態。
 
 ## 5. GEM e6 全車模型
 
@@ -210,9 +212,9 @@ seed 與固定 physics step 提供可重現條件，但 GPU renderer／多執行
 
 將高階 command arbiter、speed controller、PACMod conversion、DBW plant 分開。單一 command source 持有控制權，teleop／Nav2／研究 controller 不可同時直接寫 PACMod。speed/acceleration 與 throttle/brake 是不同物理量；必須以 feedback 與 plant/controller 連接。
 
-sim backend：canonical command → controller → 原生 PACMod-like commands → simulated DBW（delay/deadband/rate/saturation）→ joints/forces → simulated reports → vehicle state。real backend：同一 controller/adapter → 已確認版本的 driver → CAN → PACMod reports。較早的 kinematic_debug bypass 必須在 run manifest 標示，不納入 DBW parity 驗收。
+sim backend：autonomy／Nav2 → vehicle-control → pacmod2_msgs commands → PACMod2 ROS mock → Gazebo actuator adapter → joints／vehicle state → pacmod2_msgs reports。這不模擬 Serial／CAN protocol，也不以 command echo 假造回授。vehicle backend：同一 vehicle-control → pacmod2_msgs → PACMod2 driver → 真實 CAN／ECU → PACMod reports。較早的 kinematic_debug bypass 必須在 run manifest 標示，不納入控制鏈驗收。
 
-PACMod2 與 PACMod3 的 messages、enable/report semantics、topic、DBC 不可只靠 remap 互換。先實車 inventory，選擇一個受驗證 adapter，另一世代保持 optional。PACMod3 官方 driver 要求 DBC major version 與硬體相符。[PACMod3 ROS 2](https://github.com/astuff/pacmod3/tree/ros2_master)
+本專案依使用者決策，simulation 與 vehicle profile 統一採 pacmod2_msgs／PACMod2 ROS driver contract。實車 board generation、firmware、DBC 與 driver 必須盤點並確認相容後才可開啟 vehicle actuation；若實際硬體與 PACMod2 不符，先完成受驗證的 adapter/port 與 bench gate，不可靜默切換 message contract。
 
 狀態機：DISABLED → READY → ENABLED；override、fault、command expiry、missing reports 進入對應 disable/fault handling。測試 steering wheel angle 與 road wheel angle 的轉換、sign、gear/reverse、零速換檔互鎖、rate limits、brake/throttle arbitration、enable handshake、manual override 與故障復歸。steering ratio 先支援 table/map，不假定常數可完整描述實車。
 
@@ -271,9 +273,9 @@ ATE 同時報 no-alignment 與 SE(3)-aligned（記錄 alignment），尺度已�
 
 | 階段 | 工作／預估 effort | 可 review 的交付與 gate |
 |---|---|---|
-| P0 inventory／environment spike | 2–4 工作日 | hardware unknowns 表、doctor report、license/provenance、Jazzy driver matrix；最小 Gazebo GPU/GUI/headless 可啟動 |
+| P0 inventory／environment spike | 2–4 工作日 | hardware unknowns 表、doctor report、license/provenance、Humble driver matrix；最小 Gazebo GPU/GUI/headless 可啟動；另記錄未來遷移風險 |
 | P1 source baseline | 3–5 日 | 原始 snapshot、固定 image、修 plugin/bridge/timeout、demo bag；clean build、車可控、各 existing sensor 有資料、失聯可觸發 |
-| P2 主平台移植＋e6 幾何 | 5–8 日 | normalized packages、Jazzy/Harmonic migration、sim/replay launches、config schema、TF graph；靜止與直行/轉彎 contracts 通過 |
+| P2 共用 runtime 重構＋e6 幾何 | 5–8 日 | normalized packages、Humble/Fortress Compose overlays、sim/vehicle/replay launches、config schema、TF graph；靜止與直行/轉彎 contracts 通過 |
 | P3 full sensors＋DBW mock | 7–12 日 | 三顆 front lidar、多 cameras、RealSense、主要 IMU、PACMod selected-version mock、diagnostics；full profile 與 feedback state machine 通過 |
 | P4 calibration lab＋timing | 7–12 日，rolling-scan 另估 5–10 日 | truth/nominal 隔離、標靶場景、時鐘故障、校正 manifest、held-out reports；運動畸變模式有獨立驗證 |
 | P5 SLAM baseline＋benchmark | 7–12 日 | 至少一套可重播 odometry/SLAM、固定 benchmark、fault sweeps；無真值輸入、metrics 與 failure reports 可重現 |
@@ -309,7 +311,7 @@ sim 與 real contract parity 比對 message type、fields、units、frames、rat
 | SIM-01 | plugin/topic/image/info/clock audit and fixes | ENV-02 | sensor contract dump、無 plugin error |
 | CTRL-01 | 修 command receive clock、TF lookup、幾何 fallback | SIM-01 | timeout loss case＋已知幾何轉換測試 |
 | ARCH-01 | topics/TF/time/schema ADR | SIM-01 | contracts 與 ownership 表一致 |
-| MIG-02 | Jazzy/Harmonic spike、driver matrix | ENV-01,ARCH-01 | build/plugin/sensor/message compatibility report |
+| MIG-02 | 後續 Jazzy/Harmonic spike、driver matrix（非目前主線） | ENV-01,ARCH-01 | build/plugin/sensor/message compatibility report |
 | VEH-01 | e6 Xacro＋measured/placeholder 参数 | ARCH-01 | visual/collision/axles/sensors 可分別檢查 |
 | DATA-01 | recording/replay＋run manifest | ARCH-01 | gold bag 可重播且 clock/TF 正確 |
 | DBW-01 | PACMod inventory＋selected adapter＋mock state machine | CTRL-01 | enable/override/timeout/gear/sign tests |
