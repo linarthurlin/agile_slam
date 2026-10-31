@@ -47,19 +47,12 @@ def generate_launch_description():
         output='screen',
     )
     controllers = Node(
-        package='controller_manager',
-        executable='spawner',
+        package='avl_bringup',
+        executable='spawn_sim_controllers.py',
         arguments=[
-            'joint_state_broadcaster',
-            'left_steering_controller',
-            'right_steering_controller',
-            'left_front_wheel_controller',
-            'right_front_wheel_controller',
-            'left_rear_wheel_controller',
-            'right_rear_wheel_controller',
             '--controller-manager-timeout', '180',
-            '--switch-timeout', '120',
             '--service-call-timeout', '180',
+            '--switch-timeout', '120',
         ],
         parameters=[{'use_sim_time': True}],
         output='screen',

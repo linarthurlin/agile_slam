@@ -29,6 +29,6 @@ Nav2 uses Smac Hybrid-A* with DUBIN and a 4 m minimum turning radius, plus Regul
 
 ## Checks and limits
 
-Use the scripts in [scenario operations](scenarios.md) for repeatable routes and fault injection. Historical pass/fail evidence is in [navigation validation](validation/navigation.md); it was collected on the previous container topology and must be rerun after this split.
+Use the scripts in [scenario operations](scenarios.md) for repeatable routes and fault injection. The curve route has passed on the split container topology with Gazebo and RViz open; its run record is in the [current runtime acceptance report](validation/simulation-runtime-2026-10-31.md). Historical intersection and fault results in [navigation validation](validation/navigation.md) are from the previous topology and must be rerun before they count as acceptance for this split.
 
 Dynamic-obstacle detouring, full perception-based mapping, accepted SLAM localization, measured e6 geometry, and vehicle controls remain future gates.

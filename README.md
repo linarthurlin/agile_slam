@@ -46,8 +46,8 @@ The simulator publishes ROS sensor data; it does not emulate serial, USB, Ethern
 
 ## Status and limitations
 
-The new split runtime and Dev Container configuration are implemented but have not yet received a clean build or runtime acceptance run. Existing test and navigation reports refer to the previous topology.
+The split runtime has been built and exercised on the local Windows 11 + WSL2 Ubuntu 22.04 desktop. The current acceptance includes an image build, PACMod mock runtime checks, GPU renderer preflight, and all three goals in the curve route with Gazebo and RViz open. See the [current runtime acceptance report](docs/validation/simulation-runtime-2026-10-31.md) for the tested image, route results, and remaining limits.
 
-The current vehicle is an e2-derived surrogate. LIO, rolling-scan LiDAR timing, full sensor profiles, calibration, the UM982 serial service, the real PACMod2/CAN driver service, and vehicle deployment mode remain future milestones. See [the roadmap](docs/roadmap.md) and the [simulation-first plan](docs/plans/simulation_first_plan.md).
+The current vehicle is an e2-derived surrogate. The current acceptance covers the curves route only; intersection routes, dynamic fault injection, and long-duration transport are not yet accepted on this split runtime. LIO, rolling-scan LiDAR timing, full sensor profiles, calibration, the UM982 serial service, the real PACMod2/CAN driver service, and vehicle deployment mode remain future milestones. See [the roadmap](docs/roadmap.md) and [the simulation-first plan](docs/plans/simulation_first_plan.md).
 
 Project code, README, configuration, and operational documentation use English. Implementation plans use Traditional Chinese.

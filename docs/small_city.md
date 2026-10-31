@@ -17,7 +17,7 @@ python scripts/deploy.py up
 
 Assets, adapted worlds, and maps remain in the ignored `assets/small_city/` cache and are mounted read-only. Downloads are required during preparation only. Preserve upstream licenses with the local asset cache; the collection declares GPL-3.0 and aggregates assets from other authors. Review individual asset terms before redistributing any downloaded assets.
 
-The vehicle starts at (0,0) on the main east-west street. The initial navigation goals are (3,0), (8,0), and (16,0), each from a fresh simulator start. Static parked vehicles are part of the scene. See [Nav2 simulation baseline](navigation.md) and [repeatable scenarios](scenarios.md).
+The curve route starts at body pose (0,0,0) and runs three consecutive goals at (12,1), (28,-1), and (36,0). Intersection fixtures start at body pose (30,0,0). Static parked vehicles are part of the scene. See [Nav2 simulation baseline](navigation.md) and [repeatable scenarios](scenarios.md).
 
 ## Conversion
 
@@ -27,6 +27,6 @@ The initial occupancy map is generated from road corridors and conservative coll
 
 ## Rendering
 
-Software Ogre2 remains the default. WSLg D3D12 can expose the NVIDIA GPU to OpenGL, but this alone does not establish Fortress sensor-renderer compatibility. The GPU overlay remains experimental and should only be used after its capability preflight. Closing the integrated Gazebo GUI exits the Gazebo server; restart the full runtime before continuing.
+Software Ogre2 remains the default. The WSL2 NVIDIA GPU profile passed its renderer preflight and sensor startup checks. With GUI enabled, the GPU-accelerated sensor server runs headless under Xvfb and a separate software-rendered Gazebo GUI client attaches to the same world; RViz runs in its own container. This split was accepted for the three-goal curve route on 2026-10-31. It is specific to the tested WSL2 / WSLg setup and does not establish real-time performance. Closing the Gazebo GUI exits the attached server; restart the full runtime before continuing.
 
-Historical scene and rendering validation predates the current split runtime. Rerun it after the new Compose topology is built.
+See the [current runtime acceptance report](validation/simulation-runtime-2026-10-31.md) for image and route details. Intersection navigation, dynamic fault injection, and long-duration operation still need acceptance on the split topology.

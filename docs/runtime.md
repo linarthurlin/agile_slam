@@ -2,7 +2,7 @@
 
 ## Status
 
-The repository is being moved from a combined simulator container to separate runtime services. The Compose files, Gazebo bridge launch, container names, and Dev Container target have been updated. The rebuilt image and new multi-container runtime have not yet been started or validated; local WSL2 and Docker remain paused.
+The runtime has been split into dedicated services and validated on the local Windows 11 + WSL2 Ubuntu 22.04 desktop. The current acceptance includes an image build, service readiness, visible Gazebo/RViz operation, and all three goals in the curve route with GPU simulation rendering. See [the acceptance report](validation/simulation-runtime-2026-10-31.md) for exact evidence and limits.
 
 The active software baseline is Ubuntu 22.04, ROS 2 Humble, Gazebo Fortress, amd64, and CycloneDDS. The local base image is required and is not published by this repository.
 
@@ -57,7 +57,11 @@ python scripts/deploy.py down
 python scripts/deploy.py up --gui
 ```
 
-The GUI runs in the Gazebo process inside `0025-gazebo`; closing its window exits that Gazebo process. The same cold-start behavior applies when switching between GUI and headless modes or changing software/GPU rendering. Use `down` when stopping the project without immediately restarting it.
+The GUI runs in the Gazebo service inside `0025-gazebo`; closing its window stops the attached simulation server. Switching GUI/headless mode or software/GPU rendering requires a cold start so all consumers attach to the same `/clock`. Use `down` when stopping the project without immediately restarting it.
+
+For WSL2 GPU mode, `python scripts/deploy.py up --gui --rendering gpu` runs the GPU-accelerated Gazebo sensor server under Xvfb and attaches a separate software-rendered Gazebo GUI client to the same world. This works around the WSLg D3D12/GLX context failure seen when the GUI shares the accelerated server process. RViz is a separate WSLg client. Start the deployment from Windows PowerShell or the Ubuntu-22.04 WSL distro so the WSLg sockets and GPU overlay resolve in the Linux environment.
+
+The simulation Compose overlay sets `AGILE_SIM_COMMAND_TIMEOUT=1.5` seconds to tolerate the measured WSL2 scheduling gap during GPU simulation. This override is simulation-only; the shared vehicle settings retain their 0.75-second default outside the simulation overlay.
 
 Actuation is disabled at startup. `enable` is a simulation-only explicit enable; it does not enable a real vehicle. `test` exercises the mock contract and intentionally leaves it disabled with a readiness fault latched. Hardware and replay modes are unavailable and fail closed. The simulation profile receives no CAN or USB devices.
 
@@ -69,4 +73,4 @@ Open the repository in VS Code and choose **Reopen in Container**. Dev Container
 
 The current vehicle is an e2-derived surrogate, not a measured GEM e6 model. Localization is wheel odometry with a known-start alignment, not LIO. The current LiDAR model does not provide validated per-point firing times. The image inherits the local `agile_control_ros2` base; its complete source provenance is not yet reproducible from this public repository.
 
-The vehicle deployment overlay, real sensor drivers, UM982 serial integration, PACMod2 CAN driver path, calibration workflow, and hardware read-only bringup remain unimplemented. Existing validation reports document the previous topology and must not be treated as acceptance evidence for this refactor.
+The vehicle deployment overlay, real sensor drivers, UM982 serial integration, PACMod2 CAN driver path, calibration workflow, and hardware read-only bringup remain unimplemented. Curve-route acceptance does not cover intersections, injected runtime faults, hardware interfaces, or extended-duration operation.

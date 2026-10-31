@@ -9,6 +9,7 @@ x-sim-runtime: &sim-runtime
     AGILE_SPAWN_Y: "${AGILE_SPAWN_Y:-0}"
     AGILE_SPAWN_YAW: "${AGILE_SPAWN_YAW:-0}"
     AGILE_WORLD: "${AGILE_WORLD:-/opt/agile_assets/worlds/small_city.sdf}"
+    AGILE_SIM_COMMAND_TIMEOUT: "${AGILE_SIM_COMMAND_TIMEOUT:-1.5}"
     RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
     CYCLONEDDS_URI: file:///etc/agile_slam/desktop.xml
     IGN_PARTITION: agile-slam
@@ -23,6 +24,10 @@ x-sim-runtime: &sim-runtime
   shm_size: 512mb
 
 services:
+  vehicle-control:
+    environment:
+      AGILE_SIM_COMMAND_TIMEOUT: "${AGILE_SIM_COMMAND_TIMEOUT:-1.5}"
+
   gazebo:
     container_name: 0025-gazebo
     <<: *sim-runtime

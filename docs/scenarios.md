@@ -7,6 +7,7 @@ python -m pip install -r scripts/requirements-scenes.txt
 python scripts/validate_scenarios.py
 python scripts/deploy.py build
 python scripts/run_scenarios.py curves
+python scripts/run_scenarios.py curves --gui --rendering gpu
 python scripts/run_scenarios.py faults
 python scripts/run_scenarios.py intersection-left
 python scripts/run_scenarios.py intersection-right
@@ -16,7 +17,7 @@ python scripts/deploy.py up --gui
 
 The runner checks each selected destination footprint against occupied/unknown map cells before resetting services. This uses Pillow from the existing scene-tool requirements and verifies pose placement, not path feasibility.
 
-The last example is an extended acceptance run, not a claim that all scenarios have passed. Inspect the actual manifests. Do not run two scenario runners against the same project at the same time.
+The extended `all --repeat 3` example is not a claim that all scenarios have passed. The curves GUI/GPU run is accepted for the current split runtime; inspect [its report](validation/simulation-runtime-2026-10-31.md) and the actual manifest. Intersection and fault suites still need split-runtime acceptance. Do not run two scenario runners against the same project at the same time.
 
 ## Reports
 
@@ -59,7 +60,7 @@ To collect reviewed runs, including failed stress cases, use `python scripts/sum
 
 ## Canonical Docker deployment (2026-10-16)
 
-The simulation project combines `compose.yaml` and `compose.sim.yaml`; WSLg and GPU settings are optional overlays. Its five headless containers have explicit `0025-` names. RViz is an optional sixth container; the optional Dev Container uses a separate `agile-slam-dev` project. This new topology has not yet been acceptance-tested.
+The simulation project combines `compose.yaml` and `compose.sim.yaml`; WSLg and GPU settings are optional overlays. Its five core containers have explicit `0025-` names. RViz is an optional sixth container; the optional Dev Container uses a separate `agile-slam-dev` project. The split topology GPU/GUI curves run passed on 2026-10-31; other suites remain pending as listed above.
 
 Navigation trials also retain independent Gazebo Transport statistics (`*.gazebo.jsonl`, `*.gazebo.summary.json`) and timestamped runtime logs. These probes use `/world/small_city/stats` without the ROS bridge. Correlate their source iteration/simulation-time progression with ROS freshness faults before attributing a gap to physics, rendering or bridge/DDS transport. Collection timing also includes host scheduling and is not a real-time guarantee.
 
