@@ -1,7 +1,7 @@
 # Pending Task Roadmap
 
 Status date: 2026-10-31
-Implementation state: simulation service split and Dev Container configuration are being added; a clean image build and runtime acceptance have not yet been run. The user's edits to `docs/plans/simulation_first_plan.md` remain preserved.
+Implementation state: the simulation service split and Dev Container configuration are implemented. The Humble image was built and the split runtime passed its visible GPU curve-route acceptance (3/3 goals). Split-runtime intersection routes, moving-fault suite, sustained transport and record/replay remain open. The user's edits to `docs/plans/simulation_first_plan.md` remain preserved.
 Platform: Ubuntu 22.04 / ROS 2 Humble / Gazebo Fortress on Windows + WSL2 + Docker Desktop.
 
 ## Mission and boundaries
@@ -12,15 +12,15 @@ Keep simulation and hardware backends behind the same ROS contracts where possib
 
 ## Current baseline
 
-- The new Compose definition targets five headless runtime containers: autonomy, localization, vehicle-control, Gazebo, and sim-bridge. RViz is optional; the Dev Container uses a separate project.
-- The expected runtime containers use explicit `0025-` names and one shared application image.
-- This configuration has not been built or started. Existing validation reports cover the prior combined backend-sim topology.
+- The split Compose runtime has five core containers: autonomy, localization, vehicle-control, Gazebo, and sim-bridge. RViz is an optional sixth runtime container; the Dev Container is separate from runtime.
+- The Humble image build, 52 Python unit tests, 13 PACMod ROS mock checks, GPU renderer preflight, live LiDAR bridge and visible GPU curve-route acceptance passed on 2026-10-31; see [the split runtime report](validation/simulation-runtime-2026-10-31.md).
+- Only the curve route is accepted on the split topology so far. Intersection and moving-fault suites still need acceptance on this topology; historical passes on earlier deployment layouts do not transfer automatically.
 - Shared Nav2 → vehicle-control → PACMod ROS commands → PACMod mock → simulated joints path.
 - Wheel odometry and known-start map alignment; no operational LIO/SLAM.
 - Snapshot LiDAR with x/y/z/intensity/ring and no per-point time.
 - 52 Python unit tests pass; source/config, generated scene/map and vehicle/interface checks pass.
-- Targeted historical GPU/sensor, route and moving-fault tests passed; full repeated dual-GUI and sustained acceptance remain open.
-- Runtime is intentionally stopped while WSL/Docker are paused.
+- Historical sensor, route and fault reports remain useful evidence but do not replace tests on the current split topology. Repeated routes, dynamic record/replay and sustained GUI transport remain open.
+- Check local WSL/Docker state before each runtime session; this roadmap does not assert that the simulator is currently running.
 
 ## Priority definitions
 
@@ -65,12 +65,13 @@ The existing docs/current_state.md describes an earlier single-container deploym
 ### R2 — Re-establish repeatable simulator acceptance
 
 **Priority:** P1
-**Status:** Pending runtime; Docker/WSL are intentionally stopped
+**Status:** Open; split-runtime intersection and fault acceptance pending
 
-- Resume the existing deployment only when continuing runtime validation.
-- Run cold-start checks for default software rendering and the GPU sensor-server overlay.
-- Repeat straight, offset-curve and left/right intersection routes from known poses; include cancellation, occupied/unreachable goals and controller/backend faults.
-- Complete the moving 20-minute dual-GUI soak and a repeated route suite with real Gazebo and RViz windows verified.
+- Follow the staged gates in [the next simulation test plan](plans/simulation_test_phase_2.md).
+- First run left and right intersection routes on the split runtime, then its three moving-fault cases.
+- Integrate cancellation, goal replacement and NavigateThroughPoses acceptance into the scenario suite.
+- Add 120-second simulated-time sensor rate/gap and transport measurements, then dynamic obstacle/contact-event checks and dynamic bag/replay.
+- After single-run cases pass, run three repeated suites and a separate 20-minute dual-GUI soak.
 - Track simulation time and wall time separately; capture RTF, topic stamp rate, wall receive rate, freshness faults, DDS/IP counters, CPU, memory and restart state.
 
 **Acceptance criteria**
@@ -232,3 +233,4 @@ A Dev Container is VS Code configuration for opening a development environment i
 - [GPU/runtime validation](validation/gpu_runtime.md)
 - [Dynamic scenario validation](validation/dynamic_scenarios.md)
 - [Traditional Chinese simulator-first implementation plan](plans/simulation_first_plan.md)
+
