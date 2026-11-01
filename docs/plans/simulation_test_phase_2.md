@@ -19,7 +19,7 @@ Gazebo ground truth 僅供 evaluator 使用，不可作為 localization 或 Nav2
 - PACMod2 mock 只模擬 ROS command/report，不模擬 CAN frame、ECU、DBC 或實體 watchdog。
 - URDF 的主要 sensor update rate 是 RGB 30 Hz、IMU 50 Hz、LiDAR 10 Hz；這些是 simulator 設定，不是尚未確認型號的實車硬體規格。
 - check_sensors.py 已有 15 秒的 schema、frame、部分資料有效性、stamp/wall rate smoke；RGB 低於 24 Hz 僅是 warning，還沒有長時間掉包/gap 驗收。
-- check_nav2_actions.py 已測 NavigateToPose cancellation 與不可通行目標，但未納入 scenario runner，未測 active goal replacement 或 NavigateThroughPoses。
+- 計畫曾提及 check_nav2_actions.py 已測 NavigateToPose cancellation 與不可通行目標；本次檢查工作樹時未找到該檔案，因此這些 action case 尚未驗收，也未納入 scenario runner。Gate 3 開始前需先確認或建立測試器。
 - bag_smoke.sh 有短錄製與隔離重播 smoke；動態路線、simulation-time bag timestamps、QoS 與禁止 actuator 輸出尚未形成 acceptance gate。
 - 現有 footprint-overlap 是依靜態 map 幾何取樣，不能代替 Gazebo contact event。
 
@@ -52,7 +52,7 @@ Backend pause 會凍結物理與 sensor，暫停期間無法量得停車距離�
 
 ## Gate 3：Nav2 action／任務行為
 
-把既有 check_nav2_actions.py 納入 scenario suite，補以下系統測試：
+先確認或建立 Nav2 action checker，再納入 scenario suite，補以下系統測試：
 
 | 案例 | 驗收 |
 | --- | --- |

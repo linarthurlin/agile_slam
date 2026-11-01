@@ -74,8 +74,10 @@ def main():
     parser.add_argument('--repeat',type=int,default=1)
     parser.add_argument('--rendering',choices=('software','gpu'),default='software')
     parser.add_argument('--gui',action='store_true',help='Keep Gazebo and RViz open during each scenario.')
+    parser.add_argument('--fault',choices=('controller-stop','backend-pause','readiness-pause'),help='Run one fault case from the faults suite.')
     args=parser.parse_args()
     if args.repeat<1 or args.repeat>10:parser.error('--repeat must be between 1 and 10')
+    if args.fault and args.suite not in ('faults','all'):parser.error('--fault applies only to the faults or all suite.')
     config_path=ROOT/'config/scenarios/small_city.json'
     config=json.loads(config_path.read_text(encoding='utf-8-sig'))
     if args.suite=='faults' and args.start_x is not None:parser.error('--start-x applies to navigation routes; fault fixtures start at zero.')
@@ -88,7 +90,7 @@ def main():
     except (ValueError,FileNotFoundError,ImportError) as exc:parser.error(str(exc))
     run_id=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     folder=ROOT/'artifacts/scenarios'/run_id;folder.mkdir(parents=True)
-    manifest={'schema_version':1,'run_id':run_id,'suite':args.suite,'repeat':args.repeat,'gui':args.gui,'rendering':args.rendering,'starts':config['starts'],'fault_start':[0.0,0.0,0.0],'started_utc':datetime.now(timezone.utc).isoformat(),'git_commit':execute(['git','rev-parse','HEAD']).strip(),'git_status':execute(['git','status','--porcelain']),'image_id':execute(['docker','image','inspect','agile_slam:humble','--format','{{.Id}}']).strip(),'config_sha256':{p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (config_path,ROOT/'compose.yaml',ROOT/'ros2_ws/src/gem_description/config/vehicle.json')},'results':[],'passed':False}
+    manifest={'schema_version':1,'run_id':run_id,'suite':args.suite,'fault_filter':args.fault,'repeat':args.repeat,'gui':args.gui,'rendering':args.rendering,'starts':config['starts'],'fault_start':[0.0,0.0,0.0],'started_utc':datetime.now(timezone.utc).isoformat(),'git_commit':execute(['git','rev-parse','HEAD']).strip(),'git_status':execute(['git','status','--porcelain']),'image_id':execute(['docker','image','inspect','agile_slam:humble','--format','{{.Id}}']).strip(),'config_sha256':{p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (config_path,ROOT/'compose.yaml',ROOT/'ros2_ws/src/gem_description/config/vehicle.json')},'results':[],'passed':False}
     manifest['source_sha256']={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for base in ('scripts','ros2_ws/src','config','deploy','containers') for p in (ROOT/base).rglob('*') if p.is_file() and (p.suffix in ('.py','.json','.yaml','.xml','.sdf','.xacro','.sh','.txt') or p.name=='Dockerfile') and '__pycache__' not in p.parts}
     manifest['asset_sha256']={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'assets/small_city/worlds/small_city.sdf',ROOT/'assets/small_city/maps/small_city.yaml',ROOT/'assets/small_city/maps/small_city.pgm',ROOT/'assets/small_city/maps/small_city_scene.json')}
     manifest['runtime_asset_sha256']={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for directory in ('models','generated') for p in (ROOT/'assets/small_city'/directory).rglob('*') if p.is_file()}
@@ -123,7 +125,8 @@ def main():
                     manifest['results'].append({'route':route,'repeat':repeat+1,'passed':turns,'turn_commands':turn_counts})
                     if not turns:raise RuntimeError('Curve route did not exercise both steering directions')
             if args.suite in ('faults','all'):
-                for fault in ('controller-stop','backend-pause','readiness-pause'):
+                fault_cases=(args.fault,) if args.fault else ('controller-stop','backend-pause','readiness-pause')
+                for fault in fault_cases:
                     print(f'Cold-start moving fault {fault}, repeat {repeat+1}',flush=True)
                     for key in ('AGILE_SPAWN_X','AGILE_SPAWN_Y','AGILE_SPAWN_YAW'):os.environ[key]='0'
                     reset(args.gui,args.rendering,folder/f'{repeat+1}_{fault}.start.json')
