@@ -32,6 +32,8 @@ COPY --from=renderer-build /renderer/provenance.json /opt/agile_slam_metadata/re
 COPY --from=renderer-build /renderer/copyright /opt/agile_slam_metadata/renderer-copyright
 RUN test "$(dpkg-query -W -f='${Version}' libogre-next-dev)" = '2.2.5+dfsg3-0ubuntu2'
 COPY ros2_ws/src /opt/agile_slam_ws/src
+# The canonical simulation transform registry is installed by gem_description's CMake build.
+COPY config/e6/simulation_nominal_transforms.yaml /opt/config/e6/simulation_nominal_transforms.yaml
 WORKDIR /opt/agile_slam_ws
 RUN source /opt/ros/humble/setup.bash && \
     if [[ -f /workspace/ros_ws/install/setup.bash ]]; then source /workspace/ros_ws/install/setup.bash; fi && \

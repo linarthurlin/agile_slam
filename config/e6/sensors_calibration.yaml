@@ -1,0 +1,190 @@
+schema_version: 1
+profile: gem_e6_hardware
+status: draft_not_for_runtime
+units:
+  translation: m
+  rotation: rad
+rotation_order: roll_pitch_yaw
+conventions:
+  body_frames: REP-103 (x forward, y left, z up)
+  camera_optical_frames: REP-103 optical (x right, y down, z forward)
+  base_link: GEM e6 rear-axle center projected to the ground; physical datum still requires measurement
+calibration_policy:
+  publish_sensor_transforms_only_when: validated
+  required_evidence: [measurement_method, date, source_or_bag, tool_version_or_commit, initial_guess, calibration_id, estimate, uncertainty, held_out_residual]
+  simulator_values_are_valid_hardware_extrinsics: false
+  simulation_nominal_source: simulation_nominal_transforms.yaml
+  vehicle_mode_may_load_simulation_nominal_source: false
+calibration_record_schema:
+  identity_reference: sensor_id from config/e6/sensor_inventory.csv
+  fields: [calibration_id, sensor_id, measurement_method, date, source_or_bag, tool_version_or_commit, initial_guess, estimate, uncertainty, held_out_residual, status]
+frames:
+  base_link:
+    parent: null
+    role: vehicle body reference at rear-axle ground projection
+    geometry_status: pending_vehicle_measurement
+    calibration_id: E6-CAL-BASE
+  livox_mount_link:
+    parent: base_link
+    role: shared mechanical datum for the three Livox Horizon units
+    translation_m: null
+    rotation_rpy_rad: null
+    calibration_id: E6-CAL-LIVOX-MOUNT
+    status: pending_measurement
+  livox_fl_link:
+    parent: livox_mount_link
+    sensor_id: livox_fl
+    translation_m: [null, null, null]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {shared_x_with: [livox_fc_link, livox_fr_link], shared_z_with: [livox_fc_link, livox_fr_link]}
+    calibration_id: E6-CAL-LIVOX-FL
+    status: pending_measurement
+  livox_fc_link:
+    parent: livox_mount_link
+    sensor_id: livox_fc
+    translation_m: [null, null, null]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {shared_x_with: [livox_fl_link, livox_fr_link], shared_z_with: [livox_fl_link, livox_fr_link]}
+    calibration_id: E6-CAL-LIVOX-FC
+    status: pending_measurement
+  livox_fr_link:
+    parent: livox_mount_link
+    sensor_id: livox_fr
+    translation_m: [null, null, null]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {shared_x_with: [livox_fl_link, livox_fc_link], shared_z_with: [livox_fl_link, livox_fc_link]}
+    calibration_id: E6-CAL-LIVOX-FR
+    status: pending_measurement
+  top_sensor_rig_link:
+    parent: base_link
+    role: shared rig datum for AVT cameras, VLP-16, and vehicle RTK antennas
+    translation_m: null
+    rotation_rpy_rad: null
+    calibration_id: E6-CAL-TOP-RIG
+    status: pending_measurement
+  avt_cam_fl_link:
+    parent: top_sensor_rig_link
+    sensor_id: avt_cam_fl
+    translation_m: [null, null, 0.0]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {camera_mount_z_relative_to_rig_m: 0.0}
+    calibration_id: E6-CAL-AVT-FL
+    status: pending_measurement
+  avt_cam_fl_optical_frame:
+    parent: avt_cam_fl_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: REP-103 camera optical convention
+    status: defined_by_convention
+  avt_cam_fr_link:
+    parent: top_sensor_rig_link
+    sensor_id: avt_cam_fr
+    translation_m: [null, null, 0.0]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {camera_mount_z_relative_to_rig_m: 0.0}
+    calibration_id: E6-CAL-AVT-FR
+    status: pending_measurement
+  avt_cam_fr_optical_frame:
+    parent: avt_cam_fr_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: REP-103 camera optical convention
+    status: defined_by_convention
+  avt_cam_cl_link:
+    parent: top_sensor_rig_link
+    sensor_id: avt_cam_cl
+    translation_m: [null, null, 0.0]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {camera_mount_z_relative_to_rig_m: 0.0}
+    calibration_id: E6-CAL-AVT-CL
+    status: pending_measurement
+  avt_cam_cl_optical_frame:
+    parent: avt_cam_cl_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: REP-103 camera optical convention
+    status: defined_by_convention
+  avt_cam_cr_link:
+    parent: top_sensor_rig_link
+    sensor_id: avt_cam_cr
+    translation_m: [null, null, 0.0]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {camera_mount_z_relative_to_rig_m: 0.0}
+    calibration_id: E6-CAL-AVT-CR
+    status: pending_measurement
+  avt_cam_cr_optical_frame:
+    parent: avt_cam_cr_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: REP-103 camera optical convention
+    status: defined_by_convention
+  avt_cam_rl_link:
+    parent: top_sensor_rig_link
+    sensor_id: avt_cam_rl
+    translation_m: [null, null, 0.0]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {camera_mount_z_relative_to_rig_m: 0.0}
+    calibration_id: E6-CAL-AVT-RL
+    status: pending_measurement
+  avt_cam_rl_optical_frame:
+    parent: avt_cam_rl_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: REP-103 camera optical convention
+    status: defined_by_convention
+  avt_cam_rr_link:
+    parent: top_sensor_rig_link
+    sensor_id: avt_cam_rr
+    translation_m: [null, null, 0.0]
+    rotation_rpy_rad: [null, null, null]
+    constraints: {camera_mount_z_relative_to_rig_m: 0.0}
+    calibration_id: E6-CAL-AVT-RR
+    status: pending_measurement
+  avt_cam_rr_optical_frame:
+    parent: avt_cam_rr_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: REP-103 camera optical convention
+    status: defined_by_convention
+  velodyne_link:
+    parent: top_sensor_rig_link
+    sensor_id: velodyne_vlp16
+    role: VLP-16 ROS point-cloud frame
+    translation_m: null
+    rotation_rpy_rad: null
+    calibration_id: E6-CAL-VLP16
+    status: pending_measurement
+  gnss_main_link:
+    parent: top_sensor_rig_link
+    sensor_id: gnss_main
+    role: main RTK antenna phase center
+    translation_m: null
+    rotation_rpy_rad: null
+    calibration_id: E6-CAL-GNSS-MAIN
+    status: pending_measurement
+  gnss_slave_link:
+    parent: top_sensor_rig_link
+    sensor_id: gnss_slave
+    optional: true
+    role: second vehicle RTK antenna phase center
+    translation_m: null
+    rotation_rpy_rad: null
+    calibration_id: E6-CAL-GNSS-SLAVE
+    status: pending_inventory_and_measurement
+  realsense_link:
+    parent: base_link
+    sensor_id: realsense
+    role: RealSense wrapper root / left IR origin according to selected wrapper profile
+    translation_m: null
+    rotation_rpy_rad: null
+    calibration_id: E6-CAL-REALSENSE
+    status: pending_model_and_measurement
+  realsense_wrapper_children:
+    parent: realsense_link
+    owner: RealSense ROS wrapper
+    frame_ids: discover_from_runtime_and_record
+    status: pending_compatibility_spike
+runtime_transform_owners:
+  map_to_odom: selected_slam_or_localization_component
+  odom_to_base_link: selected_local_state_estimator
+  earth_to_map: optional_georeferencing_component

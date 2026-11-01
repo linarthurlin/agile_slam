@@ -1,0 +1,68 @@
+schema_version: 1
+profile: gem_e6_hardware
+target_ros_distribution: humble
+status: pending_hardware_and_runtime_spikes
+drivers:
+  - sensor_family: livox_horizon
+    package_family: livox_ros_driver
+    version_or_commit: null
+    status: pending_compatibility_spike
+    checks:
+      - Build the Horizon-capable ROS 2 driver in the pinned Humble runtime.
+      - Confirm three-device discovery and stable per-device topic/frame IDs.
+      - Confirm point-time fields, timestamp epoch, and optional IMU output.
+  - sensor_family: velodyne_vlp16
+    package_family: velodyne ROS 2 packages
+    version_or_commit: null
+    status: pending_compatibility_spike
+    checks:
+      - Build the driver and point-cloud packages in the pinned Humble runtime.
+      - Confirm VLP16 model, RPM, return mode, scan stamp, point-time schema, and REP-103 output.
+      - Confirm whether PPS plus NMEA UTC is wired and whether GPS-time mode is valid.
+  - sensor_family: avt_area_scan
+    package_family: vimbax_ros2_driver (candidate)
+    version_or_commit: null
+    status: pending_model_and_compatibility_spike
+    checks:
+      - Confirm all six camera models, serials, pixel formats, firmware, and supported transport features.
+      - Build and stream from the actual model with ROS 2 Humble.
+      - Confirm camera timestamps map to the ROS clock; separately measure trigger-to-exposure skew if simultaneous exposure is required.
+  - sensor_family: realsense
+    package_family: realsense-ros / librealsense
+    version_or_commit: null
+    status: pending_model_and_compatibility_spike
+    checks:
+      - Confirm device model, firmware, USB topology, and supported wrapper version.
+      - Discover the actual wrapper root, stream, and IMU frame IDs and keep a single TF owner below realsense_link.
+      - Measure device timestamp to host/ROS clock offset and verify gyro/accel timestamp semantics.
+  - sensor_family: rtk_gnss
+    package_family: vendor driver pending receiver inventory
+    version_or_commit: null
+    status: pending_inventory
+    checks:
+      - Identify receiver, antenna count, message protocol, and whether heading is single- or dual-antenna.
+      - Record PPS/UTC output, correction input, datum, and time reference.
+      - Keep receiver boards/adapters out of the vehicle TF tree; measure antenna phase centers.
+clock_sources:
+  preferred_vehicle_clock:
+    candidate: IEEE-1588 PTP grandmaster disciplined by GNSS PPS/UTC when available
+    status: pending_network_and_device_validation
+  livox_horizon:
+    capabilities_to_verify: [PTPv2, PPS, GPS PPS plus UTC message]
+    status: pending_firmware_driver_validation
+  velodyne_vlp16:
+    capability_to_verify: PPS plus NMEA UTC to interface box and driver GPS-time mode
+    status: pending_wiring_validation
+  avt_area_scan:
+    capabilities_to_verify: [PTP, trigger or action-command support]
+    status: pending_exact_model_firmware_validation
+  realsense:
+    capability_to_verify: device/global timestamp conversion to ROS/system epoch
+    status: pending_measurement
+bandwidth:
+  camera_payload_estimate:
+    status: pending_model_resolution_and_pixel_format
+    basis: six_camera aggregate payload; record measured frame rates and pixel format
+  switch_nic_uplink_storage_budget:
+    status: pending_inventory_and_measurement
+    basis: switch uplink, host NIC/PCIe, DDS, recorder, and sustained write rate

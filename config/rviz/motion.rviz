@@ -97,7 +97,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Target Frame: base_footprint
+      Target Frame: base_link
       Distance: 20
       Pitch: 0.5
       Yaw: 0.8

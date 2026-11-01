@@ -17,8 +17,7 @@ class WheelOdometry(Node):
         self.wheelbase = self.declare_parameter('wheelbase', 1.75).value
         self.track = self.declare_parameter('track', 1.2).value
         self.radius = self.declare_parameter('wheel_radius', 0.295).value
-        self.rear_x = self.declare_parameter('rear_axle_x', -0.87).value
-        self.initial_pose=(self.declare_parameter('initial_x',self.rear_x).value,self.declare_parameter('initial_y',0.0).value,self.declare_parameter('initial_yaw',0.0).value)
+        self.initial_pose=(self.declare_parameter('initial_x',0.0).value,self.declare_parameter('initial_y',0.0).value,self.declare_parameter('initial_yaw',0.0).value)
         self.x, self.y, self.yaw = self.initial_pose
         self.last_stamp = None
         self.publisher = self.create_publisher(Odometry, '/odometry/wheel', 10)
@@ -46,7 +45,7 @@ class WheelOdometry(Node):
         odom = Odometry()
         odom.header.stamp = msg.header.stamp
         odom.header.frame_id = 'odom'
-        odom.child_frame_id = 'base_rear_axle'
+        odom.child_frame_id = 'base_link'
         odom.pose.pose.position.x, odom.pose.pose.position.y = self.x, self.y
         odom.pose.pose.orientation.z = math.sin(self.yaw/2)
         odom.pose.pose.orientation.w = math.cos(self.yaw/2)
@@ -61,9 +60,9 @@ class WheelOdometry(Node):
         self.publisher.publish(odom)
         transform = TransformStamped()
         transform.header = odom.header
-        transform.child_frame_id = 'base_footprint'
-        transform.transform.translation.x = self.x - self.rear_x * math.cos(self.yaw)
-        transform.transform.translation.y = self.y - self.rear_x * math.sin(self.yaw)
+        transform.child_frame_id = 'base_link'
+        transform.transform.translation.x = self.x
+        transform.transform.translation.y = self.y
         transform.transform.rotation = odom.pose.pose.orientation
         self.broadcaster.sendTransform(transform)
 

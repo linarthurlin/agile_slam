@@ -1,0 +1,79 @@
+schema_version: 1
+profile: gem_e6_canonical_tf
+mode: simulation_nominal
+status: draft_not_for_vehicle
+units:
+  translation: m
+  rotation: rad
+rotation_order: roll_pitch_yaw
+canonical_base:
+  frame_id: base_link
+  datum: GEM e6 rear-axle center projected to the ground
+  migrated_from_legacy_frames:
+    source: pre-migration E2-derived base and rear-axle frames
+  status: derived_from_inherited_e2_simulator
+transforms:
+  base_chassis_link:
+    parent: base_link
+    translation_m: [0.87, 0.0, 0.44]
+    rotation_rpy_rad: [0.0, 0.0, 0.0]
+    role: inherited E2 body geometry datum; simulation only
+    source: legacy chassis origin relative to the rear-axle ground datum
+    status: simulation_nominal_only
+  top_sensor_rig_link:
+    parent: base_link
+    translation_m: [0.76828, 0.6575, 1.8321]
+    rotation_rpy_rad: [0.0, 0.0, 0.0]
+    source: legacy chassis joint plus top_rack_joint origin, rebased to canonical base_link and body-aligned rig axes
+    status: simulation_nominal_only
+  velodyne_link:
+    parent: top_sensor_rig_link
+    translation_m: [-0.019995, -0.6575, 0.150002]
+    rotation_rpy_rad: [0.0, 0.0, 0.0]
+    resolved_base_pose_m: [0.748285, 0.0, 1.982102]
+    source: legacy top_rack_joint and velodyne_joint origins, composed into the body-aligned rig axes
+    status: simulation_nominal_only
+  realsense_link:
+    parent: base_link
+    translation_m: [1.264, 0.0, 1.63]
+    rotation_rpy_rad: [0.0, 0.0, 0.0]
+    source: canonical-base rebase plus the legacy gem_front_camera_joint origin
+    role: generic Gazebo RGB-D camera stand-in; not a measured RealSense mount
+    status: simulation_nominal_only
+  realsense_color_optical_frame:
+    parent: realsense_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: existing camera_front_optical_joint REP-103 rotation
+    status: simulation_convention
+  realsense_depth_optical_frame:
+    parent: realsense_link
+    translation_m: [0.0, 0.0, 0.0]
+    rotation_rpy_rad: [-1.5707963267948966, 0.0, -1.5707963267948966]
+    source: simulated depth stream uses the color-camera mounting axes
+    status: simulation_convention
+  realsense_imu_frame:
+    parent: realsense_link
+    translation_m: [-0.64, 0.0, -1.14]
+    rotation_rpy_rad: [0.0, 0.0, -1.5708]
+    source: relative transform composed from the legacy camera and standalone IMU origins
+    role: legacy simulator IMU placement retained as a plumbing-test nominal only
+    status: simulation_nominal_only
+    hardware_use: prohibited
+simulation_scope:
+  enabled_sensor_stand_ins: [velodyne_link, realsense_link, realsense_imu_frame]
+  not_modeled_yet: [livox_fl_link, livox_fc_link, livox_fr_link, avt_cam_fl_link, avt_cam_fr_link, avt_cam_cl_link, avt_cam_cr_link, avt_cam_rl_link, avt_cam_rr_link, gnss_main_link, gnss_slave_link]
+  supplemental_legacy_sensor_frames: [legacy_gnss_sim_link]
+  supplemental_transforms:
+    legacy_gnss_sim_link:
+      parent: base_chassis_link
+      translation_m: [-0.246, 0.0, 0.05]
+      rotation_rpy_rad: [0.0, 0.0, 0.0]
+      role: preserved legacy Gazebo NavSat fixture; not an E6 antenna phase-center model
+      status: simulation_nominal_only
+  supplemental_frame_policy: Legacy NavSat is outside the E6 GNSS sensor contract.
+  policy: Do not publish zero-valued TF for sensors without a simulated model or measured transform.
+vehicle_mode_policy:
+  source: sensors_calibration.yaml
+  require_calibration_evidence: true
+  allow_simulation_nominal_values: false

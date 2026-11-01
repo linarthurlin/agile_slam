@@ -24,4 +24,10 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}
 )
 
+# Keep the repository-level nominal transform registry as the Xacro runtime source.
+install(FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/../../../config/e6/simulation_nominal_transforms.yaml
+  DESTINATION share/${PROJECT_NAME}/config/e6
+)
+
 ament_package()

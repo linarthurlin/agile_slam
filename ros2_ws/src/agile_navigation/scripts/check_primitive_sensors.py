@@ -49,7 +49,7 @@ def main():
         points=points[np.isfinite(points).all(axis=1)]
         state.update(cloud_samples=state['cloud_samples']+1,cloud_valid=msg.height*msg.width==30000,finite_points=len(points))
         if state['truth'] is None:return
-        try:tf=buffer.lookup_transform('base_footprint',msg.header.frame_id,rclpy.time.Time()).transform
+        try:tf=buffer.lookup_transform('base_link',msg.header.frame_id,rclpy.time.Time()).transform
         except Exception:return
         pose=state['truth']
         body=points@rotation(tf.rotation).T+np.array([tf.translation.x,tf.translation.y,tf.translation.z])

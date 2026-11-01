@@ -43,10 +43,13 @@ def main():
         q=pose.orientation
         yaw=math.atan2(2*(q.w*q.z+q.x*q.y),1-2*(q.y*q.y+q.z*q.z))
         x,y=pose.position.x,pose.position.y
-        observed['truth_rear_pose']=[x+cfg['rear_axle_x']*math.cos(yaw),y+cfg['rear_axle_x']*math.sin(yaw)]
+        observed['truth_rear_pose']=[x,y]
         observed['truth_yaw']=yaw
         observed['truth_samples']+=1
-        if any(footprint_overlaps_polygon(x,y,yaw,b['polygon']) if 'polygon' in b else footprint_overlaps_box(x,y,yaw,b['center'],b['size']) for b in scene['obstacles']):
+        # Collision fixtures still describe the inherited chassis-center footprint.
+        chassis_x=x-cfg['rear_axle_x']*math.cos(yaw)
+        chassis_y=y-cfg['rear_axle_x']*math.sin(yaw)
+        if any(footprint_overlaps_polygon(chassis_x,chassis_y,yaw,b['polygon']) if 'polygon' in b else footprint_overlaps_box(chassis_x,chassis_y,yaw,b['center'],b['size']) for b in scene['obstacles']):
             observed['footprint_overlap_samples']+=1
     rest_observation=False
     odom_receipt=0.0

@@ -1,5 +1,6 @@
 """Bridge simulated sensor data and PACMod2 ROS contracts to Gazebo."""
 import json
+import math
 import os
 from pathlib import Path
 
@@ -33,6 +34,10 @@ def generate_launch_description():
     for wheel_name in ('left_front_wheel', 'right_front_wheel', 'left_rear_wheel', 'right_rear_wheel'):
         controller_config[wheel_name]['diameter'] = 2.0 * vehicle['wheel_radius']
 
+    # AGILE_SPAWN_* remains the inherited chassis-origin fixture; the model root is now rear-axle base_link.
+    spawn_yaw = float(os.environ.get('AGILE_SPAWN_YAW', '0'))
+    spawn_x = float(os.environ.get('AGILE_SPAWN_X', '0')) + vehicle['rear_axle_x'] * math.cos(spawn_yaw)
+    spawn_y = float(os.environ.get('AGILE_SPAWN_Y', '0')) + vehicle['rear_axle_x'] * math.sin(spawn_yaw)
     spawn = Node(
         package='ros_gz_sim',
         executable='create',
@@ -40,9 +45,9 @@ def generate_launch_description():
             '-name', 'gem',
             '-topic', 'robot_description',
             '-z', '0.3',
-            '-x', os.environ.get('AGILE_SPAWN_X', '0'),
-            '-y', os.environ.get('AGILE_SPAWN_Y', '0'),
-            '-Y', os.environ.get('AGILE_SPAWN_YAW', '0'),
+            '-x', str(spawn_x),
+            '-y', str(spawn_y),
+            '-Y', str(spawn_yaw),
         ],
         output='screen',
     )

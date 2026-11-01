@@ -19,7 +19,9 @@ def main():
     if not all(math.isfinite(v) for v in (args.x,args.y,args.yaw)):parser.error('Nonfinite fixture')
     rclpy.init();node=Node('start_fixture_checker')
     cfg=json.loads((Path(get_package_share_directory('gem_description'))/'config/vehicle.json').read_text())
-    expected={'truth':[args.x,args.y,args.yaw],'odom':[args.x+cfg['rear_axle_x']*math.cos(args.yaw),args.y+cfg['rear_axle_x']*math.sin(args.yaw),args.yaw]}
+    rear_x=cfg['rear_axle_x']
+    rear_pose=[args.x+rear_x*math.cos(args.yaw),args.y+rear_x*math.sin(args.yaw),args.yaw]
+    expected={'truth':rear_pose,'odom':rear_pose}
     records={};receipts={};stamps={}
     def receive(msg,key):
         stamp=msg.header.stamp.sec+msg.header.stamp.nanosec*1e-9

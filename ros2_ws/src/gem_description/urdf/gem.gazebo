@@ -67,7 +67,7 @@
 
   <!-- colors used by Gazebo -->
 
-  <gazebo reference="base_link">
+  <gazebo reference="base_chassis_link">
     <material>Gazebo/White</material>
   </gazebo>
 
@@ -177,7 +177,7 @@
     <material>Gazebo/Red</material>
   </gazebo>
 
-  <gazebo reference="IMU_link">
+  <gazebo reference="realsense_imu_frame">
     <material>Gazebo/Red</material>
   </gazebo>
 
@@ -189,7 +189,7 @@
     <material>Gazebo/Orange</material>
   </gazebo>
 
-  <gazebo reference="stereo_camera_link">
+  <gazebo reference="realsense_link">
     <material>Gazebo/Red</material>
   </gazebo>
 
@@ -239,7 +239,7 @@
 
   <!-- ***************************** IMU ***************************** -->
 
-<gazebo reference="IMU_link">
+<gazebo reference="realsense_imu_frame">
   <sensor name="imu_sensor" type="imu">
     <always_on>true</always_on>
     <update_rate>50</update_rate>
@@ -252,13 +252,13 @@
     </imu>
 
     <topic>imu</topic>
-    <ignition_frame_id>IMU_link</ignition_frame_id>
+    <ignition_frame_id>realsense_imu_frame</ignition_frame_id>
   </sensor>
 </gazebo>
 
   <!-- ***************************** GPS ***************************** -->
 
- <gazebo reference="GPS_link">
+ <gazebo reference="legacy_gnss_sim_link">
   <sensor name="gps_sensor" type="navsat">
     <always_on>true</always_on>
     <update_rate>20</update_rate>
@@ -295,7 +295,7 @@
     </navsat>
 
     <topic>/navsat</topic>
-    <ignition_frame_id>GPS_link</ignition_frame_id>
+    <ignition_frame_id>legacy_gnss_sim_link</ignition_frame_id>
   </sensor>
 </gazebo>
 </robot>

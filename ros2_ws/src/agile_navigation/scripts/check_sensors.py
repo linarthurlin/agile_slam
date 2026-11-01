@@ -64,8 +64,8 @@ def main():
     info=records.get('/sensors/cameras/front/camera_info',{})
     imu=records.get('/sensors/imu/data_raw',{})
     passed=passed and image.get('shape')==info.get('shape')==[800,600]
-    passed=passed and image.get('frame_id')==info.get('frame_id')=='camera_front_optical_frame'
-    passed=passed and imu.get('frame_id')=='IMU_link' and 9.5<imu.get('acceleration_norm',0)<10.1
+    passed=passed and image.get('frame_id')==info.get('frame_id')=='realsense_color_optical_frame'
+    passed=passed and imu.get('frame_id')=='realsense_imu_frame' and 9.5<imu.get('acceleration_norm',0)<10.1
     warnings=[]
     if image.get('received_rate_stamp_hz',0)<24:
         warnings.append('RGB delivery is below 80% of nominal rate in acquisition time.')

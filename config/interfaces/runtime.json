@@ -26,7 +26,7 @@
   "clock_owner": "backend-sim",
   "tf_owners": {
     "map->odom": "localization debug only",
-    "odom->base_footprint": "wheel_odometry",
+    "odom->base_link": "wheel_odometry",
     "fixed_sensor_edges": "robot_state_publisher"
   }
 }

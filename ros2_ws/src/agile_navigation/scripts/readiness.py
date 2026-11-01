@@ -63,7 +63,7 @@ class Readiness(Node):
     def update(self):
         now=time.monotonic()
         data=self.map_ready and all(k in self.times and now-self.times[k]<2. for k in ('clock','cloud','odom','report'))
-        tf=bool(self.buffer.can_transform('map','base_rear_axle',rclpy.time.Time()))
+        tf=bool(self.buffer.can_transform('map','base_link',rclpy.time.Time()))
         if self.starting is not None and self.starting.done():
             future=self.starting;self.starting=None
             try:

@@ -29,6 +29,7 @@ services:
     build:
       context: .
       dockerfile: containers/Dockerfile
+      target: runtime
       args:
         BASE_IMAGE: agile_control_ros2:baseline-20261014
     command: [ros2, launch, agile_navigation, core.launch.py, "map_yaml:=/opt/agile_assets/maps/small_city.yaml"]

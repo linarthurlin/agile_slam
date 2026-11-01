@@ -8,6 +8,7 @@ from rclpy.duration import Duration
 from rclpy.time import Time
 from sensor_msgs.msg import PointCloud2, LaserScan
 from tf2_ros import Buffer, TransformListener
+from obstacle_scan_math import transform_finite_points
 
 
 class ObstacleScan(Node):
@@ -20,7 +21,7 @@ class ObstacleScan(Node):
 
     def update(self, cloud):
         try:
-            tf = self.buffer.lookup_transform('base_footprint', cloud.header.frame_id, Time.from_msg(cloud.header.stamp))
+            tf = self.buffer.lookup_transform('base_link', cloud.header.frame_id, Time.from_msg(cloud.header.stamp))
         except Exception:
             return
         fields = {field.name: field for field in cloud.fields}
@@ -34,8 +35,8 @@ class ObstacleScan(Node):
         x,y,z,w = q.x,q.y,q.z,q.w
         rotation = np.array([[1-2*(y*y+z*z),2*(x*y-z*w),2*(x*z+y*w)], [2*(x*y+z*w),1-2*(x*x+z*z),2*(y*z-x*w)], [2*(x*z-y*w),2*(y*z+x*w),1-2*(x*x+y*y)]])
         t = tf.transform.translation
-        points = points @ rotation.T + [t.x,t.y,t.z]
-        valid = np.isfinite(points).all(axis=1) & (points[:,2] >= .25) & (points[:,2] <= 2.5)
+        points = transform_finite_points(points, rotation, [t.x, t.y, t.z])
+        valid = (points[:,2] >= .25) & (points[:,2] <= 2.5)
         points = points[valid]
         distance = np.hypot(points[:,0],points[:,1])
         valid = (distance >= 1.0) & (distance <= 15.0)
@@ -47,7 +48,7 @@ class ObstacleScan(Node):
         np.minimum.at(ranges, indices, distance)
         scan = LaserScan()
         scan.header.stamp = cloud.header.stamp
-        scan.header.frame_id = 'base_footprint'
+        scan.header.frame_id = 'base_link'
         scan.angle_min,scan.angle_increment = -math.pi,2*math.pi/bins
         scan.angle_max = scan.angle_min + (bins-1)*scan.angle_increment
         scan.range_min,scan.range_max,scan.scan_time = 1.0,15.0,.1
